@@ -2,7 +2,7 @@
 
 The boilerplate is almost the absolute minimum that you need to get React Three Fiber to display a Three.js scene. We will make many additions to the boilerplate as we progress with the lessons.
 
-# Create a project Folder 
+# Create a project folder 
 
 Open a command/terminal prompt and create a new folder on your system somewhere.
 
@@ -16,7 +16,7 @@ Open a command/terminal prompt and create a new folder on your system somewhere.
 ```git clone https://github.com/fabrik-space/spatial-app-boilerplate.git```
 
 
-# Setup developemnt environment 
+# Setup development environment 
 # VSCode 
 
 To begin, we should ensure that we've set up an IDE (Integrated Development Environment) to develop with.
