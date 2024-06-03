@@ -11,6 +11,7 @@ import { Stats } from "@react-three/drei";
 import { DRACOLoader } from "three/examples/jsm/Addons.js";
 
 function Scene() {
+  const path = "/brick_arcs_barn_ruin-transformed.glb"
   const gltf = useLoader(GLTFLoader, path, (loader) => {
     const dracoLoader = new DRACOLoader()
     dracoLoader.setDecoderPath('https://www.gstatic.com/draco/versioned/decoders/1.5.7/')
