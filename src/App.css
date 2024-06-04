@@ -27,7 +27,9 @@ body {
   overflow: hidden;
   overscroll-behavior-y: none;
   font-family: -apple-system, BlinkMacSystemFont, avenir next, avenir, helvetica neue, helvetica, ubuntu, roboto, noto, segoe ui, arial, sans-serif;
-  color: black;
+  color: rgb(255, 255, 255);
   -webkit-font-smoothing: antialiased;
   background: #f0f0f0;
 }
+
+
