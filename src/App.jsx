@@ -35,21 +35,21 @@ const ThreeJSScene = () => {
         // Load textures
         const textureLoader = new THREE.TextureLoader();
         const textures = {
-          upperBodyColor: textureLoader.load('D:/internship/react-three-fiber-boilerplate/public/textures/ctm_gendarmerie_basic_upperbody_color_psd_6ec1202f_5.png'),
-          upperBodyNormal: textureLoader.load('D:/internship/react-three-fiber-boilerplate/public/textures/ctm_gendarmerie_basic_upperbody_normal_psd_20be52e7_3.png'),
-          gasmaskColor: textureLoader.load('D:/internship/react-three-fiber-boilerplate/public/textures/ctm_gendarmerie_gasmask_color_psd_c266879f_11.png'),
-          gasmaskNormal: textureLoader.load('D:/internship/react-three-fiber-boilerplate/public/textures/ctm_gendarmerie_gasmask_normal_psd_9b98cb25_9.png'),
-          pantColor: textureLoader.load('D:/internship/react-three-fiber-boilerplate/public/textures/ctm_gendarmerie_medic_pant_color_psd_3af1392b_8.png'),
-          pantNormal: textureLoader.load('D:/internship/react-three-fiber-boilerplate/public/textures/ctm_gendarmerie_medic_pant_normal_psd_f2875d67_6.png'),
-          visorColor: textureLoader.load('D:/internship/react-three-fiber-boilerplate/public/textures/ctm_gendarmerie_visor_yellow_vmat_g_tcolor_e11f4ab7_14.png'),
-          visorNormal: textureLoader.load('D:/internship/react-three-fiber-boilerplate/public/textures/ctm_gendarmerie_visor_yellow_vmat_g_tnormal_ae950ea1_12.png'),
-          gloveColor: textureLoader.load('D:/internship/react-three-fiber-boilerplate/public/textures/glove_hardknuckle_black_color_psd_8f00aa00_2.png'),
-          gloveNormal: textureLoader.load('D:/internship/react-three-fiber-boilerplate/public/textures/glove_hardknuckle_normal_tga_a8df881b_0.png'),
-          upperBodyAO: textureLoader.load('D:/internship/react-three-fiber-boilerplate/public/textures/ctm_gendarmerie_basic_upperbody_ao_psd_9b712b12_orm_34328200.png'),
-          gasmaskAO: textureLoader.load('D:/internship/react-three-fiber-boilerplate/public/textures/ctm_gendarmerie_gasmask_ao_psd_307245d8_orm_148598205_10@cha.png'),
-          pantAO: textureLoader.load('D:/internship/react-three-fiber-boilerplate/public/textures/ctm_gendarmerie_medic_pant_ao_psd_a04fcb40_orm_2786487808_7@.png'),
-          visorAO: textureLoader.load('D:/internship/react-three-fiber-boilerplate/public/textures/ctm_gendarmerie_visor_yellow_vmat_g_tambientocclusion_9782fd.png'),
-          gloveAO: textureLoader.load('D:/internship/react-three-fiber-boilerplate/public/textures/glove_hardknuckle_ao_psd_5be17a0d_orm_2084722161_1@channels=.png'),
+          upperBodyColor: textureLoader.load('public/textures/ctm_gendarmerie_basic_upperbody_color_psd_6ec1202f_5.png'),
+          upperBodyNormal: textureLoader.load('public/textures/ctm_gendarmerie_basic_upperbody_normal_psd_20be52e7_3.png'),
+          gasmaskColor: textureLoader.load('public/textures/ctm_gendarmerie_gasmask_color_psd_c266879f_11.png'),
+          gasmaskNormal: textureLoader.load('public/textures/ctm_gendarmerie_gasmask_normal_psd_9b98cb25_9.png'),
+          pantColor: textureLoader.load('public/textures/ctm_gendarmerie_medic_pant_color_psd_3af1392b_8.png'),
+          pantNormal: textureLoader.load('public/textures/ctm_gendarmerie_medic_pant_normal_psd_f2875d67_6.png'),
+          visorColor: textureLoader.load('public/textures/ctm_gendarmerie_visor_yellow_vmat_g_tcolor_e11f4ab7_14.png'),
+          visorNormal: textureLoader.load('public/textures/ctm_gendarmerie_visor_yellow_vmat_g_tnormal_ae950ea1_12.png'),
+          gloveColor: textureLoader.load('public/textures/glove_hardknuckle_black_color_psd_8f00aa00_2.png'),
+          gloveNormal: textureLoader.load('public/textures/glove_hardknuckle_normal_tga_a8df881b_0.png'),
+          upperBodyAO: textureLoader.load('public/textures/ctm_gendarmerie_basic_upperbody_ao_psd_9b712b12_orm_34328200.png'),
+          gasmaskAO: textureLoader.load('public/textures/ctm_gendarmerie_gasmask_ao_psd_307245d8_orm_148598205_10@cha.png'),
+          pantAO: textureLoader.load('public/textures/ctm_gendarmerie_medic_pant_ao_psd_a04fcb40_orm_2786487808_7@.png'),
+          visorAO: textureLoader.load('public/textures/ctm_gendarmerie_visor_yellow_vmat_g_tambientocclusion_9782fd.png'),
+          gloveAO: textureLoader.load('public/textures/glove_hardknuckle_ao_psd_5be17a0d_orm_2084722161_1@channels=.png'),
         };
 
         // Load the GLTF model
