@@ -14,7 +14,7 @@ const Model = () => {
 
   return <primitive ref={ref} object={glb.scene} scale={[3, 3, 3]} />;
 };
-
+//comment
 export default function App() {
   return (
     <>
