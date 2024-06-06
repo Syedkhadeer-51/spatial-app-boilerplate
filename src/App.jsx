@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect } from "react";
 import { Canvas, useLoader } from "@react-three/fiber";
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader';
@@ -7,7 +7,7 @@ import { GLTFExporter } from 'three/examples/jsm/exporters/GLTFExporter';
 import { saveAs } from 'file-saver';
 import "./App.css";
 
-
+// Helper function to fetch file size
 async function fetchFileSize(url) {
   try {
     const response = await fetch(url, { method: 'HEAD' });
@@ -24,7 +24,7 @@ async function fetchFileSize(url) {
   }
 }
 
-
+// Helper function to compress and export GLTF
 async function compressAndExportGLTF(gltf, fileName) {
   const exporter = new GLTFExporter();
   const options = {
@@ -47,7 +47,7 @@ async function compressAndExportGLTF(gltf, fileName) {
 }
 
 function Scene({ onModelLoaded }) {
-  const path = "sample/skibidi.glb"; 
+  const path = "sample/skibidi.glb"; // Ensure this path is correct and the file is present
   const gltf = useLoader(GLTFLoader, path, loader => {
     const dracoLoader = new DRACOLoader();
     dracoLoader.setDecoderPath('https://www.gstatic.com/draco/versioned/decoders/1.5.7/');
@@ -64,14 +64,14 @@ function Scene({ onModelLoaded }) {
 }
 
 export default function App() {
-  const compressedFileName = "skibidi_compressed.glb";
+  const compressedFileName = "model_compressed.glb";
 
   useEffect(() => {
-    const originalPath = "/sample/skibidi.glb"; 
+    const originalPath = "/sample/skibidi.glb"; // Ensure this path is correct and the file is present
 
     fetchFileSize(originalPath).then(size => {
       if (size !== null) {
-        console.log("Original Model Size: ", size);
+        console.log("Original Model Size (bytes): ", size);
       }
     });
   }, []);
@@ -80,7 +80,16 @@ export default function App() {
     try {
       const compressedBlob = await compressAndExportGLTF(gltf, compressedFileName);
 
-      console.log("Compressed Model Size: ", compressedBlob.size);
+      console.log("Compressed Model Size (bytes): ", compressedBlob.size);
+
+      // For debugging: Log the GLTF object and options
+      console.log("GLTF object:", gltf);
+      console.log("Exporter options:", {
+        binary: true,
+        dracoOptions: {
+          compressionLevel: 10
+        }
+      });
     } catch (error) {
       console.error("Error during compression and export:", error);
     }
@@ -96,4 +105,3 @@ export default function App() {
     </Canvas>
   );
 }
-
