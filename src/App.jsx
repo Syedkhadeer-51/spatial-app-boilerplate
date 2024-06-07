@@ -1,4 +1,3 @@
-
 import { useRef, useEffect, useState, forwardRef } from 'react';
 import { Canvas } from '@react-three/fiber';
 import { OrbitControls, useGLTF, Center, Stats } from '@react-three/drei';
@@ -28,16 +27,17 @@ const Model = forwardRef(({ url, scale, onLoaded }, ref) => {
 export default function App() {
   const modelRef = useRef();
   const [modelLoaded, setModelLoaded] = useState(false);
-  const modelUrl = '/mikudayo.glb';    // replace file name here
-  const setScale = [0.2, 0.2, 0.2];
+  const modelUrl = '/mikudayo.glb'; // Replace with the path of the model
+  const setScale = [0.2, 0.2, 0.2]; // Set your desired scale here
 
   useEffect(() => {
     const fetchAndLogOriginalSize = async () => {
-      // fetch the original model
+      // Fetch the original model to get its size
       const response = await fetch(modelUrl);
       const originalBlob = await response.blob();
       const originalSize = originalBlob.size;
 
+      // Log the original file size
       console.log('Original File Size:', originalSize, 'bytes');
     };
 
@@ -46,16 +46,17 @@ export default function App() {
 
   useEffect(() => {
     if (modelLoaded && modelRef.current) {
-      console.log('Starting compression and export');
+      console.log('Starting export process');
       const exporter = new GLTFExporter();
       exporter.parse(
         modelRef.current,
         (result) => {
-          console.log('Compression and export completed');
+          console.log('Export process completed');
           const output = JSON.stringify(result, null, 2);
           const compressedBlob = new Blob([output], { type: 'application/json' });
           const compressedSize = compressedBlob.size;
 
+          // Log the compressed file size
           console.log('Compressed File Size:', compressedSize, 'bytes');
         },
         { binary: true }
