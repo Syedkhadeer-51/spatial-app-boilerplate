@@ -62,7 +62,7 @@ export default function App() {
         <ambientLight intensity={1.5} />
         <pointLight position={[10, 10, 10]} />
         <Suspense fallback={null}>
-          <Model url="Models/Barn.glb" ref={modelRef} />
+          <Model url="Models/(Placeholder)PlsUseAFileLargerThan100MB.glb" ref={modelRef} />
         </Suspense>
         <OrbitControls />
         <Stats />
