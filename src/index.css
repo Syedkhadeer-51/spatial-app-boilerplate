@@ -1,3 +1,21 @@
+* {
+  background-color: #ffffff;
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+div {
+  position: fixed;
+  top: 10px;
+  left: 10px;
+  height: 100px;
+  width: 100px;
+
+}
+
 :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
@@ -65,4 +83,10 @@ button:focus-visible {
   button {
     background-color: #f9f9f9;
   }
+}
+
+.Stat {
+  position: relative;
+  top: 100px;
+  left: 100px;
 }
