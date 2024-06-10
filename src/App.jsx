@@ -9,6 +9,7 @@ import './App.css';
 function Model({ castShadow }) {
   const gltf = useLoader(GLTFLoader, '/sample/audi.glb');
 
+<<<<<<< HEAD
   gltf.scene.traverse((node) => {
     if (node.isMesh) node.castShadow = castShadow;
   });
@@ -63,6 +64,12 @@ function Lights({
     }
   }, [lightType, activeLights]);
 
+=======
+  return <primitive ref={ref} object={glb.scene} scale={[3, 3, 3]} />;
+};
+//comment
+export default function App() {
+>>>>>>> ddb2d03258980d9055ee459ac0658fc892eb0cb3
   return (
     <>
       {activeLights.ambient && <ambientLight color={ambientLightColor} intensity={ambientLightIntensity} />}
