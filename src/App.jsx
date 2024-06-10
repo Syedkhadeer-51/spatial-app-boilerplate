@@ -20,7 +20,7 @@ export default function App() {
   const [gridColor, setGridColor] = useState('#ffffff');
   const gridHelperRef = useRef(null);
 
-  const path = "./tired.glb"; // Ensure this path is correct and the file is present
+  const path = "./model5.glb"; // Ensure this path is correct and the file is present
   const gltf = useLoader(GLTFLoader, path, loader => {
     const dracoLoader = new DRACOLoader();
     dracoLoader.setDecoderPath('https://www.gstatic.com/draco/versioned/decoders/1.5.7/');
