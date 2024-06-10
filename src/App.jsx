@@ -362,7 +362,7 @@ export default function App() {
   };
 
   const handleAlphaHashToggle = (object) => {
-    object.material.alphaTest = !object.material.alphaTest;
+    object.material.alphaHash = !object.material.alphaHash;
     setSelectedObject({ ...object });
   };
 
