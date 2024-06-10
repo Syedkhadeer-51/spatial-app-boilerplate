@@ -14,10 +14,12 @@ import { positionGeometry } from "three/examples/jsm/nodes/Nodes.js";
 
 function Scene() {
   
-  const path1 = "/mutant_mantis_2.0.glb"
-   const path2 = "/mutant_mantis_2.0-transformed.glb"
-  handleExport(path1);
-  handleExport(path2);
+  const path1 = "/brick_arcs_barn_ruin-transformed.glb"
+  const path2 = "/brick_arcs_barn_ruin.glb"
+  const comp="compressed"
+  const ncomp="not compressed"
+  handleExport(path2,ncomp);
+  handleExport(path1,comp);
   const gltf = useLoader(GLTFLoader,path1, (loader) => {
     const dracoLoader = new DRACOLoader()
     dracoLoader.setDecoderPath('https://www.gstatic.com/draco/versioned/decoders/1.5.7/')
@@ -29,8 +31,6 @@ function Scene() {
 
 
 export default function App() {
-  //const Cam = new THREE.PerspectiveCamera(75,window.innerWidth/window.innerHeight,0.1,100);
-  //Cam.position.set([0,0,0])
   return(
     
     <Canvas style={{ background: "#dddddd" }} >
@@ -43,17 +43,12 @@ export default function App() {
     </Canvas>
 )};
 
-const handleExport = (glbModelUrl) => {
-  // Assuming you already have the URL or ArrayBuffer of the GLB model
- // Change this to the actual URL or ArrayBuffer of your GLB model
-
-  // Fetch the GLB model
+const handleExport = (glbModelUrl,comp) => {
   fetch(glbModelUrl)
       .then(response => response.blob())
       .then(blob => {
-          // Now you have the GLB model as a Blob
-          // Log the size of the blob
-          console.log("Size of GLB model:", blob.size, "bytes");
+          // GLB model as a Blob
+          console.log("Size of",comp ,"GLB model:", blob.size, "bytes");
         
       })
       .catch(error => {
