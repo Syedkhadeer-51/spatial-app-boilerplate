@@ -47,7 +47,7 @@ async function compressAndExportGLTF(gltf, fileName) {
 }
 
 function Scene({ onModelLoaded }) {
-  const path = "sample/real_light.glb"; // Ensure this path is correct and the file is present
+  const path = "sample/original-model.glb"; // Ensure this path is correct and the file is present
   const gltf = useLoader(GLTFLoader, path, loader => {
     const dracoLoader = new DRACOLoader();
     dracoLoader.setDecoderPath('https://www.gstatic.com/draco/versioned/decoders/1.5.7/');
@@ -67,7 +67,7 @@ export default function App() {
   const compressedFileName = "model_compressed.glb";
 
   useEffect(() => {
-    const originalPath = "/sample/real_light.glb"; // Ensure this path is correct and the file is present
+    const originalPath = "/sample/original-model.glb"; // Ensure this path is correct and the file is present
 
     fetchFileSize(originalPath).then(size => {
       if (size !== null) {
