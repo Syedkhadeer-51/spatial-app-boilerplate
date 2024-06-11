@@ -171,7 +171,8 @@ button:focus-visible {
 .sketch-picker input,
 .sketch-picker label {
   color: white !important;
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  font-family: Helvetica;
+  border-radius: 4px;
 }
 
 /* Transparent background for the color picker elements */
