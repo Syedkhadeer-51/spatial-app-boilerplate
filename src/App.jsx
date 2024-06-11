@@ -1,20 +1,22 @@
-import { Canvas } from '@react-three/fiber'
+import { Canvas } from '@react-three/fiber';
+import { OrbitControls, Center, Stats } from '@react-three/drei';
+import Model from './Model';
 import './App.css'
-import { OrbitControls } from '@react-three/drei'
-
 
 export default function App() {
+  const modelUrl = '/mikudayo.glb'; // Replace with the path of the model
+  const setScale = [0.2, 0.2, 0.2]; // Set your desired scale here  
   return (
     <>
       <Canvas camera={{ position: [-8, 5, 8] }}>
-        <ambientLight intensity={0.1} />
-        <directionalLight color="red" position={[0, 0, 5]} />
-        <mesh scale={3}>
-          <boxGeometry />
-          <meshStandardMaterial />
-        </mesh>
+        <ambientLight intensity={0.5} />
+        <directionalLight color="white" position={[2, 2, 5]} />
+        <Center>
+          <Model url={modelUrl} scale={setScale} />
+        </Center>
         <OrbitControls />
+        <Stats />
       </Canvas>
     </>
-  )
+  );
 }
