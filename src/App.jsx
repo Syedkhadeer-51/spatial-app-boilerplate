@@ -60,17 +60,17 @@ export default function App() {
 
   return (
     <div className="App">
-      <Canvas >
-        <ambientLight/>
+      <Canvas>
+        <ambientLight />
         <directionalLight intensity={7.0} />
-        <pointLight  position={[10, 10, 10]} />
+        <pointLight position={[10, 10, 10]} />
         <OrbitControls />
         <Scene sceneRef={sceneRef} />
         <Stats />
       </Canvas>
       <h2>Model Compressor</h2>
       <div className="bottom-right-panel">
-        <div  className="button-group">
+        <div className="button-group">
           <button className="panel-button" onClick={handleMeshMerge}>Merge All Meshes</button>
           <button className="panel-button" onClick={handleExport}>Compress and Export</button>
         </div>
