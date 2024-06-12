@@ -21,7 +21,11 @@ body,
 #root {
   overflow: hidden;
 }
-
+h2 {
+  position: fixed;
+  left: 100px;
+  
+}
 body {
   position: fixed;
   overflow: hidden;
@@ -47,67 +51,6 @@ body {
   height: 100%;
   display: flex;
   overflow: hidden;
-}
-
-.info-panel { 
-  position: fixed;
-  top: 0;
-  right: 0;
-  width: 300px;
-  height: 100vh;
-  background-color: #1a1a1a;
-  color: #f0f0f0;
-  padding: 20px;
-  box-shadow: -2px 0 5px rgba(0, 0, 0, 0.5);
-  overflow-y: auto;
-  z-index: 10;
-}
-
-.info-panel h2 {
-  color: #66b2ff;
-}
-
-.info-panel p {
-  margin: 10px 0;
-}
-
-.info-panel label {
-  display: block;
-  margin: 10px 0 5px;
-  color: #66b2ff;
-}
-
-.info-panel input[type="color"],
-.info-panel input[type="range"],
-.info-panel input[type="number"],
-.info-panel select {
-  width: 100%;
-  padding: 5px;
-  margin: 5px 0 15px;
-  border: none;
-  border-radius: 5px;
-  background-color: #333;
-  color: #f0f0f0;
-}
-
-.info-panel input[type="checkbox"] {
-  margin-right: 10px;
-}
-
-.info-panel button {
-  display: block;
-  width: 100%;
-  padding: 10px;
-  margin: 20px 0;
-  border: none;
-  border-radius: 5px;
-  background-color: #66b2ff;
-  color: #1a1a1a;
-  cursor: pointer;
-}
-
-.info-panel button:hover {
-  background-color: #558bcc;
 }
 
 .import-container {
@@ -136,4 +79,73 @@ body {
 
 .import-container input[type="file"]::-webkit-file-upload-button:hover {
   background-color: #558bcc;
+}
+
+.export-button {
+  position: fixed;
+  bottom: 20px;
+  right: 200px;
+  background-color: #66b2ff;
+  color: #1a1a1a;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  z-index: 2000;
+}
+
+.export-button:hover {
+  background-color: #558bcc;
+}
+
+.bottom-right-panel {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: rgba(0, 0, 0, 0.8);
+  padding: 10px;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+}
+
+.button-group {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.panel-button {
+  background-color: #66b2ff;
+  color: #1a1a1a;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.panel-button:hover {
+  background-color: #558bcc;
+}
+
+.merge-message {
+  position: fixed;
+  top: 20px;
+  left: 250px;
+  background-color: rgba(0, 0, 0, 0.8);
+  padding: 10px;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+  color: white;
+  z-index: 2000;
+  animation: fadeOut 3s forwards;
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
 }
