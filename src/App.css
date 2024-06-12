@@ -30,4 +30,52 @@ body {
   color: rgb(212, 17, 108);
   -webkit-font-smoothing: antialiased;
   background: #f0f0f0;
+
 }
+
+.app {
+  text-align: center;
+  padding: 20px;
+}
+
+h1 {
+  font-size: 2rem; /* Reduce font size of the title */
+  color: #FF1493;
+}
+
+.file-info p {
+  margin: 5px 0;
+  font-size: 1rem; /* Adjust font size */
+  color: #FF1493;
+}
+
+button {
+  margin: 10px;
+  padding: 10px 20px;
+  font-size: 1rem; /* Adjust font size */
+  background-color: #FFD700;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+input[type="file"] {
+  margin: 20px 0;
+}
+
+canvas {
+  margin-top: 20px;
+  width: 90%;
+  height: 500px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+p {
+  font-size: 1rem; /* Adjust font size */
+  color: #FF1493;
+}
+
+}
+
