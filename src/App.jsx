@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { Canvas, useLoader } from "@react-three/fiber";
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader';
@@ -46,63 +46,77 @@ async function compressAndExportGLTF(gltf, fileName) {
   });
 }
 
-function Scene({ onModelLoaded }) {
-  const path = "sample/original-model.glb"; // Ensure this path is correct and the file is present
-  const gltf = useLoader(GLTFLoader, path, loader => {
-    const dracoLoader = new DRACOLoader();
-    dracoLoader.setDecoderPath('https://www.gstatic.com/draco/versioned/decoders/1.5.7/');
-    loader.setDRACOLoader(dracoLoader);
-  });
-
-  useEffect(() => {
-    if (gltf) {
-      onModelLoaded(gltf);
-    }
-  }, [gltf, onModelLoaded]);
-
-  return <primitive object={gltf.scene} />;
+function Scene({ gltf }) {
+  return gltf ? <primitive object={gltf.scene} /> : null;
 }
 
 export default function App() {
-  const compressedFileName = "model_compressed.glb";
+  const [gltf, setGltf] = useState(null);
+  const [originalFileSize, setOriginalFileSize] = useState(null);
+  const [compressedFileSize, setCompressedFileSize] = useState(null);
+  const [compressionStatus, setCompressionStatus] = useState("");
+  const inputFileRef = useRef(null);
 
-  useEffect(() => {
-    const originalPath = "/sample/original-model.glb"; // Ensure this path is correct and the file is present
+  const handleFileUpload = async (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      const url = URL.createObjectURL(file);
+      const size = file.size;
+      setOriginalFileSize(size);
 
-    fetchFileSize(originalPath).then(size => {
-      if (size !== null) {
-        console.log("Original Model Size (bytes): ", size);
-      }
-    });
-  }, []);
+      const loader = new GLTFLoader();
+      const dracoLoader = new DRACOLoader();
+      dracoLoader.setDecoderPath('https://www.gstatic.com/draco/versioned/decoders/1.5.7/');
+      loader.setDRACOLoader(dracoLoader);
 
-  const handleModelLoaded = async (gltf) => {
-    try {
-      const compressedBlob = await compressAndExportGLTF(gltf, compressedFileName);
-
-      console.log("Compressed Model Size (bytes): ", compressedBlob.size);
-
-      // For debugging: Log the GLTF object and options
-      console.log("GLTF object:", gltf);
-      console.log("Exporter options:", {
-        binary: true,
-        dracoOptions: {
-          compressionLevel: 10
+      loader.load(
+        url,
+        (loadedGltf) => {
+          setGltf(loadedGltf);
+          setCompressionStatus("");
+        },
+        undefined,
+        (error) => {
+          console.error('Error loading the model:', error);
+          setCompressionStatus("Error loading the model");
         }
-      });
-    } catch (error) {
-      console.error("Error during compression and export:", error);
+      );
+    }
+  };
+
+  const handleCompressAndExport = async () => {
+    if (gltf) {
+      setCompressionStatus("Compressing...");
+      try {
+        const compressedBlob = await compressAndExportGLTF(gltf, "model_compressed.glb");
+        setCompressedFileSize(compressedBlob.size);
+        setCompressionStatus("Compression and export successful!");
+      } catch (error) {
+        console.error("Error during compression and export:", error);
+        setCompressionStatus("Error during compression and export");
+      }
     }
   };
 
   return (
-    <Canvas style={{ background: "#171717" }}>
-      <OrbitControls />
-      <ambientLight intensity={5.0} />
-      <directionalLight intensity={10.0} />
-      <Scene onModelLoaded={handleModelLoaded} />
-      <Stats /> {/* Show stats to record the model loading */}
-    </Canvas>
+    <div className="app">
+      <h1>3D Model Viewer and Compressor</h1>
+      <input type="file" accept=".glb,.gltf" ref={inputFileRef} onChange={handleFileUpload} />
+      <div className="file-info">
+        {originalFileSize && <p>Original Model Size: {originalFileSize} bytes</p>}
+        {compressedFileSize && <p>Compressed Model Size: {compressedFileSize} bytes</p>}
+      </div>
+      <button onClick={handleCompressAndExport} disabled={!gltf}>
+        Compress and Export
+      </button>
+      <p>{compressionStatus}</p>
+      <Canvas style={{ background: "#171717", height: "500px" }}>
+        <OrbitControls />
+        <ambientLight intensity={5.0} />
+        <directionalLight intensity={10.0} />
+        <Scene gltf={gltf} />
+        <Stats />
+      </Canvas>
+    </div>
   );
 }
-
