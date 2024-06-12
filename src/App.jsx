@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Canvas } from '@react-three/fiber';
 import { OrbitControls } from '@react-three/drei';
 import { saveAs } from 'file-saver';
+import { Stats } from '@react-three/drei';
 import Model from './components/Model';
 import UploadButton from './components/UploadButton';
 import CompressButton from './components/CompressButton';
@@ -43,6 +44,7 @@ function App() {
       <Message message={message} error={error} />
       <div className="canvas-container">
         <Canvas style={{ height: 600 }}>
+          <Stats></Stats>
           <ambientLight />
           <pointLight position={[10, 10, 10]} />
           <OrbitControls />
