@@ -27,7 +27,7 @@ export default function App() {
   return (
     <div className="app-wrapper">
       <div className="app-container">
-        <h1>3D-Model Viewer and Exporter</h1>
+        <h1>3D-Model Viewer and Compressor</h1>
         <FileUploader onFileUpload={handleFileUpload} />
         {modelUrl && (
           <Canvas camera={{ position: [-8, 3, 8] }}>
