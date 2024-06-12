@@ -11,11 +11,22 @@
   },
   "dependencies": {
     "@react-three/drei": "^9.106.0",
+
     "@react-three/fiber": "^8.16.8",
     "@react-three/xr": "^5.7.1",
     "downloadjs": "^1.4.7",
     "file-saver": "^2.0.5",
     "gltf-pipeline": "^4.1.0",
+
+
+   
+    "downloadjs": "^1.4.7",
+    "file-saver": "^2.0.5",
+    "gltf-pipeline": "^4.1.0",
+
+    
+
+
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-draggable": "^4.4.6",

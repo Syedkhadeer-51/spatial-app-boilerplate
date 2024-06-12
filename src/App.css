@@ -30,6 +30,7 @@ body {
   color: rgb(212, 17, 108);
   -webkit-font-smoothing: antialiased;
   background: #f0f0f0;
+
 }
 
 .app {
@@ -75,3 +76,6 @@ p {
   font-size: 1rem; /* Adjust font size */
   color: #FF1493;
 }
+
+}
+
