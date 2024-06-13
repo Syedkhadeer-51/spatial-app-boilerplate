@@ -22,4 +22,3 @@ export default function ModelViewer({ modelUrl, scale, onModelLoaded }) {
     <Model url={modelUrl} ref={modelRef} scale={scale} onLoaded={onModelLoaded} />
   );
 }
-
