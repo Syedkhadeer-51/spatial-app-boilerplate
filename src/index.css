@@ -66,15 +66,140 @@ button:focus-visible {
     background-color: #f9f9f9;
   }
 }
-.custom-file-upload {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
-  color: wheat;
+
+.color-picker-button {
+  position: absolute;
+  top: 100px;
+  left: 10px;
+  z-index: 1;
+}
+
+.color-picker-button button {
+  background-color: #3b3b3b;
+  color: white;
+  border: none;
+  padding: 10px;
   cursor: pointer;
-  transition: border-color 0.25s;
+  margin-bottom: 10px;
+}
+.color-picker-icon {
+  width: 40px; /* Adjust the size as needed */
+  height: 40px; /* Adjust the size as needed */
+}
+
+.color-picker-button .tooltip {
+  visibility: hidden;
+  width: 120px;
+  background-color: #555;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+  position: absolute;
+  z-index: 1;
+  bottom: 100%; /* Position above the button */
+  left: 50%;
+  margin-left: -50px;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.color-picker-button .tooltip::after {
+  content: "";
+  position: absolute;
+  top: 100%; /* Bottom of the tooltip */
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #555 transparent transparent transparent;
+}
+
+.color-picker-button button:hover .tooltip {
+  visibility: visible;
+  opacity: 1;
+}
+
+.picker {
+  position: absolute;
+  z-index: 1;
+  background: white;
+  padding: 10px;
+  border: 1px solid #ccc;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+}
+/* Override SketchPicker styles */
+.sketch-picker {
+  background: rgba(0, 0, 0, 0.75) !important; /* Black-tinted transparent background */
+  border-radius: 8px !important;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2) !important;
+  padding: 10px !important;
+  border: 1px solid #ccc !important;
+}
+
+/* Customize the individual components */
+.sketch-picker .flexbox-fix {
+  background: transparent !important;
+}
+
+.sketch-picker .saturation {
+  border-radius: 8px !important;
+  background: transparent !important;
+}
+
+.sketch-picker .hue {
+  border-radius: 8px !important;
+  background: transparent !important;
+}
+
+.sketch-picker .alpha {
+  border-radius: 8px !important;
+  background: transparent !important;
+}
+
+.sketch-picker .controls {
+  background: transparent !important;
+}
+
+
+
+.sketch-picker .color {
+  border-radius: 8px !important;
+  background: transparent !important;
+}
+
+.sketch-picker input,
+.sketch-picker label {
+  color: white !important;
+  font-family: Helvetica;
+  border-radius: 4px;
+}
+.sidebar {
+  width: 200px;
+  padding: 10px;
+  background-color: #f0f0f0;
+  border-left: 1px solid #ccc;
+}
+/* Transparent background for the color picker elements */
+:root {
+  --icon-color-light: #000000; /* black for light mode */
+  --icon-color-dark: #ffffff; /* white for dark mode */
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --icon-color: var(--icon-color-dark);
+  }
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    --icon-color: var(--icon-color-light);
+  }
+}
+
+.icon {
+  width: 24px;
+  height: 24px;
+  fill: var(--icon-color);
 }

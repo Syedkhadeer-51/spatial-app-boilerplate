@@ -4,7 +4,31 @@ import { GLTFExporter } from 'three/examples/jsm/exporters/GLTFExporter';
 import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader';
 import { useEffect, useRef } from 'react';
 import { saveAs } from 'file-saver';
-
+function SelectCamera() {
+    const { scene } = useThree();
+  
+    useEffect(() => {
+      // Traverse the scene to find all cameras
+      const cameras = [];
+      scene.traverse((object) => {
+        if (object.isCamera) {
+          cameras.push(object.name || 'Unnamed Camera');
+        }
+      });
+  
+      // Update the state with the camera names
+      setCameraNames(cameras);
+    }, [scene]);
+    return (
+        <div className="sidebar">
+          <h3>Camera Names</h3>
+          <ul>
+            {cameraNames.map((name, index) => (
+              <li key={index}>{name}</li>
+            ))}
+          </ul>
+        </div>
+      );
 async function compressAndExportGLTF(gltf, fileName) {
     const exporter = new GLTFExporter();
     const options = {
