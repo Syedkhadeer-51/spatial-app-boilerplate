@@ -1,22 +1,43 @@
-import React from "react";
+import { Environment } from "@react-three/drei";
+import { useThree } from "@react-three/fiber";
 import { useAtom } from "jotai";
-import { Canvas } from "@react-three/fiber"; // Import Canvas
+import { useControls } from "leva";
 import { Scene } from "./Scene";
 import { slideAtom } from "./Overlay";
 
-const modelPaths = [
-  "/models/mcqueen.glb",
-  "/models/cruz.glb",
-  "/models/storm.glb",
+// Array of three scenes with three different models
+export const scenes = [
+  {
+    path: "/models/gt3rs.glb",
+    name: "911 GT3RS",
+  },
+  {
+    path: "/models/918.glb",
+    name: "918 spyder",
+  },
+  {
+    path: "/models/carrera.glb",
+    name: "Carrera",
+  },
+  
 ];
 
 export const Experience = () => {
   const [slide] = useAtom(slideAtom);
+  const viewport = useThree((state) => state.viewport);
+  const { slideDistance } = useControls({
+    slideDistance: {
+      value: 1,
+      min: 0,
+      max: 10,
+    },
+  });
 
   return (
-    <Canvas> {/* Wrap your components in a Canvas component */}
-      <Scene backgroundScene /> {/* Render the background scene */}
-      <Scene path={modelPaths[slide]} /> {/* Render the current model */}
-    </Canvas>
+    <>
+      <ambientLight intensity={0.2} />
+      <Environment preset={"city"} />
+        <Scene {...scenes[slide]}/>
+    </>
   );
 };
