@@ -1,4 +1,4 @@
-* {
+/* * {
   box-sizing: border-box;
 }
 
@@ -31,3 +31,52 @@ body {
   -webkit-font-smoothing: antialiased;
   background: #f0f0f0;
 }
+
+.canvas-container {
+  flex: 1; 
+} */
+
+
+
+/* App.css */
+html, body {
+  height: 100%;
+  margin: 0;
+}
+
+#root {
+  overflow: hidden;
+  height: 100%;
+  width: 100%;
+}
+
+.App {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+}
+
+.canvas-container {
+  flex-grow: 1;
+  display: flex;
+  height: 100%;
+}
+
+button {
+  position: absolute; /* Ensures it's placed over the canvas */
+  bottom: 20px; /* Adjust as needed */
+  left: 500px; /* Adjust as needed */
+  padding: 5px 10px; /* Adjust padding for size */
+  font-size: 14px; /* Adjust font size */
+  background-color: #99d341; /* Button background color */
+  color: rgb(205, 214, 214); /* Button text color */
+  border: none; /* Remove default border */
+  border-radius: 3px; /* Rounded corners */
+  cursor: pointer; /* Pointer cursor on hover */
+}
+
+button:hover {
+  background-color: #0056b3; /* Darker background on hover */
+}
+
