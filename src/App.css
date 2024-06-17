@@ -39,21 +39,3 @@ body {
   bottom: 0 !important;
 }
 
-.dropzone {
-  border: 2px dashed #504d4d;
-  border-radius: 5px;
-  padding: 20px;
-  text-align: center;
-  cursor: pointer;
-  margin: 0 auto; 
-  height: 25%;
-}
-
-
-.dropzone p {
-  margin: 0 auto;
-  font-size: 1.2em;
-  color: #4b4747;
-  text-align: center;
-}
-
