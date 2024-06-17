@@ -12,8 +12,12 @@
   "dependencies": {
     "@react-three/drei": "^9.105.6",
     "@react-three/fiber": "^8.16.6",
+    "dat.gui": "^0.7.9",
+    "file-saver": "^2.0.5",
     "react": "^18.2.0",
+    "react-color": "^2.19.3",
     "react-dom": "^18.2.0",
+    "react-dropzone": "^14.2.3",
     "three": "^0.164.1"
   },
   "devDependencies": {

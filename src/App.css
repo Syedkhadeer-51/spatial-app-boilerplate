@@ -31,3 +31,29 @@ body {
   -webkit-font-smoothing: antialiased;
   background: #f0f0f0;
 }
+
+.stats {
+  top: unset !important;
+  left: unset !important;
+  right: 0 !important;
+  bottom: 0 !important;
+}
+
+.dropzone {
+  border: 2px dashed #504d4d;
+  border-radius: 5px;
+  padding: 20px;
+  text-align: center;
+  cursor: pointer;
+  margin: 0 auto; 
+  height: 25%;
+}
+
+
+.dropzone p {
+  margin: 0 auto;
+  font-size: 1.2em;
+  color: #4b4747;
+  text-align: center;
+}
+
