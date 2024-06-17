@@ -5,9 +5,7 @@
 
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
-  
-
-  background-color: #30e40d;
+  background-color: #242424;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -30,7 +28,6 @@ body {
   place-items: center;
   min-width: 320px;
   min-height: 100vh;
-  background-color: #ffffff; /* Ensure the body background is also black */
 }
 
 h1 {
@@ -45,7 +42,7 @@ button {
   font-size: 1em;
   font-weight: 500;
   font-family: inherit;
-  background-color: #ea0c56;
+  background-color: #1a1a1a;
   cursor: pointer;
   transition: border-color 0.25s;
 }
@@ -59,14 +56,13 @@ button:focus-visible {
 
 @media (prefers-color-scheme: light) {
   :root {
-    color: #000000; /* Maintain white text color in light mode for contrast */
-    background-color: #0fb2e8; /* Ensure root background remains black */
+    color: #213547;
+    background-color: #ffffff;
   }
   a:hover {
     color: #747bff;
   }
   button {
-    background-color: #e7e713; /* Maintain button background color */
+    background-color: #f9f9f9;
   }
 }
-
