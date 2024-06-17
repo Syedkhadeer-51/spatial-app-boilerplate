@@ -3,15 +3,19 @@ import './App.css'
 import { CameraHelper } from 'three';
 import { useRef, useEffect,useState } from 'react';
 
-export default function PerspectiveCameraWithHelper({ visible,name,...perspectiveCameraProps }) {
+export default function PerspectiveCameraWithHelper({ visible,name,active,...perspectiveCameraProps }) {
   const[visibility,setVisibility]=useState(true);
+  const[cameraActive,setCameraActive]=useState(false);
+  useEffect(()=>{
+    setCameraActive(active===name);
+  },[active])
   useEffect(() => {
     if (visible[name] !== undefined) {
       setVisibility(visible[name]);
     }
   }, [visible, name]);  
   return (
-      <PerspectiveCamera {...perspectiveCameraProps} name={name} >
+      <PerspectiveCamera {...perspectiveCameraProps} name={name} makeDefault={cameraActive}>
       {visibility&&<Helper type={CameraHelper} />}
       </PerspectiveCamera>
       );

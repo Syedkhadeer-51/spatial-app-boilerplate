@@ -1,13 +1,16 @@
-import { useState } from 'react';
+import { useState,useEffect } from 'react';
 
-function CameraNamesList({ cameraNames, setCameraNames }) {
+function CameraNamesList({ cameraNames, setCameraNames,activeCamera,setActiveCamera,setEnableOrbitControls }) {
   // State to manage dropdown visibility
   const [dropdownVisible, setDropdownVisible] = useState(false);
 
   // Function to toggle dropdown visibility
   const toggleDropdown = () => {
     setDropdownVisible(!dropdownVisible);
+    setActiveCamera('default');
   };
+
+  
 
   return (
     <div>
@@ -25,18 +28,20 @@ function CameraNamesList({ cameraNames, setCameraNames }) {
           {/* Mapping over cameraNames object to render rows */}
           {Object.keys(cameraNames).map((camera, index) => (
             <tr
-              key={index}
-              onClick={() => {
+              key={index}    
+            >
+              {/* Display camera name */}
+              <td onClick={() => {
+        if (activeCamera !== 'default') setActiveCamera('default'); // Ensure default camera is activated before switching
+        setTimeout(() => setActiveCamera(camera), 0); // Switch to PerspectiveCamera1
+      }}>{camera || 'Unnamed camera'}</td>
+
+              {/* Display icon based on camera state */}
+              <td className='icon' onClick={() => {
                 // Toggle the boolean value for the clicked camera name
                 const updatedCameras = { ...cameraNames, [camera]: !cameraNames[camera] };
                 setCameraNames(updatedCameras); // Update state with the new camera names
-              }}
-            >
-              {/* Display camera name */}
-              <td>{camera || 'Unnamed camera'}</td>
-
-              {/* Display icon based on camera state */}
-              <td className='icon'>
+              }}>
                 {cameraNames[camera] ? (
                   // Icon when camera is active
                   <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 576 512">
