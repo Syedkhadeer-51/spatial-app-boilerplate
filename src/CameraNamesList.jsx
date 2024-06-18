@@ -7,7 +7,7 @@ function CameraNamesList({ cameraNames, setCameraNames,activeCamera,setActiveCam
   // Function to toggle dropdown visibility
   const toggleDropdown = () => {
     setDropdownVisible(!dropdownVisible);
-    setActiveCamera('default');
+    setActiveCamera('defaults');
   };
 
   

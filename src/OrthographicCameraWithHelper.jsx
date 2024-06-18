@@ -6,8 +6,14 @@ export default function PerspectiveCameraWithHelper({ visible,name,active,...per
   const[visibility,setVisibility]=useState(true);
   const[cameraActive,setCameraActive]=useState(false);
   useEffect(()=>{
-    setCameraActive(active===name);
-  },[active])
+    if(active===name)
+    setTimeout(() => {
+      setCameraActive(true);
+    }, 1);
+    else{
+      setCameraActive(false);
+    }
+    },[active])
 
   useEffect(() => {
     if (visible[name] !== undefined) {

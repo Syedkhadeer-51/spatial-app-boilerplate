@@ -17,8 +17,7 @@ export default function App() {
   const [gridColor, setGridColor] = useState('#ffffff');
   const gridHelperRef = useRef(null);
   const [cameraNames, setCameraNames] = useState({});
-  const [activeCamera, setActiveCamera] = useState('default'); // State to track active camera
-  const [enableOrbitControls, setEnableOrbitControls] = useState(true); // State to control OrbitControls
+  const [activeCamera, setActiveCamera] = useState('defaults'); // State to track active camera
 
 
   const path = "./model6.glb"; // Ensure this path is correct and the file is present
@@ -28,22 +27,13 @@ export default function App() {
     loader.setDRACOLoader(dracoLoader);
   });
 
-  useEffect(() => {
-    console.log(activeCamera);
-    
-      if (activeCamera === 'default') {
-        setEnableOrbitControls(true);
-      } else {
-        setEnableOrbitControls(false);
-      }
-  }, [activeCamera]);
   return (
     <>
       <ColorPickerGrid setBackgroundColor={setBackgroundColor} setGridColor={setGridColor} gridHelperRef={gridHelperRef} />
-      <CameraNamesList cameraNames={cameraNames} setCameraNames={setCameraNames} activeCamera={activeCamera} setActiveCamera={setActiveCamera} setEnableOrbitControls={setEnableOrbitControls}  position={'absolute'} />
+      <CameraNamesList cameraNames={cameraNames} setCameraNames={setCameraNames} activeCamera={activeCamera} setActiveCamera={setActiveCamera}  position={'absolute'} />
       <Canvas camera={{ position: [0, 3, 10]}}>
         <ambientLight />
-        <CustomGizmoHelper orbitConrols={enableOrbitControls}/>
+        <CustomGizmoHelper orbitConrols={activeCamera}/>
         <primitive object={gltf.scene} />
         <TraverseForCamera setCameraNames={setCameraNames} />
         <PerspectiveCameraWithHelper 
