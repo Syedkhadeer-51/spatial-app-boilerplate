@@ -1,138 +1,197 @@
-import React, { useState, useEffect, useRef } from "react";
-import { Canvas } from "@react-three/fiber";
-import { OrbitControls, Stats } from "@react-three/drei";
+import React, { useState, useEffect, useCallback, useRef } from 'react';
+import { Canvas, useThree } from '@react-three/fiber';
+import { Stats, OrbitControls } from '@react-three/drei';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
-import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader';
 import { GLTFExporter } from 'three/examples/jsm/exporters/GLTFExporter';
-import { saveAs } from 'file-saver';
-import * as THREE from 'three';
 import * as dat from 'dat.gui';
-import "./App.css";
-
-// Helper function to resize textures
-function resizeTexture(texture, maxSize) {
-  const { image } = texture;
-  const canvas = document.createElement('canvas');
-  const ctx = canvas.getContext('2d', { willReadFrequently: true });
-  let width = image.width;
-  let height = image.height;
-
-  if (width > height) {
-    if (width > maxSize) {
-      height *= maxSize / width;
-      width = maxSize;
-    }
-  } else {
-    if (height > maxSize) {
-      width *= maxSize / height;
-      height = maxSize;
-    }
-  }
-
-  canvas.width = width;
-  canvas.height = height;
-  ctx.drawImage(image, 0, 0, width, height);
-
-  return new THREE.CanvasTexture(canvas);
-}
-
-// Helper function to compress and export GLTF
-async function compressAndExportGLTF(gltf, fileName, textureSize) {
-  gltf.scene.traverse((node) => {
-    if (node.isMesh) {
-      const material = node.material;
-      if (material.map) {
-        material.map = resizeTexture(material.map, textureSize);
-      }
-      if (material.normalMap) {
-        material.normalMap = resizeTexture(material.normalMap, textureSize);
-      }
-      if (material.roughnessMap) {
-        material.roughnessMap = resizeTexture(material.roughnessMap, textureSize);
-      }
-      if (material.metalnessMap) {
-        material.metalnessMap = resizeTexture(material.metalnessMap, textureSize);
-      }
-    }
-  });
-
-  const exporter = new GLTFExporter();
-  const options = {
-    binary: true,
-    dracoOptions: {
-      compressionLevel: 10
-    }
-  };
-
-  return new Promise((resolve, reject) => {
-    exporter.parse(gltf.scene, (result) => {
-      const blob = new Blob([result], { type: 'application/octet-stream' });
-      saveAs(blob, fileName);
-      resolve(blob);
-    }, (error) => {
-      console.error('An error happened during GLTF export', error);
-      reject(error);
-    }, options);
-  });
-}
+import './App.css';
 
 export default function App() {
   const [model, setModel] = useState(null);
-  const [gltf, setGltf] = useState(null);
-  const [textureSize, setTextureSize] = useState(1024);
-  const compressedFileName = "model_compressed.glb";
+  const [lightProperties, setLightProperties] = useState({
+    type: 'ambientLight',
+    color: '#ffffff',
+    intensity: 1,
+    position: { x: 10, y: 10, z: 10 },
+  });
   const guiRef = useRef(null);
 
   useEffect(() => {
     const gui = new dat.GUI();
+    const lightFolder = gui.addFolder('Light Properties');
+
+    lightFolder.add(lightProperties, 'type', ['ambientLight', 'directionalLight']).name('Type').onChange((value) => {
+      setLightProperties(prev => ({ ...prev, type: value }));
+    });
+
+    lightFolder.addColor(lightProperties, 'color').name('Color').onChange((value) => {
+      setLightProperties(prev => ({ ...prev, color: value }));
+    });
+
+    lightFolder.add(lightProperties, 'intensity', 0, 10).name('Intensity').onChange((value) => {
+      setLightProperties(prev => ({ ...prev, intensity: value }));
+    });
+
+    const positionFolder = lightFolder.addFolder('Position');
+    positionFolder.add(lightProperties.position, 'x', -50, 50).name('X').onChange((value) => {
+      setLightProperties(prev => ({ ...prev, position: { ...prev.position, x: value } }));
+    });
+    positionFolder.add(lightProperties.position, 'y', -50, 50).name('Y').onChange((value) => {
+      setLightProperties(prev => ({ ...prev, position: { ...prev.position, y: value } }));
+    });
+    positionFolder.add(lightProperties.position, 'z', -50, 50).name('Z').onChange((value) => {
+      setLightProperties(prev => ({ ...prev, position: { ...prev.position, z: value } }));
+    });
+
+    lightFolder.open();
     guiRef.current = gui;
-    gui.add({ textureSize }, 'textureSize', 256, 4096, 256).name('Texture Size').onChange(setTextureSize);
 
     return () => {
       gui.destroy();
     };
-  }, [textureSize]);
+  }, [lightProperties]);
 
   const handleFileUpload = (event) => {
     const file = event.target.files[0];
     const loader = new GLTFLoader();
-    const dracoLoader = new DRACOLoader();
-    dracoLoader.setDecoderPath('https://www.gstatic.com/draco/versioned/decoders/1.5.7/');
-    loader.setDRACOLoader(dracoLoader);
-    
     loader.load(URL.createObjectURL(file), (gltf) => {
       setModel(gltf.scene);
-      setGltf(gltf);
+      printMeshHierarchy(gltf.scene);
     });
   };
 
-  const handleExport = async () => {
-    if (gltf) {
-      try {
-        const compressedBlob = await compressAndExportGLTF(gltf, compressedFileName, textureSize);
-        console.log("Compressed Model Size (bytes): ", compressedBlob.size);
-      } catch (error) {
-        console.error("Error during compression and export:", error);
-      }
-    } else {
-      console.log("No model loaded to export.");
+  const printMeshHierarchy = (object, depth = 0) => {
+    console.log(`${' '.repeat(depth * 2)}${object.type}: ${object.name || 'Unnamed'}`);
+    if (object.children) {
+      object.children.forEach(child => printMeshHierarchy(child, depth + 1));
+    }
+  };
+
+  const handleExport = () => {
+    const exporter = new GLTFExporter();
+    if (model) {
+      exporter.parse(
+        model,
+        (result) => {
+          const output = JSON.stringify(result, null, 2);
+          const blob = new Blob([output], { type: 'application/json' });
+          const link = document.createElement('a');
+          link.href = URL.createObjectURL(blob);
+          link.download = 'modified_model.gltf';
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
+        },
+        { binary: false }
+      );
     }
   };
 
   return (
     <>
       <input type="file" onChange={handleFileUpload} />
-      <button onClick={handleExport}>Export Compressed Model</button>
-      <Canvas
-        camera={{
-          position: [-20, 10, 20]      // Ensure the camera looks at the center of the scene
-        }}
-      >
-        <ambientLight intensity={5} />
-        {model && <primitive object={model} />}
-        <OrbitControls target={[0, 0, 0]} />
-        <Stats className="stats"/>
+      <button onClick={handleExport}>Export</button>
+      <Canvas camera={{ position: [-8, 5, 8] }}>
+        <Scene model={model} lightProperties={lightProperties} />
+        <OrbitControls />
+        <Stats showPanel={0} className="stats" />
       </Canvas>
+    </>
+  );
+}
+
+function Scene({ model, lightProperties }) {
+  const { scene } = useThree();
+  const [selectedMesh, setSelectedMesh] = useState(null);
+  const guiRef = useRef(null);
+
+  useEffect(() => {
+    if (model) {
+      scene.add(model);
+    }
+    return () => {
+      if (model) {
+        scene.remove(model);
+      }
+    };
+  }, [model, scene]);
+
+  useEffect(() => {
+    if (selectedMesh && selectedMesh.isMesh) {
+      setupMeshGUI(selectedMesh);
+    }
+  }, [selectedMesh]);
+
+  const onClick = useCallback((event) => {
+    event.stopPropagation();
+    const { object } = event;
+    
+    // Deselect previous mesh (if any)
+    if (selectedMesh) {
+      selectedMesh.material.color.copy(selectedMesh.currentColor);
+    }
+    
+    // Select new mesh
+    setSelectedMesh(object);
+    object.currentColor = object.material.color.clone(); // Store current color
+    object.material.color.set(0x0000ff); // Set selected mesh color to blue (hex value)
+    
+    console.log(`Selected mesh: ${object.name || 'Unnamed'}`);
+    
+    // Update GUI to reflect selected mesh properties
+    setupMeshGUI(object);
+  }, [selectedMesh]);
+
+  const setupMeshGUI = (mesh) => {
+    if (guiRef.current) {
+      guiRef.current.destroy();
+    }
+    
+    guiRef.current = new dat.GUI();
+
+    if (mesh.geometry) {
+      const geometry = mesh.geometry;
+      const vertexCount = geometry.attributes.position.count;
+      const triangleCount = geometry.index ? geometry.index.count / 3 : vertexCount / 3;
+      const edgeCount = vertexCount;
+
+      const meshFolder = guiRef.current.addFolder('Mesh Properties');
+      const colorOptions = {
+        Color: mesh.material.color.getStyle(),
+      };
+
+      meshFolder.addColor(colorOptions, 'Color').name('Color').onChange((value) => {
+        mesh.material.color.set(value);
+      });
+
+      meshFolder.add(mesh.material, 'wireframe').name('Wireframe');
+      meshFolder.add(mesh.material, 'transparent').name('Transparent');
+      meshFolder.add(mesh.material, 'opacity', 0, 1).name('Opacity').onChange((value) => {
+        mesh.material.transparent = value < 1;
+        mesh.material.opacity = value;
+      });
+
+      const infoFolder = meshFolder.addFolder('Mesh Info');
+      infoFolder.add({ Vertices: vertexCount }, 'Vertices').name('Vertices').listen();
+      infoFolder.add({ Edges: edgeCount }, 'Edges').name('Edges').listen();
+      infoFolder.add({ Triangles: triangleCount }, 'Triangles').name('Triangles').listen();
+
+      meshFolder.open();
+    }
+  };
+
+  return (
+    <>
+      {lightProperties.type === 'ambientLight' ? (
+        <ambientLight intensity={lightProperties.intensity} color={lightProperties.color} />
+      ) : (
+        <directionalLight
+          intensity={lightProperties.intensity}
+          color={lightProperties.color}
+          position={[lightProperties.position.x, lightProperties.position.y, lightProperties.position.z]}
+        />
+      )}
+      {model && <primitive object={model} onClick={onClick} />}
     </>
   );
 }
