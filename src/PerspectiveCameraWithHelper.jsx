@@ -10,7 +10,7 @@ export default function PerspectiveCameraWithHelper({ visible,name,active,...per
     if(active===name)
     setTimeout(() => {
       setCameraActive(true);
-    }, 1);
+    }, 5);
     else{
       setCameraActive(false);
     }

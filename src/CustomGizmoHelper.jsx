@@ -10,7 +10,7 @@ export default function CustomGizmoHelper({orbitConrols})
         {
       setTimeout(() => {
         setActive(true);
-      }, 1);}
+      }, 5);}
       else{
         setActive(false);
       }
