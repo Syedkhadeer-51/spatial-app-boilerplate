@@ -19,7 +19,7 @@ export default function CustomGizmoHelper({orbitConrols})
         <>
         {active && <OrbitControls makeDefault enabled={active}/>}
          <GizmoHelper alignment="top-right">
-          <GizmoViewport axisColors={['red', 'green', 'blue']} labelColor="black" />
+         {active && <GizmoViewport axisColors={['red', 'green', 'blue']} labelColor="black" />}
          </GizmoHelper>
          </>
     )
