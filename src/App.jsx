@@ -4,11 +4,12 @@ import { Stats, OrbitControls } from '@react-three/drei';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 import { GLTFExporter } from 'three/examples/jsm/exporters/GLTFExporter';
 import * as dat from 'dat.gui';
-import { Raycaster, Vector2 } from 'three';
+import { Raycaster, Vector2, AnimationMixer } from 'three';
 import './App.css';
 
 export default function App() {
   const [model, setModel] = useState(null);
+  const [animations, setAnimations] = useState(null);
   const [lightProperties, setLightProperties] = useState({
     type: 'ambientLight',
     color: '#ffffff',
@@ -44,10 +45,10 @@ export default function App() {
       setLightProperties((prev) => ({ ...prev, position: { ...prev.position, x: value } }));
     });
     positionFolder.add(lightProperties.position, 'y', -50, 50).name('Y').onChange((value) => {
-      setLightProperties((prev) => ({ ...prev, position: { ...prev.position, y: value } }));
+      setLightProperties((prev) => ({ ...prev, position: { ...prev, y: value } }));
     });
     positionFolder.add(lightProperties.position, 'z', -50, 50).name('Z').onChange((value) => {
-      setLightProperties((prev) => ({ ...prev, position: { ...prev.position, z: value } }));
+      setLightProperties((prev) => ({ ...prev, position: { ...prev, z: value } }));
     });
 
     const sceneFolder = gui.addFolder('Scene Properties');
@@ -85,6 +86,7 @@ export default function App() {
     const loader = new GLTFLoader();
     loader.load(URL.createObjectURL(file), (gltf) => {
       setModel(gltf.scene);
+      setAnimations(gltf.animations);
       printMeshHierarchy(gltf.scene);
     });
   };
@@ -121,7 +123,7 @@ export default function App() {
       <input type="file" onChange={handleFileUpload} />
       <button onClick={handleExport}>Export</button>
       <Canvas camera={{ position: [-8, 5, 8] }} style={{ background: sceneProperties.backgroundColor }}>
-        <Scene model={model} lightProperties={lightProperties} sceneProperties={sceneProperties} />
+        <Scene model={model} animations={animations} lightProperties={lightProperties} sceneProperties={sceneProperties} />
         <OrbitControls autoRotate={sceneProperties.autoRotate} />
         <Stats showPanel={0} className="stats" />
       </Canvas>
@@ -193,22 +195,35 @@ function HoverHighlight({ setHoveredObject, setSelectedObject }) {
   return null;
 }
 
-function Scene({ model, lightProperties, sceneProperties }) {
+function Scene({ model, animations, lightProperties, sceneProperties }) {
   const { scene } = useThree();
   const [selectedMesh, setSelectedMesh] = useState(null);
   const [hoveredMesh, setHoveredMesh] = useState(null);
   const guiRef = useRef(null);
+  const mixer = useRef(null);
+  const [activeAction, setActiveAction] = useState(null);
 
   useEffect(() => {
     if (model) {
       scene.add(model);
+      if (animations && animations.length > 0) {
+        mixer.current = new AnimationMixer(model);
+        const action = mixer.current.clipAction(animations[0]);
+        action.play();
+        setActiveAction(action);
+      }
     }
     return () => {
       if (model) {
         scene.remove(model);
       }
+      if (mixer.current) {
+        mixer.current.stopAllAction();
+        mixer.current = null;
+        setActiveAction(null);
+      }
     };
-  }, [model, scene]);
+  }, [model, animations, scene]);
 
   useEffect(() => {
     if (selectedMesh && selectedMesh.isMesh) {
@@ -225,6 +240,12 @@ function Scene({ model, lightProperties, sceneProperties }) {
       });
     }
   }, [model, sceneProperties.wireframe]);
+
+  useFrame((state, delta) => {
+    if (mixer.current) {
+      mixer.current.update(delta);
+    }
+  });
 
   const setupMeshGUI = (mesh) => {
     if (guiRef.current) {
