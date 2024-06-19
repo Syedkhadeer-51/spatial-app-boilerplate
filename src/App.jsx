@@ -15,20 +15,26 @@ export default function App() {
     intensity: 1,
     position: { x: 10, y: 10, z: 10 },
   });
+  const [sceneProperties, setSceneProperties] = useState({
+    wireframe: false,
+    autoRotate: false,
+    backgroundColor: '#aaaaaa',
+    showGrid: false,
+    gridSize: 50,
+    gridDivisions: 50,
+  });
   const guiRef = useRef(null);
 
   useEffect(() => {
     const gui = new dat.GUI();
-    const lightFolder = gui.addFolder('Light Properties');
 
+    const lightFolder = gui.addFolder('Light Properties');
     lightFolder.add(lightProperties, 'type', ['ambientLight', 'directionalLight']).name('Type').onChange((value) => {
       setLightProperties((prev) => ({ ...prev, type: value }));
     });
-
     lightFolder.addColor(lightProperties, 'color').name('Color').onChange((value) => {
       setLightProperties((prev) => ({ ...prev, color: value }));
     });
-
     lightFolder.add(lightProperties, 'intensity', 0, 10).name('Intensity').onChange((value) => {
       setLightProperties((prev) => ({ ...prev, intensity: value }));
     });
@@ -44,13 +50,35 @@ export default function App() {
       setLightProperties((prev) => ({ ...prev, position: { ...prev.position, z: value } }));
     });
 
-    lightFolder.open();
+    const sceneFolder = gui.addFolder('Scene Properties');
+    sceneFolder.add(sceneProperties, 'wireframe').name('Wireframe').onChange((value) => {
+      setSceneProperties((prev) => ({ ...prev, wireframe: value }));
+    });
+    sceneFolder.add(sceneProperties, 'autoRotate').name('Auto Rotate').onChange((value) => {
+      setSceneProperties((prev) => ({ ...prev, autoRotate: value }));
+    });
+    sceneFolder.addColor(sceneProperties, 'backgroundColor').name('Background Color').onChange((value) => {
+      setSceneProperties((prev) => ({ ...prev, backgroundColor: value }));
+    });
+    sceneFolder.add(sceneProperties, 'showGrid').name('Show Grid').onChange((value) => {
+      setSceneProperties((prev) => ({ ...prev, showGrid: value }));
+    });
+    sceneFolder.add(sceneProperties, 'gridSize', 1, 100).name('Grid Size').onChange((value) => {
+      setSceneProperties((prev) => ({ ...prev, gridSize: value }));
+    });
+    sceneFolder.add(sceneProperties, 'gridDivisions', 1, 100).name('Grid Divisions').onChange((value) => {
+      setSceneProperties((prev) => ({ ...prev, gridDivisions: value }));
+    });
+
+    lightFolder.close();
+    sceneFolder.close();
+
     guiRef.current = gui;
 
     return () => {
       gui.destroy();
     };
-  }, [lightProperties]);
+  }, [lightProperties, sceneProperties]);
 
   const handleFileUpload = (event) => {
     const file = event.target.files[0];
@@ -92,9 +120,9 @@ export default function App() {
     <>
       <input type="file" onChange={handleFileUpload} />
       <button onClick={handleExport}>Export</button>
-      <Canvas camera={{ position: [-8, 5, 8] }}>
-        <Scene model={model} lightProperties={lightProperties} />
-        <OrbitControls />
+      <Canvas camera={{ position: [-8, 5, 8] }} style={{ background: sceneProperties.backgroundColor }}>
+        <Scene model={model} lightProperties={lightProperties} sceneProperties={sceneProperties} />
+        <OrbitControls autoRotate={sceneProperties.autoRotate} />
         <Stats showPanel={0} className="stats" />
       </Canvas>
     </>
@@ -165,7 +193,7 @@ function HoverHighlight({ setHoveredObject, setSelectedObject }) {
   return null;
 }
 
-function Scene({ model, lightProperties }) {
+function Scene({ model, lightProperties, sceneProperties }) {
   const { scene } = useThree();
   const [selectedMesh, setSelectedMesh] = useState(null);
   const [hoveredMesh, setHoveredMesh] = useState(null);
@@ -187,6 +215,16 @@ function Scene({ model, lightProperties }) {
       setupMeshGUI(selectedMesh);
     }
   }, [selectedMesh]);
+
+  useEffect(() => {
+    if (model) {
+      model.traverse((child) => {
+        if (child.isMesh) {
+          child.material.wireframe = sceneProperties.wireframe;
+        }
+      });
+    }
+  }, [model, sceneProperties.wireframe]);
 
   const setupMeshGUI = (mesh) => {
     if (guiRef.current) {
@@ -237,6 +275,9 @@ function Scene({ model, lightProperties }) {
           color={lightProperties.color}
           position={[lightProperties.position.x, lightProperties.position.y, lightProperties.position.z]}
         />
+      )}
+      {sceneProperties.showGrid && (
+        <gridHelper args={[sceneProperties.gridSize, sceneProperties.gridDivisions]} />
       )}
     </>
   );
