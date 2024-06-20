@@ -71,15 +71,29 @@ export default function App() {
       setSceneProperties((prev) => ({ ...prev, gridDivisions: value }));
     });
 
+    const meshFolder = gui.addFolder('Mesh Hierarchy');
+
+    const printMeshHierarchy = (object, folder) => {
+      const subFolder = folder.addFolder(object.name || 'Unnamed');
+      if (object.children) {
+        object.children.forEach((child) => printMeshHierarchy(child, subFolder));
+      }
+    };
+
+    if (model) {
+      printMeshHierarchy(model, meshFolder);
+    }
+
     lightFolder.close();
     sceneFolder.close();
+    meshFolder.close();
 
     guiRef.current = gui;
 
     return () => {
       gui.destroy();
     };
-  }, [lightProperties, sceneProperties]);
+  }, [lightProperties, sceneProperties, model]);
 
   const handleFileUpload = (event) => {
     const file = event.target.files[0];
@@ -87,15 +101,7 @@ export default function App() {
     loader.load(URL.createObjectURL(file), (gltf) => {
       setModel(gltf.scene);
       setAnimations(gltf.animations);
-      printMeshHierarchy(gltf.scene);
     });
-  };
-
-  const printMeshHierarchy = (object, depth = 0) => {
-    console.log(`${' '.repeat(depth * 2)}${object.type}: ${object.name || 'Unnamed'}`);
-    if (object.children) {
-      object.children.forEach((child) => printMeshHierarchy(child, depth + 1));
-    }
   };
 
   const handleExport = () => {
@@ -264,7 +270,11 @@ function Scene({ model, animations, lightProperties, sceneProperties }) {
       const colorOptions = {
         Color: mesh.material.color.getStyle(),
       };
-
+      // Add text displaying the name of the selected mesh
+      const selectedMeshText = {
+        Name: mesh.name || 'Unnamed',
+      };
+      meshFolder.add(selectedMeshText, 'Name').name('Selected Mesh');
       meshFolder.addColor(colorOptions, 'Color').name('Color').onChange((value) => {
         mesh.material.color.set(value);
       });
