@@ -8,7 +8,7 @@
 
 body{
   margin: 0;
-  font-family: 'Raleway',sans-serif;
+  background-color: transparent;
 }
 
 .overlay {
@@ -24,6 +24,7 @@ body{
   pointer-events: none;
   color: #f5f0f0;
   transition: opacity 1s;
+  background-color: transparent;
 }
 
 .visible {
@@ -32,6 +33,38 @@ body{
 
 .invisible {
   opacity: 0;
+}
+
+.nav-bar {
+  position: fixed;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  top: 0;
+  color: white;
+  pointer-events: auto;
+  background-color: transparent;
+}
+
+.nav-left, .nav-right {
+  display: flex;
+  padding: 1.5rem;
+  gap: 3rem;
+}
+
+.nav-bar .nav-left .nav-link,
+.nav-bar .nav-right .nav-link {
+  font-family: "Exo 2", sans-serif;
+  color: white;
+  text-decoration: none;
+  padding: 1rem;
+  transition: color 0.3s ease;
+}
+
+.nav-bar .nav-left .nav-link:hover,
+.nav-bar .nav-right .nav-link:hover {
+  color: rgb(255, 0, 0);
 }
 
 .logo {
@@ -64,7 +97,6 @@ body{
 }
 
 .content {
-  background: linear-gradient(to top, rgba(255, 255, 255, 0.066), transparent);
   padding-top: 5rem;
   padding-bottom: 2.5rem;
   padding-left: 1rem;
@@ -76,22 +108,11 @@ body{
 }
 
 .title {
+  padding-top: 30rem;
   font-family:"Racing Sans One", sans-serif;
   font-size: 2.7rem;
   font-weight: 800;
   margin: 5rem;
 }
 
-.icons {
-  display: flex;
-  align-items: center;
-  gap: 3rem;
-  margin-top: 2.5rem;
-}
-
-.icon {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
 

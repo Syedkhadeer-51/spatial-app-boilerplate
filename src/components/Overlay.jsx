@@ -14,7 +14,6 @@ export const Overlay = () => {
   const [slide, setSlide] = useAtom(slideAtom); //represents current slide indext
   const [displaySlide, setDisplaySlide] = useState(slide); //index of slide to be displayed
   const [visible, setVisible] = useState(false); //visibility of overlay
-  const [homeDisp, setHomeDisp] = useAtom(dispAtom); //if UI elements should be displayed or not
   
 
   //delayed fade in effect for overlay
@@ -39,9 +38,20 @@ export const Overlay = () => {
 
   return (
     <div className={`overlay ${visible ? "visible" : "invisible"}`}>
-      <img src={logo} alt="Logo" className="logo" />
-      {homeDisp && (
+      
       <>
+        <div className="nav-bar">
+          <div className="nav-left">
+            <a href="https://www.google.com/" className="nav-link">Import From Device</a>
+            <a href="https://www.google.com/" className="nav-link">Export To Device</a>
+          </div>
+          <img src={logo} alt="Logo" className="logo" />
+          <div className="nav-right">
+            <a href="https://www.google.com/" className="nav-link">Import From FireBase</a>
+            <a href="https://www.google.com/" className="nav-link">Export From FireBase</a>
+          </div>
+        </div>
+
         <div className="nav">
           <img
             src={leftArrow}
@@ -64,8 +74,6 @@ export const Overlay = () => {
           <h1 className="title">{scenes[displaySlide].name}</h1>
         </div>
       </>
-      )}
-      
     </div>
   );
 };

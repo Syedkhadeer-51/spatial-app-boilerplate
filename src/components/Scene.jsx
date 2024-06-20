@@ -69,7 +69,7 @@ export const Scene = ({path, ...props }) => {
                     
                 </Environment>
                 <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -0.2, 0]} scale={[100, 100, 1]}>
-                    <planeGeometry args={[100, 100]} />
+                    <planeGeometry args={[100,100]} />
                     <MeshReflectorMaterial 
                         blur={[400, 100]}
                         resolution={1024}
