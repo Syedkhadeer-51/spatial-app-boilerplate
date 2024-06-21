@@ -5,7 +5,6 @@ export default function CustomGizmoHelper({orbitConrols})
 {
   const [active,setActive]=useState(true);
     useEffect(() => {
-      console.log(active);
       if(orbitConrols==='defaults')
         {
       setTimeout(() => {

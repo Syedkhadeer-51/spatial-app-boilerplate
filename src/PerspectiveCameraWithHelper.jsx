@@ -25,17 +25,13 @@ export default function PerspectiveCameraWithHelper({ visible, name, active,grid
   const helper = useHelper(visibility&&cameraRef, CameraHelper);
 
   useEffect(() => {
-    console.log(helper && helper.current instanceof CameraHelper);
-    console.log(gridColor);
+    
     if (helper && helper.current instanceof CameraHelper) {
-      console.log('hii'+selected);
       const colorFrustum = new CustomColor(selected==name ? '#ffff00' : '#ff0000');
       const colorCone = new CustomColor('#ff0000');
       const colorUp = new CustomColor('#00aaff');
       const colorTarget = new CustomColor('#ffffff');
       const colorCross = new CustomColor('#333333');
-      console.log(cameraActive);
-      console.log(colorFrustum.r);
       helper.current.setColors(colorFrustum, colorCone, colorUp, colorTarget, colorCross);
     }
   }, [helper,gridColor,visibility,selected]); 

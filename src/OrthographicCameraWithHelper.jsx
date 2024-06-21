@@ -18,7 +18,7 @@ class CustomColor {
 }
 
 
-export default function PerspectiveCameraWithHelper({ visible, name, active,gridColor,selected, ...perspectiveCameraProps }) {
+export default function OrthographicCameraWithHelper({ visible, name, active,gridColor,selected, ...perspectiveCameraProps }) {
   const [visibility, setVisibility] = useState(true);
   const [cameraActive, setCameraActive] = useState(false);
   const cameraRef = useRef();
@@ -28,16 +28,13 @@ export default function PerspectiveCameraWithHelper({ visible, name, active,grid
 
   useEffect(() => {
     // Ensure helper is available and is the correct instance before calling setColors
-    console.log(helper && helper.current instanceof CameraHelper);
-    console.log(gridColor);
+    
     if (helper && helper.current instanceof CameraHelper) {
       const colorFrustum = new CustomColor(selected==name ? '#ffff00' : '#ff0000');
       const colorCone = new CustomColor('#ff0000');
       const colorUp = new CustomColor('#00aaff');
       const colorTarget = new CustomColor('#ffffff');
       const colorCross = new CustomColor('#333333');
-      console.log(cameraActive);
-      console.log(colorFrustum.r);
       helper.current.setColors(colorFrustum, colorCone, colorUp, colorTarget, colorCross);
     }
   }, [helper,gridColor,visibility,selected]); // Depend on helper to re-run when it changes

@@ -10,7 +10,6 @@ export default function TraverseForCamera({ setCameraNames }) {
           cameras[object.name]=true;
         }
       });
-      console.log(cameras)
       setCameraNames(cameras);
     }, [scene, setCameraNames]);
    return null;
