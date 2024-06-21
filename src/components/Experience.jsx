@@ -1,12 +1,12 @@
 import { Environment } from "@react-three/drei";
 import { useThree } from "@react-three/fiber";
-import { useAtom } from "jotai";
+import { atom, useAtom } from "jotai";
 import { useControls } from "leva";
 import { Scene } from "./Scene";
 import { slideAtom } from "./Overlay";
 
 // Array of three scenes with three different models
-export const scenes = [
+export const scenesAtom = atom([
   {
     path: "/models/gt3rs.glb",
     name: "911 GT3RS",
@@ -19,11 +19,11 @@ export const scenes = [
     path: "/models/carrera.glb",
     name: "Carrera",
   },
-  
-];
+]);
 
 export const Experience = () => {
   const [slide] = useAtom(slideAtom);
+  const [scenes] = useAtom(scenesAtom); 
   const viewport = useThree((state) => state.viewport);
   const { slideDistance } = useControls({
     slideDistance: {
