@@ -1,49 +1,12 @@
 import { useState,useEffect } from 'react';
 import { Canvas } from '@react-three/fiber';
-import { useLoader } from '@react-three/fiber';
-import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
-import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader';
-import { OrbitControls } from '@react-three/drei';
-import { useFrame } from '@react-three/fiber';
-import { useRef } from 'react';
+import ThreeDIcons from './ThreeDIcons';
 
-function SceneComponent({ setHovered, scale, hovered, setScale }) {
-  const path = "./camera.glb"; // Ensure this path is correct and the file is present
-  const gltf = useLoader(GLTFLoader, path, (loader) => {
-    const dracoLoader = new DRACOLoader();
-    dracoLoader.setDecoderPath('https://www.gstatic.com/draco/versioned/decoders/1.5.7/');
-    loader.setDRACOLoader(dracoLoader);
-  });
-
-  const meshRef = useRef();
-  const [rotationSpeed, setRotationSpeed] = useState(0.02);
-
-  useEffect(() => {
-    if (hovered) {
-      setRotationSpeed(0.005);
-      setScale(1.8);
-    } else {
-      setRotationSpeed(0.01);
-      setScale(1.4);
-    }
-  }, [hovered]);
-
-  useFrame(() => {
-    if (meshRef.current) {
-      meshRef.current.rotation.y += rotationSpeed;
-    }
-  });
-
-  return (
-    <primitive object={gltf.scene} ref={meshRef} scale={[scale, scale, scale]} />
-  );
-}
 
 function CameraNamesList({ cameraNames, setCameraNames,activeCamera,setActiveCamera,SetSelected }) {
   // State to manage dropdown visibility
   const [dropdownVisible, setDropdownVisible] = useState(false);
-  const [hovered, setHovered] = useState(false);
-  const [scale, setScale] = useState(1.4);
+  
 
   // Function to toggle dropdown visibility
   const toggleDropdown = () => {
@@ -56,14 +19,8 @@ function CameraNamesList({ cameraNames, setCameraNames,activeCamera,setActiveCam
   return (
     <div>
       {/* Button to toggle the dropdown */}
-      <div onClick={toggleDropdown} style={{ position: 'absolute', zIndex: '1', left: '93%', top: '25%',width: '70px', height: '70px',padding: '0', border: 'none', overflow: 'hidden',  }} onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}>
-        <Canvas style={{ width: '100%', height: '100%' }} >
-        <ambientLight intensity={0.5} />
-        <directionalLight position={[2, 2, 5]} intensity={1} />        
-        <SceneComponent setHovered={setHovered} scale={scale} hovered={hovered} setScale={setScale}/>
-        <OrbitControls/>
-        </Canvas>
+      <div onClick={toggleDropdown} style={{ position: 'absolute', zIndex: '1', left: '93%', top: '25%',  }} >
+        <ThreeDIcons path={'./camera.glb'}/>
       </div>
 
       {/* Dropdown menu */}

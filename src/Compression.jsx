@@ -2,33 +2,11 @@ import { useLoader } from '@react-three/fiber';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 import { GLTFExporter } from 'three/examples/jsm/exporters/GLTFExporter';
 import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader';
-import { useEffect, useRef } from 'react';
+import { useEffect, useState } from 'react';
 import { saveAs } from 'file-saver';
-function SelectCamera() {
-    const { scene } = useThree();
-  
-    useEffect(() => {
-      // Traverse the scene to find all cameras
-      const cameras = [];
-      scene.traverse((object) => {
-        if (object.isCamera) {
-          cameras.push(object.name || 'Unnamed Camera');
-        }
-      });
-  
-      // Update the state with the camera names
-      setCameraNames(cameras);
-    }, [scene]);
-    return (
-        <div className="sidebar">
-          <h3>Camera Names</h3>
-          <ul>
-            {cameraNames.map((name, index) => (
-              <li key={index}>{name}</li>
-            ))}
-          </ul>
-        </div>
-      );
+import { Html } from '@react-three/drei';
+import { uploadFile } from './upload';
+// Helper function to compress and export GLTF
 async function compressAndExportGLTF(gltf, fileName) {
     const exporter = new GLTFExporter();
     const options = {
@@ -50,49 +28,54 @@ async function compressAndExportGLTF(gltf, fileName) {
     });
 }
 
-function Scene({ modelPath, onModelLoaded }) {
-    const gltf = useLoader(GLTFLoader, modelPath, loader => {
-        const dracoLoader = new DRACOLoader();
-        dracoLoader.setDecoderPath('https://www.gstatic.com/draco/versioned/decoders/1.5.7/');
-        loader.setDRACOLoader(dracoLoader);
-    });
-
+export default function Compression({ modelPath, exports,toCloud,inputModelUrl}) {
+    const [isLoadingModel, setIsLoadingModel] = useState(false);
+  const [gltf, setGltf] = useState(null);
     useEffect(() => {
-        if (gltf) {
-            onModelLoaded(gltf);
-        }
-    }, [gltf, onModelLoaded]);
-
-    return <primitive object={gltf.scene} />;
-}
-
-export default function Compression({ modelPath, onExport }) {
-    const gltfRef = useRef();
-
-    const handleModelLoaded = (gltf) => {
-        gltfRef.current = gltf;
-    };
-
-    const handleExportClick = async () => {
-        if (gltfRef.current) {
-            try {
-                const compressedBlob = await compressAndExportGLTF(gltfRef.current, "model_compressed.glb");
-                console.log("Compressed Model Size (bytes): ", compressedBlob.size);
-            } catch (error) {
-                console.error("Error during compression and export:", error);
+        if (modelPath) {
+          setIsLoadingModel(true);
+          const loader = new GLTFLoader();
+          const dracoLoader = new DRACOLoader();
+          dracoLoader.setDecoderPath('https://www.gstatic.com/draco/versioned/decoders/1.5.7/');
+          loader.setDRACOLoader(dracoLoader);
+          loader.load(modelPath, 
+            (gltf) => {
+              setGltf(gltf);
+              setIsLoadingModel(false);
+            },
+            undefined,
+            (error) => {
+              console.error('An error occurred while loading the model:', error);
+              setIsLoadingModel(false);
             }
+          );
         }
-    };
+      }, [modelPath]);
+      useEffect(()=>{
+        if(toCloud)
+            {
+        uploadFile(gltf,inputModelUrl);
+            }
+      },[toCloud])
+    useEffect(()=>{
+        const compressedFileName = "model_compressed.glb";
+        console.log(exports);
+        if(exports){
+        try {
+        const compressedBlob = compressAndExportGLTF(gltf, compressedFileName);
+        console.log("Compressed Model Size (bytes): ", compressedBlob.size);
+        // For debugging: Log the GLTF object and options
+        console.log("GLTF object:", gltf);
+        console.log("Exporter options:", {
+            binary: true,
+            dracoOptions: {
+                compressionLevel: 10
+            }
+        });
+    } catch (error) {
+        console.error("Error during compression and export:", error);
+    }}},[exports]);
 
-    useEffect(() => {
-        if (onExport) {
-            onExport(handleExportClick);
-        }
-    }, [onExport]);
-
-    return (
-        <>
-            {modelPath && <Scene modelPath={modelPath} onModelLoaded={handleModelLoaded} />}
-        </>
-    );
+    return       isLoadingModel ? <Html><div>Loading...</div></Html> : gltf && <primitive object={gltf.scene} />;
 }
+
