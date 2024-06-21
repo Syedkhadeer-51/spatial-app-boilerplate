@@ -189,6 +189,7 @@ button:focus-visible {
 @media (prefers-color-scheme: dark) {
   :root {
     --icon-color: var(--icon-color-dark);
+    color: white;
   }
 }
 

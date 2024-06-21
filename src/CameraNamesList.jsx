@@ -1,26 +1,70 @@
 import { useState,useEffect } from 'react';
+import { Canvas } from '@react-three/fiber';
+import { useLoader } from '@react-three/fiber';
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
+import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader';
+import { OrbitControls } from '@react-three/drei';
+import { useFrame } from '@react-three/fiber';
+import { useRef } from 'react';
 
-function CameraNamesList({ cameraNames, setCameraNames,activeCamera,setActiveCamera,setEnableOrbitControls }) {
+function SceneComponent({ setHovered, scale, hovered, setScale }) {
+  const path = "./camera.glb"; // Ensure this path is correct and the file is present
+  const gltf = useLoader(GLTFLoader, path, (loader) => {
+    const dracoLoader = new DRACOLoader();
+    dracoLoader.setDecoderPath('https://www.gstatic.com/draco/versioned/decoders/1.5.7/');
+    loader.setDRACOLoader(dracoLoader);
+  });
+
+  const meshRef = useRef();
+  const [rotationSpeed, setRotationSpeed] = useState(0.02);
+
+  useEffect(() => {
+    if (hovered) {
+      setRotationSpeed(0.005);
+      setScale(1.8);
+    } else {
+      setRotationSpeed(0.01);
+      setScale(1.4);
+    }
+  }, [hovered]);
+
+  useFrame(() => {
+    if (meshRef.current) {
+      meshRef.current.rotation.y += rotationSpeed;
+    }
+  });
+
+  return (
+    <primitive object={gltf.scene} ref={meshRef} scale={[scale, scale, scale]} />
+  );
+}
+
+function CameraNamesList({ cameraNames, setCameraNames,activeCamera,setActiveCamera,SetSelected }) {
   // State to manage dropdown visibility
   const [dropdownVisible, setDropdownVisible] = useState(false);
+  const [hovered, setHovered] = useState(false);
+  const [scale, setScale] = useState(1.4);
 
   // Function to toggle dropdown visibility
   const toggleDropdown = () => {
     setDropdownVisible(!dropdownVisible);
     setActiveCamera('defaults');
+    SetSelected('defaults');
+    
   };
-
   
-
   return (
     <div>
       {/* Button to toggle the dropdown */}
-      <button onClick={toggleDropdown} style={{ position: 'absolute', zIndex: '1', left: '93%', top: '25%' }}>
-        {/* SVG icon */}
-        <svg className="icon" width="24" height="24" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
-          <path d="M149.1 64.8L138.7 96H64C28.7 96 0 124.7 0 160V416c0 35.3 28.7 64 64 64H448c35.3 0 64-28.7 64-64V160c0-35.3-28.7-64-64-64H373.3L362.9 64.8C356.4 45.2 338.1 32 317.4 32H194.6c-20.7 0-39 13.2-45.5 32.8zM256 192a96 96 0 1 1 0 192 96 96 0 1 1 0-192z"/>
-        </svg>
-      </button>
+      <div onClick={toggleDropdown} style={{ position: 'absolute', zIndex: '1', left: '93%', top: '25%',width: '70px', height: '70px',padding: '0', border: 'none', overflow: 'hidden',  }} onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}>
+        <Canvas style={{ width: '100%', height: '100%' }} >
+        <ambientLight intensity={0.5} />
+        <directionalLight position={[2, 2, 5]} intensity={1} />        
+        <SceneComponent setHovered={setHovered} scale={scale} hovered={hovered} setScale={setScale}/>
+        <OrbitControls/>
+        </Canvas>
+      </div>
 
       {/* Dropdown menu */}
       {dropdownVisible && (
@@ -31,16 +75,15 @@ function CameraNamesList({ cameraNames, setCameraNames,activeCamera,setActiveCam
               key={index}    
             >
               {/* Display camera name */}
-              <td onClick={() => {
-        if (activeCamera !== 'default') setActiveCamera('default'); // Ensure default camera is activated before switching
-        setTimeout(() => setActiveCamera(camera), 0); // Switch to PerspectiveCamera1
-      }}>{camera || 'Unnamed camera'}</td>
+              <td onClick={()=>{
+                SetSelected(camera);
+              }}>{camera || 'Unnamed camera'}</td>
 
               {/* Display icon based on camera state */}
               <td className='icon' onClick={() => {
-                // Toggle the boolean value for the clicked camera name
+
                 const updatedCameras = { ...cameraNames, [camera]: !cameraNames[camera] };
-                setCameraNames(updatedCameras); // Update state with the new camera names
+                setCameraNames(updatedCameras); 
               }}>
                 {cameraNames[camera] ? (
                   // Icon when camera is active
@@ -54,6 +97,11 @@ function CameraNamesList({ cameraNames, setCameraNames,activeCamera,setActiveCam
                   </svg>
                 )}
               </td>
+              <td className='icon' onClick={() => {
+        if (activeCamera !== 'default') setActiveCamera('default'); // Ensure default camera is activated before switching
+        setTimeout(() => setActiveCamera(camera), 0); // Switch to PerspectiveCamera1
+      }}>
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" id="video-camera"><path d="M8.5,4 C9.32843,4 10,4.67157 10,5.5 L10,10.5 C10,11.3284 9.32843,12 8.5,12 L3.5,12 C2.67157,12 2,11.3284 2,10.5 L2,5.5 C2,4.67157 2.67157,4 3.5,4 L8.5,4 Z M13.2484,4.17778 C13.5560615,4.00182308 13.9331669,4.19321101 13.9895199,4.52565995 L13.9967,4.61158 L13.9996001,11.388 C13.9997846,11.7424615 13.6462746,11.9749065 13.3296592,11.8587365 L13.2515,11.8223 L11.0003,10.5359 L11.0003,5.46373 L13.2484,4.17778 Z"></path></svg>              </td>
             </tr>
           ))}
         </table>

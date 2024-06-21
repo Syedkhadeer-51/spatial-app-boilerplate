@@ -18,6 +18,8 @@ export default function App() {
   const gridHelperRef = useRef(null);
   const [cameraNames, setCameraNames] = useState({});
   const [activeCamera, setActiveCamera] = useState('defaults'); // State to track active camera
+  const [selected,SetSelected] = useState('defaults');
+  
 
 
   const path = "./model6.glb"; // Ensure this path is correct and the file is present
@@ -27,11 +29,13 @@ export default function App() {
     loader.setDRACOLoader(dracoLoader);
   });
 
+  
+
   return (
     <>
       <ColorPickerGrid setBackgroundColor={setBackgroundColor} setGridColor={setGridColor} gridHelperRef={gridHelperRef} />
-      <CameraNamesList cameraNames={cameraNames} setCameraNames={setCameraNames} activeCamera={activeCamera} setActiveCamera={setActiveCamera}  position={'absolute'} />
-      <Canvas camera={{ position: [0, 3, 10]}}>
+      <CameraNamesList cameraNames={cameraNames} setCameraNames={setCameraNames} activeCamera={activeCamera} setActiveCamera={setActiveCamera}  position={'absolute'} SetSelected={SetSelected} />
+      <Canvas camera={{ position: [0, 3, 10]}} >
         <ambientLight />
         <CustomGizmoHelper orbitConrols={activeCamera}/>
         <primitive object={gltf.scene} />
@@ -42,6 +46,8 @@ export default function App() {
           active={activeCamera}
           position={[0, 1.3, 0]} 
           far={10} 
+          gridColor={gridColor}
+          selected={selected}
         />
         <OrthographicCameraWithHelper 
           name="OrthographicCamera1" 
@@ -53,6 +59,8 @@ export default function App() {
           right={5} 
           top={5} 
           bottom={-5} 
+          selected={selected}
+
         />
         <color attach="background" args={[backgroundColor]} />
         <gridHelper ref={gridHelperRef} args={[20, 20, gridColor, gridColor]} />
