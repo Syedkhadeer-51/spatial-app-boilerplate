@@ -1,5 +1,5 @@
 {
-  "name": "compression1",
+  "name": "spatial-app-boilerplate",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -10,12 +10,11 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@react-three/drei": "^9.106.0",
-    "@react-three/fiber": "^8.16.8",
-    "file-saver": "^2.0.5",
+    "@react-three/drei": "^9.105.6",
+    "@react-three/fiber": "^8.16.6",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-three-fiber": "^6.0.13"
+    "three": "^0.164.1"
   },
   "devDependencies": {
     "@types/react": "^18.2.66",
@@ -25,6 +24,7 @@
     "eslint-plugin-react": "^7.34.1",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.6",
+    "react-draggable": "^4.4.6",
     "vite": "^5.2.0"
   }
 }
