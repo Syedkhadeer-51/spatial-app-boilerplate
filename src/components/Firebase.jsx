@@ -1,5 +1,6 @@
 import { getStorage } from "firebase/storage";
-import { scenes } from "./Experience";
+import { initializeApp } from 'firebase/app';
+import { getDatabase } from 'firebase/database';
 
 const firebaseConfig = {
   projectId: "mulx-scenes",
@@ -16,4 +17,4 @@ const app = initializeApp(firebaseConfig);
 const database = getDatabase(app);
 const storage = getStorage(app);
 
-export { storage };
+export { storage, database };
