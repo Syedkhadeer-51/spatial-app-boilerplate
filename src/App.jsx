@@ -1,122 +1,126 @@
-import React, { useEffect, useState, useRef } from "react";
-import { Canvas, useLoader } from "@react-three/fiber";
-import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
-import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader';
-import { OrbitControls, Stats } from "@react-three/drei";
-import { GLTFExporter } from 'three/examples/jsm/exporters/GLTFExporter';
-import { saveAs } from 'file-saver';
-import "./App.css";
+import React, { useState, useEffect, useRef } from 'react';
+import { Canvas } from '@react-three/fiber';
+import { OrbitControls, Stats } from '@react-three/drei';
+import Lights from './components/Lights';
+import Model from './components/model';
+import Stage from './components/stage';
+import LightControls from './components/LightControls';
+import CloudContainer from './components/cloudcontainer';
+import CloudExportContainer from './components/cloudexportcontainer';
+import ImportContainer from './components/importcontainer';
+import * as THREE from 'three'; // Import Three.js to create geometries
 
-// Helper function to fetch file size
-async function fetchFileSize(url) {
-  try {
-    const response = await fetch(url, { method: 'HEAD' });
-    if (response.ok) {
-      const size = response.headers.get('content-length');
-      return parseInt(size, 10);
-    } else {
-      console.error(`Failed to fetch file size for ${url}`);
-      return null;
-    }
-  } catch (error) {
-    console.error(`Error fetching file size for ${url}:`, error);
-    return null;
-  }
-}
+import './App.css';
 
-// Helper function to compress and export GLTF
-async function compressAndExportGLTF(gltf, fileName) {
-  const exporter = new GLTFExporter();
-  const options = {
-    binary: true,
-    dracoOptions: {
-      compressionLevel: 10
-    }
+const App = () => {
+  const [lights, setLights] = useState([]);
+  const [expandedLightId, setExpandedLightId] = useState(null);
+  const [globalShadows, setGlobalShadows] = useState(true);
+  const [globalExposure, setGlobalExposure] = useState(1);
+  const sceneRef = useRef(null); // Ref for the 3D scene
+
+  useEffect(() => {
+    console.log("Lights:", lights);
+  }, [lights]);
+
+  const addLight = (type) => {
+    const newLight = {
+      id: lights.length,
+      type: type,
+      color: '#ffffff',
+      intensity: 1,
+      position: [0, 5, 0],
+      exposure: 1,
+      shadows: true,
+      shadowIntensity: 1,
+      ...(type === 'spot' && { angle: Math.PI / 4, penumbra: 0.1, distance: 10 }),
+      ...(type === 'point' && { distance: 10 })
+    };
+    setLights([...lights, newLight]);
   };
 
-  return new Promise((resolve, reject) => {
-    exporter.parse(gltf.scene, (result) => {
-      const blob = new Blob([result], { type: 'application/octet-stream' });
-      saveAs(blob, fileName);
-      resolve(blob);
-    }, (error) => {
-      console.error('An error happened during GLTF export', error);
-      reject(error);
-    }, options);
-  });
-}
-
-function Scene({ gltf }) {
-  return gltf ? <primitive object={gltf.scene} /> : null;
-}
-
-export default function App() {
-  const [gltf, setGltf] = useState(null);
-  const [originalFileSize, setOriginalFileSize] = useState(null);
-  const [compressedFileSize, setCompressedFileSize] = useState(null);
-  const [compressionStatus, setCompressionStatus] = useState("");
-  const inputFileRef = useRef(null);
-
-  const handleFileUpload = async (event) => {
-    const file = event.target.files[0];
-    if (file) {
-      const url = URL.createObjectURL(file);
-      const size = file.size;
-      setOriginalFileSize(size);
-
-      const loader = new GLTFLoader();
-      const dracoLoader = new DRACOLoader();
-      dracoLoader.setDecoderPath('https://www.gstatic.com/draco/versioned/decoders/1.5.7/');
-      loader.setDRACOLoader(dracoLoader);
-
-      loader.load(
-        url,
-        (loadedGltf) => {
-          setGltf(loadedGltf);
-          setCompressionStatus("");
-        },
-        undefined,
-        (error) => {
-          console.error('Error loading the model:', error);
-          setCompressionStatus("Error loading the model");
-        }
-      );
-    }
+  const updateLight = (id, property, value) => {
+    const updatedLights = lights.map(light =>
+      light.id === id ? { ...light, [property]: value } : light
+    );
+    setLights(updatedLights);
   };
 
-  const handleCompressAndExport = async () => {
-    if (gltf) {
-      setCompressionStatus("Compressing...");
-      try {
-        const compressedBlob = await compressAndExportGLTF(gltf, "model_compressed.glb");
-        setCompressedFileSize(compressedBlob.size);
-        setCompressionStatus("Compression and export successful!");
-      } catch (error) {
-        console.error("Error during compression and export:", error);
-        setCompressionStatus("Error during compression and export");
-      }
-    }
+  const deleteLight = (id) => {
+    setLights(lights.filter(light => light.id !== id));
+  };
+
+  const resetLights = () => {
+    setLights([]);
+  };
+
+  const toggleGlobalShadows = () => {
+    const newGlobalShadows = !globalShadows;
+    setGlobalShadows(newGlobalShadows);
+    const updatedLights = lights.map(light => ({
+      ...light,
+      shadows: newGlobalShadows,
+    }));
+    setLights(updatedLights);
+  };
+
+  const updateGlobalExposure = (value) => {
+    setGlobalExposure(value);
+    const updatedLights = lights.map(light => ({
+      ...light,
+      exposure: value,
+    }));
+    setLights(updatedLights);
+  };
+
+  const handleImportFromLocal = (scene) => {
+    // Handle import from local storage here
+    // Example: setLights based on imported scene
+    console.log('Imported scene from local:', scene);
+  };
+
+  const handleImportFromCloud = (scene) => {
+    // Handle import from cloud (CloudContainer)
+    // Example: setLights based on imported scene
+    console.log('Imported scene from cloud:', scene);
   };
 
   return (
-    <div className="app">
-      <h1>3D Model Viewer and Compressor</h1>
-      <input type="file" accept=".glb,.gltf" ref={inputFileRef} onChange={handleFileUpload} />
-      <div className="file-info">
-        {originalFileSize && <p>Original Model Size: {originalFileSize} bytes</p>}
-        {compressedFileSize && <p>Compressed Model Size: {compressedFileSize} bytes</p>}
+    <div id="root">
+      <div className="canvas-container">
+        <Canvas shadows={globalShadows} camera={{ position: [-8, 8, 8] }} ref={sceneRef}>
+          <ambientLight intensity={0.5} />
+          <Lights lights={lights} expandedLightId={expandedLightId} globalExposure={globalExposure} />
+          <Model />
+          <Stage />
+          <OrbitControls />
+          <Stats />
+          {/* Neutral background */}
+          <mesh position={[0, 0, -10]} rotation={[0, 0, 0]}>
+            <planeGeometry args={[100, 100]} />
+            <meshBasicMaterial color={0xf0f0f0} />
+          </mesh>
+        </Canvas>
       </div>
-      <button onClick={handleCompressAndExport} disabled={!gltf}>
-        Compress and Export
-      </button>
-      <p>{compressionStatus}</p>
-      <Canvas style={{ background: "#171717", height: "500px" }}>
-        <OrbitControls />
-        <ambientLight intensity={5.0} />
-        <directionalLight intensity={10.0} />
-        <Scene gltf={gltf} />
-        <Stats />
-      </Canvas>
+      <div className="controls-container">
+        <LightControls 
+          lights={lights} 
+          updateLight={updateLight} 
+          setExpandedLight={setExpandedLightId}
+          addLight={addLight}
+          deleteLight={deleteLight}
+          resetLights={resetLights}
+          toggleGlobalShadows={toggleGlobalShadows}
+          globalShadows={globalShadows}
+          globalExposure={globalExposure}
+          updateGlobalExposure={updateGlobalExposure}
+        />
+        <CloudContainer onImport={handleImportFromCloud} />
+        <CloudExportContainer sceneRef={sceneRef} />
+        <ImportContainer onImport={handleImportFromLocal} />
+      </div>
     </div>
   );
-}
+};
+
+export default App;
