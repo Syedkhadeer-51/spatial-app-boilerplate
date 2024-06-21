@@ -47,7 +47,6 @@ function Dropdown({modelUrls,setExport,setModelPath,setModelUrls,setToCloud}) {
   };
   return (
     <div className="model-selector" style={{float:'left',padding:'0px 10px 0px 0px'}}>
-        <label htmlFor="model-select">Select a model:</label>
         <select id="model-select" onChange={handleModelChange}>
         <option value="">Select a model</option>
           {modelUrls.map(model => (

@@ -15,7 +15,7 @@ function LocalImport({setModelPath,setExport,setToCloud}) {
         }
     };
     return (
-        <input type="file" accept=".glb, .gltf" onChange={handleFileUpload} style={{float:'left',padding:'0',width:'190px'}}/>
+        <input type="file" accept=".glb, .gltf" onChange={handleFileUpload} style={{float:'left',padding:'5px',width:'190px'}}/>
     );
 }
 

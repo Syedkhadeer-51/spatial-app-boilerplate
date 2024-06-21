@@ -58,11 +58,10 @@ export default function Compression({ modelPath, exports,toCloud,inputModelUrl})
             }
       },[toCloud])
     useEffect(()=>{
-        const compressedFileName = "model_compressed.glb";
         console.log(exports);
         if(exports){
         try {
-        const compressedBlob = compressAndExportGLTF(gltf, compressedFileName);
+        const compressedBlob = compressAndExportGLTF(gltf, inputModelUrl+'.glb');
         console.log("Compressed Model Size (bytes): ", compressedBlob.size);
         // For debugging: Log the GLTF object and options
         console.log("GLTF object:", gltf);

@@ -1,7 +1,7 @@
 import React from 'react';
 import { useEffect,useState } from 'react';
 
-export function ExportToCloud({modelUrls,inputModelUrl,setInputModelUrl}) {
+export function ModelName({modelUrls,inputModelUrl,setInputModelUrl}) {
     const [isUrlUnique, setIsUrlUnique] = useState(true); // State to track if the URL is unique
 
     useEffect(() => {
@@ -17,7 +17,7 @@ export function ExportToCloud({modelUrls,inputModelUrl,setInputModelUrl}) {
         setInputModelUrl(event.target.value);
       };
     return (
-        <div style={{float:'left'}}>
+        <div style={{float:'left',padding:'5px'}}>
         <label htmlFor="model-url-input">Enter Model name:</label>
         <input
           id="model-url-input"
