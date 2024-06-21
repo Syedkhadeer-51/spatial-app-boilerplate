@@ -1,0 +1,88 @@
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  overflow: hidden;
+}
+
+#root {
+  overflow: hidden;
+}
+
+body {
+  position: fixed;
+  overflow: hidden;
+  overscroll-behavior-y: none;
+  font-family: -apple-system, BlinkMacSystemFont, avenir next, avenir, helvetica neue, helvetica, ubuntu, roboto, noto, segoe ui, arial, sans-serif;
+  color: black;
+  -webkit-font-smoothing: antialiased;
+  background: #f0f0f0;
+}
+
+.scene{
+  width:100vw;
+  height:100vh;
+  display:flex;
+}
+
+
+.sidebar{
+  width: 25%;
+  height: 100%;
+  background: #000000;
+  border-right: 1px solid #e0e0e0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow-x: auto;
+  overflow-y: auto;
+}
+
+.searchbar {
+  background-color: #ffffff; 
+}
+
+.hierarchy {
+  background-color: #ffffff;
+  flex-grow: 1;
+  overflow-y: auto;
+  padding: 10px; /* Example background color */
+}
+
+.viewport{
+  width: 80%;
+  height: 100%;
+  background: #f0f0f0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.accessbar {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background-color: #5a5858; 
+  padding: 10px;
+  border: 1px solid #ccc;
+  font-family: Arial, sans-serif;
+  font-size: 10px;
+  display: flex;
+  justify-content: flex-end; 
+}
+
+
