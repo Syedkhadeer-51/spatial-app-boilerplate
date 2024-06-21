@@ -50,7 +50,7 @@ export const Overlay = () => {
     }
   };
 
-  const handleImport = (event) => {
+  const handleImportDevice = (event) => {
     const file = event.target.files[0];
     if (file) {
       const reader = new FileReader();
@@ -103,7 +103,7 @@ export const Overlay = () => {
             <input
               type="file"
               accept=".glb,.gltf"
-              onChange={handleImport}
+              onChange={handleImportDevice}
               style={{ display: 'none' }}
               id="import-file"
             />
