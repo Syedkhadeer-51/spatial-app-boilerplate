@@ -8,8 +8,8 @@ const CloudLoader = ({ onSelectModel }) => {
   useEffect(() => {
     const fetchFiles = async () => {
       try {
-        const storageInstance = getStorage(storage);
-        const listRef = storageRef(storageInstance, '/');
+        //const storageInstance = getStorage(storage);
+        const listRef = storageRef(storage, '/');
         const res = await listAll(listRef);
         const downloadURLPromises = res.items.map((itemRef) => getDownloadURL(itemRef));
         const fileUrls = await Promise.all(downloadURLPromises);
@@ -28,9 +28,9 @@ const CloudLoader = ({ onSelectModel }) => {
         const segments = url.split('/');
         const fileName = decodeURIComponent(segments.pop().split('?')[0]).replace('.glb', '');
         return (
-          <div key={index} onClick={() => onSelectModel(fileName)}>
+          <button key={index} onClick={() => onSelectModel(fileName)}>
             {fileName}
-          </div>
+          </button>
         );
       })}
     </div>
