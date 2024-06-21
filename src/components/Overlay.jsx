@@ -15,7 +15,6 @@ export const Overlay = () => {
   const [displaySlide, setDisplaySlide] = useState(slide); //index of slide to be displayed
   const [visible, setVisible] = useState(false); //visibility of overlay
   
-
   //delayed fade in effect for overlay
   useEffect(() => {
     setTimeout(() => {
@@ -38,7 +37,7 @@ export const Overlay = () => {
 
   return (
     <div className={`overlay ${visible ? "visible" : "invisible"}`}>
-      
+
       <>
         <div className="nav-bar">
           <div className="nav-left">
@@ -47,7 +46,15 @@ export const Overlay = () => {
           </div>
           <img src={logo} alt="Logo" className="logo" />
           <div className="nav-right">
-            <a href="https://www.google.com/" className="nav-link">Import From FireBase</a>
+            <div className="dropdown">
+              <button className="dropbtn">Import From FireBase</button>
+              <div class="dropdown-content">
+              <a href="#">Link 1</a>
+              <a href="#">Link 2</a>
+              <a href="#">Link 3</a>
+              </div>
+            </div>
+            
             <a href="https://www.google.com/" className="nav-link">Export From FireBase</a>
           </div>
         </div>

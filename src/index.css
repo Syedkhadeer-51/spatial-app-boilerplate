@@ -56,6 +56,7 @@ body{
 .nav-bar .nav-left .nav-link,
 .nav-bar .nav-right .nav-link {
   font-family: "Exo 2", sans-serif;
+  background-color: transparent;
   color: white;
   text-decoration: none;
   padding: 1rem;
@@ -65,6 +66,49 @@ body{
 .nav-bar .nav-left .nav-link:hover,
 .nav-bar .nav-right .nav-link:hover {
   color: rgb(255, 0, 0);
+}
+
+.dropdown .dropbtn{
+  font-family: "Exo 2", sans-serif;
+  font-size: 1rem;
+  background-color: transparent;
+  border: none;
+  outline: none;
+  color: white;
+  text-decoration: none;
+  padding: 1rem;
+  transition: color 0.3s ease;
+  cursor: pointer;
+}
+
+.dropdown .dropbtn:hover{
+  color: rgb(255, 0, 0);
+}
+
+.dropdown-content {
+  font-family: "Exo 2", sans-serif;
+  display: none;
+  position: absolute;
+  background-color: #f5f0f0;
+  min-width: 13rem;
+  z-index: 1;
+}
+
+.dropdown-content a {
+  float: none;
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  text-align: left;
+}
+
+.dropdown-content a:hover {
+  background-color: #dba7a7;
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
 }
 
 .logo {
