@@ -1,10 +1,9 @@
+/* Existing global styles */
 * {
   box-sizing: border-box;
 }
 
-html,
-body,
-#root {
+html, body, #root {
   width: 100%;
   height: 100%;
   margin: 0;
@@ -27,40 +26,51 @@ body {
   overflow: hidden;
   overscroll-behavior-y: none;
   font-family: -apple-system, BlinkMacSystemFont, avenir next, avenir, helvetica neue, helvetica, ubuntu, roboto, noto, segoe ui, arial, sans-serif;
-  color: black;
+  color: #1a1a1a;
   -webkit-font-smoothing: antialiased;
-  background: #f0f0f0;
+  background: #e0e0e0;
+}
+
+.app-container {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  pointer-events: auto;
+  touch-action: none;
 }
 
 .canvas-container {
   flex: 1;
   height: 100%;
   width: 100%;
-  position: relative; 
+  position: relative;
 }
 
 .App {
-  position: fixed;
   top: 0;
   left: 0;
   width: 100%;
-  height: 100%;
+  height: 100vh;
   display: flex;
   overflow: hidden;
 }
 
-.info-panel { 
+/* Styles for info panel */
+.info-panel {
   position: fixed;
   top: 0;
   right: 0;
   width: 300px;
   height: 100vh;
-  background-color: #1a1a1a;
+  background-color: rgba(26, 26, 26, 0.9);
+  backdrop-filter: blur(10px);
   color: #f0f0f0;
   padding: 20px;
-  box-shadow: -2px 0 5px rgba(0, 0, 0, 0.5);
+  box-shadow: -2px 0 10px rgba(0, 0, 0, 0.3);
   overflow-y: auto;
   z-index: 10;
+  border-radius: 10px 0 0 10px;
 }
 
 .info-panel h2 {
@@ -82,12 +92,21 @@ body {
 .info-panel input[type="number"],
 .info-panel select {
   width: 100%;
-  padding: 5px;
+  padding: 8px;
   margin: 5px 0 15px;
   border: none;
-  border-radius: 5px;
+  border-radius: 10px;
   background-color: #333;
   color: #f0f0f0;
+  outline: none;
+  transition: background-color 0.3s ease;
+}
+
+.info-panel input[type="color"]:hover,
+.info-panel input[type="range"]:hover,
+.info-panel input[type="number"]:hover,
+.info-panel select:hover {
+  background-color: #444;
 }
 
 .info-panel input[type="checkbox"] {
@@ -97,43 +116,108 @@ body {
 .info-panel button {
   display: block;
   width: 100%;
-  padding: 10px;
+  padding: 12px;
   margin: 20px 0;
   border: none;
-  border-radius: 5px;
+  border-radius: 10px;
   background-color: #66b2ff;
   color: #1a1a1a;
   cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
 .info-panel button:hover {
   background-color: #558bcc;
 }
 
-.import-container {
-  position: fixed; 
-  bottom: 20px;   
-  left: 20px;        
-  background-color: #1a1a1a;
-  padding: 10px;
-  border-radius: 5px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
-  z-index: 2000;
+.info-close .close-button {
+  background-color: transparent;
+  color: #fff;
+  border: none;
+  font-size: 0.8rem;
+  padding: 3px 5px;
+  cursor: pointer;
+  text-align: left;
+  display: inline-block;
+  margin: 0;
+  text-decoration: none;
 }
 
-.import-container input[type="file"] {
+.info-close .close-button:hover {
+  color: #66b2ff;
+}
+
+/* Styles for containers */
+.import-container,
+.export-container,
+.cloud-container,
+.cloud-export-container {
+  position: fixed;
+  left: 20px;
+  background-color: rgba(26, 26, 26, 0.9);
+  backdrop-filter: blur(10px);
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  z-index: 2000;
+  color: #ffffff;
+}
+
+.import-container {
+  bottom: 20px;
+}
+
+.export-container {
+  bottom: 70px;
+}
+
+.cloud-container {
+  bottom: 120px;
+}
+
+.cloud-export-container {
+  bottom: 170px;
+}
+
+.import-container input[type="file"],
+.export-container input[type="file"],
+.cloud-container input[type="file"],
+.cloud-export-container input[type="file"] {
   color: #f0f0f0;
 }
 
-.import-container input[type="file"]::-webkit-file-upload-button {
-  padding: 5px 10px;
+.import-container input[type="file"]::-webkit-file-upload-button,
+.export-container input[type="file"]::-webkit-file-upload-button,
+.cloud-container input[type="file"]::-webkit-file-upload-button,
+.cloud-export-container input[type="file"]::-webkit-file-upload-button {
+  padding: 8px 12px;
   border: none;
-  border-radius: 5px;
+  border-radius: 10px;
   background-color: #66b2ff;
   color: #1a1a1a;
   cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
-.import-container input[type="file"]::-webkit-file-upload-button:hover {
+.import-container input[type="file"]::-webkit-file-upload-button:hover,
+.export-container input[type="file"]::-webkit-file-upload-button:hover,
+.cloud-container input[type="file"]::-webkit-file-upload-button:hover,
+.cloud-export-container input[type="file"]::-webkit-file-upload-button:hover {
   background-color: #558bcc;
+}
+
+/* Additional styles for cloud and import containers */
+.cloud-container label,
+.import-container label,
+.cloud-export-container label {
+  color: #ffffff; /* Set the color to white */
+}
+
+/* Add transitions for smoother interactions */
+button,
+input[type="color"],
+input[type="range"],
+input[type="number"],
+select {
+  transition: all 0.3s ease;
 }
