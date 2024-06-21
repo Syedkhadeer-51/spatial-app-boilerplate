@@ -65,8 +65,7 @@ export const Overlay = () => {
   };
 
   const handleExportDevice = () => {
-    // Generate the 3D model (GLB/GLTF) here
-    const modelData = null; // Replace with actual 3D model data
+    const modelData = null; 
 
     const blob = new Blob([modelData], { type: 'application/octet-stream' });
     const url = URL.createObjectURL(blob);
