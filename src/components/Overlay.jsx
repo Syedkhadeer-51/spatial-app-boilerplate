@@ -30,6 +30,26 @@ export const Overlay = () => {
     }, 2000);
   }, [slide]);
 
+  const getModelData = async () => {
+    const currentScene = scenes[displaySlide];
+    if (currentScene) {
+      const modelUrl = currentScene.path;
+      try {
+        const response = await fetch(modelUrl);
+        if (!response.ok) {
+          throw new Error('Failed to fetch model data');
+        }
+        return await response.arrayBuffer();
+      } catch (error) {
+        console.error('Error fetching model data:', error);
+        return null;
+      }
+    } else {
+      console.warn('No scene found to export.');
+      return null;
+    }
+  };
+
   const handleImport = (event) => {
     const file = event.target.files[0];
     if (file) {
@@ -44,8 +64,21 @@ export const Overlay = () => {
     }
   };
 
+  const handleExportDevice = () => {
+    // Generate the 3D model (GLB/GLTF) here
+    const modelData = null; // Replace with actual 3D model data
+
+    const blob = new Blob([modelData], { type: 'application/octet-stream' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'model.glb';
+    a.click();
+    URL.revokeObjectURL(url);
+  };
+
   const handleExport = async () => {
-    const modelData = getModelData(); // Implement this function to get your model data
+    const modelData = await getModelData();
     if (modelData) {
       const modelName = prompt('Enter a name for the model:');
       if (modelName) {
@@ -78,7 +111,7 @@ export const Overlay = () => {
             <label htmlFor="import-file" className="nav-link">
               Import From Device
             </label>
-            <button onClick={handleExport} className="exportbtn">
+            <button onClick={handleExportDevice} className="exportbtn">
               Export To Device
             </button>
           </div>
