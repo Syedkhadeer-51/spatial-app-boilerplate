@@ -1,6 +1,6 @@
 [
     {
-      "origin": ["http://localhost:5173"],
+      "origin": ["http://localhost:5173","https://twojs-n99h7gji9-aadiudus-projects.vercel.app"],
       "responseHeader": ["Content-Type"],
       "method": ["GET", "HEAD", "DELETE"],
       "maxAgeSeconds": 3600
