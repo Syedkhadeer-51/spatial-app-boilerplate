@@ -24,7 +24,7 @@ export function ModelName({modelUrls,inputModelUrl,setInputModelUrl}) {
           type="text"
           value={inputModelUrl}
           onChange={handleInputChange}
-          placeholder="Enter a new model URL"
+          placeholder="Enter a new model name"
         />
         {!isUrlUnique && <p style={{ color: 'red' }}>This model name is taken will be replaced</p>}
         </div>
