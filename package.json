@@ -1,5 +1,5 @@
 {
-  "name": "spatial-app-boilerplate",
+  "name": "hierarchy",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -10,11 +10,15 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@react-three/drei": "^9.105.6",
-    "@react-three/fiber": "^8.16.6",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "three": "^0.164.1"
+    "@react-three/drei": "^9.106.0",
+    "@react-three/fiber": "^8.16.8",
+    "@react-three/uikit": "^0.3.6",
+    "file-saver": "^2.0.5",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-draggable": "^4.4.6",
+    "three": "^0.165.0",
+    "three-stdlib": "^2.30.3"
   },
   "devDependencies": {
     "@types/react": "^18.2.66",

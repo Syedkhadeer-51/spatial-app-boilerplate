@@ -1,33 +1,55 @@
-* {
-  box-sizing: border-box;
+.App {
+  display: flex;
+  height: 100vh;
 }
 
-html,
-body,
-#root {
-  width: 100%;
-  height: 100%;
-  margin: 0;
-  padding: 0;
-  -webkit-touch-callout: none;
-  -webkit-user-select: none;
-  -khtml-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-  overflow: hidden;
-}
-
-#root {
-  overflow: hidden;
-}
-
-body {
-  position: fixed;
-  overflow: hidden;
-  overscroll-behavior-y: none;
-  font-family: -apple-system, BlinkMacSystemFont, avenir next, avenir, helvetica neue, helvetica, ubuntu, roboto, noto, segoe ui, arial, sans-serif;
-  color: black;
-  -webkit-font-smoothing: antialiased;
+.panel {
+  width: 600px !important;
+  flex-shrink: 0; 
+  padding: 20px;
   background: #f0f0f0;
+  overflow-y: auto;
+  overflow-x: auto;
+  background-color: rgb(33, 33, 33);
+}
+
+.panel ul {
+  padding-left: 20px;
+  list-style-type: none;
+}
+
+.buttons {
+  display: flex;
+  flex-direction: column;
+}
+
+.button-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+button {
+  border-radius: 50px;
+  flex-grow: 1;
+  margin: 5px 0;
+  padding: 10px;
+  background: white;
+  border: 1px solid #ccc;
+  cursor: pointer;
+  text-align: left;
+}
+
+button:hover {
+  border-color: #006902;
+  border-width: 3px;
+  font-weight: 600;
+  background: rgb(251, 224, 200);
+}
+
+.toggle-icon {
+  color: #ffffff;
+  font-size: larger;
+  margin-left: 10px;
+  cursor: pointer;
 }
