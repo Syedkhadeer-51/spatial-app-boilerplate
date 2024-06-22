@@ -2,9 +2,7 @@
   box-sizing: border-box;
 }
 
-html,
-body,
-#root {
+html, body, #root {
   width: 100%;
   height: 100%;
   margin: 0;
@@ -12,22 +10,366 @@ body,
   -webkit-touch-callout: none;
   -webkit-user-select: none;
   -khtml-user-select: none;
+  /*
+  @Rao, explain me why you added this in the initial CSS File later. I find it unnecessary!
+   */
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
   overflow: hidden;
 }
 
-#root {
-  overflow: hidden;
-}
-
 body {
-  position: fixed;
-  overflow: hidden;
-  overscroll-behavior-y: none;
-  font-family: -apple-system, BlinkMacSystemFont, avenir next, avenir, helvetica neue, helvetica, ubuntu, roboto, noto, segoe ui, arial, sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, avenir next, avenir, helvetica neue, helvetica, sans-serif;
   color: black;
   -webkit-font-smoothing: antialiased;
   background: #f0f0f0;
+  position: relative;
+}
+
+
+
+
+.keyframe-settings, .keyframe-values {
+  position: absolute;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  top: 20px;
+  right: 80px;
+}
+
+.keyframe-settings label, .keyframe-values label {
+  margin: 10px;
+}
+
+input[type="text"] {
+  margin-left: 10px;
+}
+
+.loopCall {
+  position: absolute;
+  top: 220px;
+  right: 20px;
+  background: #d11554;
+}
+
+button:focus {
+  outline: none;
+}
+
+/*
+@Rao, chaning complete UI Don't change any stuff over here, without letting me know.
+ */
+.input-container {
+  position: absolute;
+  top: 25px;
+  left: 25px;
+  background: rgba(255, 255, 255, 0.3);
+  /*
+  Sexiest Thing, WebKit ever Made. Chromium Sucks @Rao
+   */
+  padding: 10px;
+  border-radius: 30px;
+  font-family: Helvetica, sans-serif;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+.input-container .title {
+  font-size: 13px;
+  font-weight: normal;
+  padding-left: 8px;
+  padding-top: 3px;
+  display: flex;
+  align-items: center;
+}
+
+
+/*
+@Rao, Found some shitty temp Icons, just we can think about them later. Right now, let's create more like a Beta Form. Then when we have time, let's refine this
+ */
+
+.input-container .title span {
+  flex: 0.96;
+}
+
+.input-container .image-container {
+  margin-left: 5px;
+}
+
+.input-container .inputs {
+  display: flex;
+}
+
+.input-container label {
+  display: flex;
+  align-items: center;
+}
+
+
+.input-container label input[type="number"] {
+  margin-left: 5px;
+  padding: 8px;
+  width: 70px;
+  border: 1px solid #ddd;
+  border-radius: 20px;
+  font-size: 14px;
+  background-color: #f9f9f9;
+  transition: border-color 0.3s, box-shadow 0.3s;
+  outline: none;
+}
+
+.input-container .position-input label:nth-child(1) input[type="number"]:focus,
+.input-container .scale-input label:nth-child(1) input[type="number"]:focus,
+.input-container .rotation-input label:nth-child(1) input[type="number"]:focus {
+  border-color: #ac0000;
+  box-shadow: 0 0 1px rgba(255, 0, 0, 0.5);
+}
+
+.input-container .position-input label:nth-child(2) input[type="number"]:focus,
+.input-container .scale-input label:nth-child(2) input[type="number"]:focus,
+.input-container .rotation-input label:nth-child(2) input[type="number"]:focus {
+  border-color: green;
+  box-shadow: 0 0 1px rgba(0, 255, 0, 0.5);
+}
+
+.input-container .position-input label:nth-child(3) input[type="number"]:focus,
+.input-container .scale-input label:nth-child(3) input[type="number"]:focus,
+.input-container .rotation-input label:nth-child(3) input[type="number"]:focus {
+  border-color: #007cff;
+  box-shadow: 0 0 1px rgba(0, 124, 255, 0.5);
+}
+
+
+.input-container input::placeholder {
+  color: #999;
+}
+
+.input-container .position-input,
+.input-container .scale-input,
+.input-container .rotation-input {
+  margin-bottom: 14px;
+  padding: 6px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(5px);
+  color: #333;
+  font-family: Helvetica, sans-serif;
+  transition: border-color 0.3s, box-shadow 0.3s;
+  font-size: 8px;
+}
+
+.input-container .position-input:focus-within,
+.input-container .scale-input:focus-within,
+.input-container .rotation-input:focus-within {
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+}
+
+.input-container .position-input:last-child,
+.input-container .scale-input:last-child,
+.input-container .rotation-input:last-child {
+  margin-bottom: 0;
+}
+
+.keyframeTitleStuff {
+  font-size: 20px;
+  margin-bottom: 15px;
+  font-weight: bold;
+  padding-left: 5px;
+  padding-top: 5px;
+}
+
+
+
+/*
+Duration handling shit. Don't modify this also
+ */
+.duration-input {
+  display: flex;
+  align-items: center;
+  margin-bottom: 14px;
+  /*
+  Don't change any Padding Margin Values, they accurately work
+   */
+  padding: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(5px);
+  color: #333;
+  font-family: Helvetica, sans-serif;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+
+.duration-input .title {
+  display: flex;
+  align-items: center;
+}
+
+.duration-input .title span {
+  font-size: 12px;
+  font-weight: bold;
+  margin-right: 10px;
+}
+
+.duration-input .image-container {
+  margin-left: 5px;
+}
+
+.duration-input .inputs {
+  flex: 1;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.duration-input input[type="number"] {
+  padding: 8px;
+  width: 70px;
+  border: 1px solid #ddd;
+  border-radius: 20px;
+  font-size: 12px;
+  background-color: #f9f9f9;
+  transition: border-color 0.3s, box-shadow 0.3s;
+  outline: none;
+}
+
+.duration-input input[type="number"]:focus {
+  border-color: #fd9002;
+  box-shadow: 0 0 1px rgba(253, 144, 2, 0.5);
+}
+
+.duration-input input::placeholder {
+  color: #999;
+}
+
+.buttonFunctionalities {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+.importExportButtons,
+.playLoopButtons {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.importExportButtons button{
+  flex-basis: 48%;
+  padding: 15px;
+  font-size: 14px;
+  border: none;
+  border-radius: 22px;
+  cursor: pointer;
+  transition: background-color 0.3s, box-shadow 0.3s;
+}
+
+.playLoopButtons button {
+  flex-basis: 48%;
+  padding: 13px;
+  font-size: 14px;
+  border: none;
+  border-radius: 22px;
+  cursor: pointer;
+  transition: background-color 0.3s, box-shadow 0.3s;
+}
+
+.importButton{
+  color: white;
+  background-color: rgb(0, 111, 255);
+}
+.exportButton{
+  color: white;
+  background-color: rgba(126, 126, 126, 0.85);
+}
+
+.importExportButtons button:hover,
+.playLoopButtons button:hover {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+span{
+  font-weight: bold;
+  font-size: 12px;
+}
+
+.animation-selector label {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+  cursor: pointer;
+}
+
+.animation-selector label input[type="checkbox"] {
+  /* Hide the default checkbox */
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.animation-selector label input[type="checkbox"] + span {
+  /* Create a custom checkbox */
+  width: 20px;
+  height: 20px;
+  background-color: white;
+  border-radius: 50%;
+  border: 2px solid #ccc;
+  display: inline-block;
+  position: relative;
+  cursor: pointer;
+  margin-right: 10px;
+}
+
+.animation-selector label input[type="checkbox"]:checked + span {
+  background-color: #016fff;
+  border-color: #016fff
+}
+
+.animation-selector label input[type="checkbox"] + span::after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+.animation-selector label input[type="checkbox"]:checked + span::after {
+  display: block;
+  left: 50%;
+  top: 50%;
+  width: 12px;
+  height: 12px;
+  background: white;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.availableAnimationsTitle{
+  padding-bottom: 20px;
+}
+
+.animation-selector{
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  padding: 15px 15px 7px;
+  background: rgba(255, 255, 255, 0.3) ;
+  margin-top: 20px;
+}
+
+.animationsCollection {
+  border-radius: 30px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  background: rgba(255, 255, 255, 0.3);
+  transition: background 0.3s ease;
+  font-size: 10px;
+}
+
+.animationsCollection:hover {
+  background: rgba(223, 223, 223, 0.5);
+}
+
+.animation-list{
+  margin-top: 10px;
 }
