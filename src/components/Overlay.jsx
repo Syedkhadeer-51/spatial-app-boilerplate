@@ -6,6 +6,7 @@ import CloudLoader from './CloudLoaderComponent';
 import leftArrow from '../assets/left-arrow.svg';
 import rightArrow from '../assets/right-arrow.svg';
 import logo from '../assets/logo.svg';
+import trash from '../assets/trash.svg'
 import '../index.css';
 import { ref as storageRef, uploadBytes } from 'firebase/storage';
 
@@ -98,6 +99,12 @@ export const Overlay = () => {
     }
   };
 
+  const handleDelete = (index) => {
+    scenes.splice(index,1);
+    setSlide((prev) => (prev < scenes.length - 1 ? prev + 1 : 0));
+    console.log(scenes);
+  }
+
   return (
     <div className={`overlay ${visible ? 'visible' : 'invisible'}`}>
       <>
@@ -135,6 +142,7 @@ export const Overlay = () => {
           </div>
         </div>
         <div className="nav">
+          <div className="arrows">
           <img
             src={leftArrow}
             alt="Previous Slide"
@@ -147,9 +155,16 @@ export const Overlay = () => {
             className="nav-button"
             onClick={() => setSlide((prev) => (prev < scenes.length - 1 ? prev + 1 : 0))}
           />
+          </div>
+          <img
+            src = {trash}
+            alt="delete"
+            className="delete"
+            onClick={()=> handleDelete(slide)}
+          />
         </div>
         <div className="content">
-          <h1 className="title">{scenes[displaySlide].name}</h1>
+          <h1 className="title">{scenes[slide].name}</h1>
         </div>
       </>
     </div>

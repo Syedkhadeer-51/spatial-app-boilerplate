@@ -140,7 +140,7 @@ label.nav-link{
   margin: 1rem auto;
 }
 
-.nav {
+.arrows{
   position: absolute;
   top: 0;
   bottom: 0;
@@ -152,15 +152,35 @@ label.nav-link{
   padding: 1rem;
 }
 
+.nav {
+  display: flex;
+  flex-direction: column;
+}
+
 .nav-button {
-  width: 2.5rem;
-  height: 2.5rem;
+  width: 3rem;
+  height: 3rem;
   pointer-events: auto;
   cursor: pointer;
   transition: opacity 0.3s;
 }
 
 .nav-button:hover {
+  opacity: 0.6;
+}
+
+.delete{
+  top:45rem;
+  left: 92rem;
+  position: absolute;
+  width: 3rem;
+  height: 3rem;
+  pointer-events: auto;
+  cursor: pointer;
+  transition: opacity 0.3s;
+}
+
+.delete:hover {
   opacity: 0.6;
 }
 
