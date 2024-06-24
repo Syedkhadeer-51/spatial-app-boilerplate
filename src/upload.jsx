@@ -25,12 +25,21 @@ async function compressAndExportGLTF(gltf, storageRef) {
             compressionLevel: 10
         }
     };
+    Swal.fire({
+        title: 'Uploading...',
+        html: 'Please wait while the model is being uploaded',
+        allowOutsideClick: false,
+        didOpen: () => {
+            Swal.showLoading()
+        }
+    });
 
     return new Promise(async (resolve, reject) => {
         exporter.parse(gltf.scene, async(result) => {
             const blob = new Blob([result], { type: 'application/octet-stream' });
             const snapshot = await uploadBytes(storageRef, blob);
-            console.log('Uploaded a blob or file!', snapshot);       
+            console.log('Uploaded a blob or file!', snapshot);   
+            Swal.close();    
             Swal.fire({
                 title: 'Success!',
                 text: 'Upload completed successfully!',
