@@ -18,17 +18,11 @@ export const Overlay = () => {
   const [showDropdown, setShowDropdown] = useState(false);
 
   useEffect(() => {
-    setTimeout(() => {
-      setVisible(true);
-    }, 1000);
-  }, []);
-
-  useEffect(() => {
     setVisible(false);
     setTimeout(() => {
       setDisplaySlide(slide);
       setVisible(true);
-    }, 2000);
+    }, 200);
   }, [slide]);
 
   const getModelData = async () => {
@@ -112,11 +106,8 @@ export const Overlay = () => {
     }
   };
 
-  const handlePageChange = (event) => {
-    const pageNumber = parseInt(event.target.value, 10);
-    if (pageNumber > 0 && pageNumber <= scenes.length) {
-      setSlide(pageNumber - 1);
-    }
+  const handlePageChange = (pageNumber) => {
+    setSlide(pageNumber);
   };
   
 
@@ -164,7 +155,6 @@ export const Overlay = () => {
             className="nav-button"
             onClick={() => setSlide((prev) => (prev > 0 ? prev - 1 : scenes.length - 1))}
           />
-          
           <img
             src={rightArrow}
             alt="Next Slide"
@@ -181,7 +171,19 @@ export const Overlay = () => {
         </div>
         <div className="content">
           <h1 className="title">{scenes[slide].name}</h1>
+          <div className="pages">
+            {scenes.map((scene, index) => (
+              <button
+                key={index}
+                className={`pages-button ${slide === index ? 'active' : ''}`}
+                onClick={() => handlePageChange(index)}
+              >
+                {index + 1}
+              </button>
+            ))} 
+          </div>
         </div>
+        
       </>
     </div>
   );

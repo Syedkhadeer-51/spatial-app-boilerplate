@@ -185,7 +185,7 @@ label.nav-link{
 }
 
 .content {
-  padding-top: 5rem;
+  padding-top: 2rem;
   padding-bottom: 2.5rem;
   padding-left: 1rem;
   padding-right: 1rem;
@@ -200,5 +200,31 @@ label.nav-link{
   font-family:"Racing Sans One", sans-serif;
   font-size: 2.7rem;
   font-weight: 800;
-  margin: 5rem;
+  margin: 2rem;
+}
+
+.pages-button {
+  font-family: "Exo 2", sans-serif;
+  cursor: pointer;
+  pointer-events: auto;
+  background-color: transparent;
+  color: #f5f0f0;
+  float: left;
+  padding: 8px 16px;
+  border: none;
+  outline: none;
+  text-decoration: none;
+  transition: background-color 0.3s;
+  margin: 0 4px;
+}
+
+.pages .active {
+  background-color: #f5f0f0;
+  color: black;
+}
+
+.pages-button:hover {
+  font-weight: bold;
+  background-color: #de1d1d;
+  color: #f5f0f0;
 }
