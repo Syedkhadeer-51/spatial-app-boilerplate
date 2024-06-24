@@ -7,6 +7,7 @@ import { toCloud } from "./atoms";
 import { useAtom } from "jotai";
 import { modelPath } from "./atoms";
 import { inputModelUrl } from "./atoms";
+import Draggable from 'react-draggable';
 
 export default function UiForFirebase() {
    const [Exports,setExport]=useAtom(exports);
@@ -16,6 +17,7 @@ export default function UiForFirebase() {
 
 
    return(
+      <Draggable>
 <div style={{position:'absolute', zIndex:'1',left:'100px',top:'7px',backgroundColor:'rgba(0,0,0,0.5)',borderRadius:'10px',color:'white'}}>
       <LocalImport/>
       <div style={{float:'left',margin:'0px 10px 0px 0px'}}> OR </div>
@@ -32,6 +34,7 @@ export default function UiForFirebase() {
       {ModelPath &&
       <ModelName/>}
       </div>
+      </Draggable>
 
    );
     

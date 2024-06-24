@@ -17,7 +17,8 @@ export default function App() {
 
 
   return (
-    <><UiForFirebase/>
+    <>
+    <UiForFirebase/>
       <ColorPickerGrid gridHelperRef={gridHelperRef} />
       <CameraNamesList position={'absolute'} />
       <Canvas camera={{ position: [0, 3, 10] }}>
