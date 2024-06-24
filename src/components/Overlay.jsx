@@ -57,8 +57,11 @@ export const Overlay = () => {
       reader.onload = function (e) {
         const path = URL.createObjectURL(file);
         const name = file.name.replace(/\.glb$/i, '');
-        setScenes((prevScenes) => [...prevScenes, { path, name }]);
-        setSlide(prevScenes.length);
+        const obj = {
+          path: `${path}`,
+          name: `${name}`
+        }
+        scenes.push(obj);
       };
       reader.readAsArrayBuffer(file);
     }
@@ -152,4 +155,3 @@ export const Overlay = () => {
     </div>
   );
 };
-
