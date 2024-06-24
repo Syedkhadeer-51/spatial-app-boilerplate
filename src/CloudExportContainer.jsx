@@ -1,7 +1,7 @@
 import React from 'react';
-import { ref, uploadBytesResumable } from 'firebase/storage';
+import { ref, uploadBytesResumable } from '@firebase/storage';
 import { GLTFExporter } from 'three/examples/jsm/exporters/GLTFExporter';
-import { storage } from './firebaseConfig.jsx'; // Adjust path as per your firebase configuration
+import { storage } from './firebase.jsx'; // Adjust path as per your firebase configuration
 import { Button } from './components/apfel/button';
 import { Container, Text } from '@react-three/uikit';
 
