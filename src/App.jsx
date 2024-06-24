@@ -5,7 +5,7 @@ import { TextGeometry } from 'three/examples/jsm/geometries/TextGeometry';
 import { STLExporter } from 'three/examples/jsm/exporters/STLExporter';
 import { GLTFExporter } from 'three/examples/jsm/exporters/GLTFExporter';
 import { OBJExporter } from 'three/examples/jsm/exporters/OBJExporter';
-import SceneInit from './lib/SceneInit';
+import SceneInit from './assets/SceneInit';
 import { GUI } from 'dat.gui';
 
 function App() {
