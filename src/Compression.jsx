@@ -6,6 +6,12 @@ import { useEffect, useState } from 'react';
 import { saveAs } from 'file-saver';
 import { Html } from '@react-three/drei';
 import { uploadFile } from './upload';
+import { modelPath } from './atoms';
+import { exports } from './atoms';
+import { toCloud } from './atoms';
+import { useAtom } from 'jotai';
+import { inputModelUrl } from './atoms';
+
 // Helper function to compress and export GLTF
 async function compressAndExportGLTF(gltf, fileName) {
     const exporter = new GLTFExporter();
@@ -20,6 +26,7 @@ async function compressAndExportGLTF(gltf, fileName) {
         exporter.parse(gltf.scene, (result) => {
             const blob = new Blob([result], { type: 'application/octet-stream' });
             saveAs(blob, fileName);
+
             resolve(blob);
         }, (error) => {
             console.error('An error happened during GLTF export', error);
@@ -28,17 +35,21 @@ async function compressAndExportGLTF(gltf, fileName) {
     });
 }
 
-export default function Compression({ modelPath, exports,toCloud,inputModelUrl,setToCloud}) {
+export default function Compression() {
     const [isLoadingModel, setIsLoadingModel] = useState(false);
   const [gltf, setGltf] = useState(null);
+  const [ModelPath,setModelPath] = useAtom(modelPath);
+  const [Exports,setExports] = useAtom(exports)
+  const [ToCloud,setToCloud] = useAtom(toCloud);
+  const [InputModelUrl,setInputModelUrl] = useAtom(inputModelUrl);
     useEffect(() => {
-        if (modelPath) {
+        if (ModelPath) {
           setIsLoadingModel(true);
           const loader = new GLTFLoader();
           const dracoLoader = new DRACOLoader();
           dracoLoader.setDecoderPath('https://www.gstatic.com/draco/versioned/decoders/1.5.7/');
           loader.setDRACOLoader(dracoLoader);
-          loader.load(modelPath, 
+          loader.load(ModelPath, 
             (gltf) => {
               setGltf(gltf);
               setIsLoadingModel(false);
@@ -50,20 +61,20 @@ export default function Compression({ modelPath, exports,toCloud,inputModelUrl,s
             }
           );
         }
-      }, [modelPath]);
+      }, [ModelPath]);
       useEffect(()=>{
-        if(toCloud)
+        if(ToCloud)
             {
-        uploadFile(gltf,inputModelUrl);
+        uploadFile(gltf,InputModelUrl);
         setToCloud(false);
 
             }
-      },[toCloud])
+      },[ToCloud])
     useEffect(()=>{
-        console.log(exports);
-        if(exports){
+        console.log(Exports);
+        if(Exports){
         try {
-        const compressedBlob = compressAndExportGLTF(gltf, inputModelUrl+'.glb');
+        const compressedBlob = compressAndExportGLTF(gltf, InputModelUrl+'.glb');
         console.log("Compressed Model Size (bytes): ", compressedBlob.size);
         // For debugging: Log the GLTF object and options
         console.log("GLTF object:", gltf);
@@ -73,9 +84,10 @@ export default function Compression({ modelPath, exports,toCloud,inputModelUrl,s
                 compressionLevel: 10
             }
         });
+        setExports(false);
     } catch (error) {
         console.error("Error during compression and export:", error);
-    }}},[exports]);
+    }}},[Exports]);
 
     return       isLoadingModel ? <Html><div>Loading...</div></Html> : gltf && <primitive object={gltf.scene} />;
 }

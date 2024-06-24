@@ -1,17 +1,22 @@
 import React from 'react';
 import { useEffect,useState } from 'react';
+import { modelUrls } from './atoms';
+import { inputModelUrl } from './atoms';
+import { useAtom } from 'jotai';
 
-export function ModelName({modelUrls,inputModelUrl,setInputModelUrl}) {
+
+export function ModelName() {
     const [isUrlUnique, setIsUrlUnique] = useState(true); // State to track if the URL is unique
-
+    const [ModelUrls,setModelUrls] = useAtom(modelUrls);
+    const [InputModelUrl,setInputModelUrl] = useAtom(inputModelUrl);
     useEffect(() => {
         // Check if the input URL is already in modelUrls
 
-        console.log(inputModelUrl);
-        console.log(modelUrls)
-        const urlExists =  modelUrls.some(model => model.name === inputModelUrl+'.glb');
+        console.log(InputModelUrl);
+        console.log(ModelUrls)
+        const urlExists =  ModelUrls.some(model => model.name === InputModelUrl+'.glb');
         setIsUrlUnique(!urlExists);
-      }, [inputModelUrl, modelUrls]);
+      }, [InputModelUrl, ModelUrls]);
     
       const handleInputChange = (event) => {
         setInputModelUrl(event.target.value);
@@ -22,7 +27,7 @@ export function ModelName({modelUrls,inputModelUrl,setInputModelUrl}) {
         <input
           id="model-url-input"
           type="text"
-          value={inputModelUrl}
+          value={InputModelUrl}
           onChange={handleInputChange}
           placeholder="Enter a new model name"
         />

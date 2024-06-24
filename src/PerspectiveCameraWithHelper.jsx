@@ -2,6 +2,10 @@ import { PerspectiveCamera, useHelper } from '@react-three/drei';
 import { CameraHelper } from 'three';
 import './App.css';
 import { useRef, useEffect, useState } from 'react';
+import { cameraNames } from './atoms';
+import { activeCamera } from './atoms';
+import { selectedCamera } from './atoms';
+import { useAtom } from 'jotai';
 
 class CustomColor {
   constructor(colorString) {
@@ -17,11 +21,14 @@ class CustomColor {
 }
 
 
-export default function PerspectiveCameraWithHelper({ visible, name, active,gridColor,selected, ...perspectiveCameraProps }) {
+export default function PerspectiveCameraWithHelper({ name, ...perspectiveCameraProps }) {
   const [visibility, setVisibility] = useState(true);
   const [cameraActive, setCameraActive] = useState(false);
   const cameraRef = useRef();
-  
+  const [visible,setVisibilile] = useAtom(cameraNames);
+  const [active,setActive] = useAtom(activeCamera);
+  const [selected,SetSelected] = useAtom(selectedCamera);
+
   const helper = useHelper(visibility&&cameraRef, CameraHelper);
 
   useEffect(() => {
@@ -34,7 +41,7 @@ export default function PerspectiveCameraWithHelper({ visible, name, active,grid
       const colorCross = new CustomColor('#333333');
       helper.current.setColors(colorFrustum, colorCone, colorUp, colorTarget, colorCross);
     }
-  }, [helper,gridColor,visibility,selected]); 
+  }, [helper,visibility,selected]); 
 
   useEffect(() => {
     if (active === name) {

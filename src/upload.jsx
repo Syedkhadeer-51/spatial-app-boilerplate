@@ -36,10 +36,11 @@ async function compressAndExportGLTF(gltf, storageRef) {
 
     return new Promise(async (resolve, reject) => {
         exporter.parse(gltf.scene, async(result) => {
+            console
             const blob = new Blob([result], { type: 'application/octet-stream' });
             const snapshot = await uploadBytes(storageRef, blob);
-            console.log('Uploaded a blob or file!', snapshot);   
             Swal.close();    
+            console.log('Uploaded a blob or file!', snapshot);   
             Swal.fire({
                 title: 'Success!',
                 text: 'Upload completed successfully!',
@@ -54,6 +55,7 @@ async function compressAndExportGLTF(gltf, storageRef) {
 }
 
 const uploadFile = async (gltf,name) => {
+    console.log(name);
   const storageRef = ref(storage, 'models/'+name+'.glb'); // Specify the path in Firebase Storage
   try {
     const compressedBlob = await compressAndExportGLTF(gltf, storageRef); // Wait for the promise to resolve

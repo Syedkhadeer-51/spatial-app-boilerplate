@@ -2,10 +2,13 @@ import { OrthographicCamera, useHelper } from '@react-three/drei';
 import { CameraHelper } from 'three';
 import './App.css';
 import { useRef, useEffect, useState } from 'react';
+import { cameraNames } from './atoms';
+import { activeCamera } from './atoms';
+import { selectedCamera } from './atoms';
+import { useAtom } from 'jotai';
 
 class CustomColor {
   constructor(colorString) {
-    // Assuming colorString is in the format "#rrggbb"
     const match = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(colorString);
     if (match) {
       this.r = parseInt(match[1], 16)/255;
@@ -18,16 +21,17 @@ class CustomColor {
 }
 
 
-export default function OrthographicCameraWithHelper({ visible, name, active,gridColor,selected, ...perspectiveCameraProps }) {
+export default function PerspectiveCameraWithHelper({ name, ...perspectiveCameraProps }) {
   const [visibility, setVisibility] = useState(true);
   const [cameraActive, setCameraActive] = useState(false);
   const cameraRef = useRef();
-  
-  // Use useHelper to attach a CameraHelper to the cameraRef
+  const [visible,setVisibilile] = useAtom(cameraNames);
+  const [active,setActive] = useAtom(activeCamera);
+  const [selected,SetSelected] = useAtom(selectedCamera);
+
   const helper = useHelper(visibility&&cameraRef, CameraHelper);
 
   useEffect(() => {
-    // Ensure helper is available and is the correct instance before calling setColors
     
     if (helper && helper.current instanceof CameraHelper) {
       const colorFrustum = new CustomColor(selected==name ? '#ffff00' : '#ff0000');
@@ -37,7 +41,7 @@ export default function OrthographicCameraWithHelper({ visible, name, active,gri
       const colorCross = new CustomColor('#333333');
       helper.current.setColors(colorFrustum, colorCone, colorUp, colorTarget, colorCross);
     }
-  }, [helper,gridColor,visibility,selected]); // Depend on helper to re-run when it changes
+  }, [helper,visibility,selected]); 
 
   useEffect(() => {
     if (active === name) {

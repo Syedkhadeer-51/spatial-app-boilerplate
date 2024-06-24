@@ -1,5 +1,8 @@
 import { useState } from 'react';
 import { SketchPicker } from 'react-color';
+import { backgroundColor } from './atoms';
+import { gridColor } from './atoms';
+import { useAtom } from 'jotai';
 
 const hexToRgb = (hex) => {
   hex = hex.replace(/^#/, '');
@@ -30,12 +33,12 @@ const getComplementaryColor = (hex) => {
   return rgbToHex(compR, compG, compB);
 };
 
-const ColorPickerGrid = ({ setBackgroundColor, setGridColor, gridHelperRef }) => {
+const ColorPickerGrid = ({  gridHelperRef }) => {
   const [pickerVisible, setPickerVisible] = useState(false);
-  const [backgroundColor, setBackground] = useState('#3b3b3b');
+  const [BackgroundColor,setBackgroundColor] = useAtom(backgroundColor);
+  const [GridColor,setGridColor] = useAtom(gridColor);
 
   const handleColorChange = (color) => {
-    setBackground(color.hex);
     setBackgroundColor(color.hex);
     const complementaryColor = getComplementaryColor(color.hex);
     setGridColor(complementaryColor);
@@ -62,7 +65,7 @@ const ColorPickerGrid = ({ setBackgroundColor, setGridColor, gridHelperRef }) =>
         <span className="tooltip">Background Colour</span>
       </button>
       {pickerVisible && (
-          <SketchPicker color={backgroundColor} onChange={handleColorChange} />
+          <SketchPicker color={BackgroundColor} onChange={handleColorChange} />
       )}
     </div>
   );

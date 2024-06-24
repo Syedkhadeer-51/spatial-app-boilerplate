@@ -3,7 +3,11 @@ import { ref, listAll, getDownloadURL } from 'firebase/storage';
 import { initializeApp } from "firebase/app";
 import {getStorage } from "firebase/storage";
 import { useEffect } from 'react';
-
+import {modelPath} from './atoms';
+import { exports } from './atoms';
+import { toCloud } from './atoms';
+import { useAtom } from 'jotai';
+import { modelUrls } from './atoms';
 const firebaseConfig = {
   apiKey: "AIzaSyBUsbX0lNGuDwn_sDkqy4djrDJpdL3Qr5g",
   authDomain: "twojs-bdb50.firebaseapp.com",
@@ -29,7 +33,12 @@ const listModels = async () => {
   }
 };
 
-function Dropdown({modelUrls,setExport,setModelPath,setModelUrls,setToCloud}) {
+function Dropdown() {
+  const [ModelPath,setModelPath]=useAtom(modelPath);
+  const [Exports,setExport]=useAtom(exports);
+  const [Tocloud,setToCloud]=useAtom(toCloud);
+  const [ModelUrls,setModelUrls]=useAtom(modelUrls)
+
   useEffect(() => {
     const fetchModels = async () => {
       const modelList = await listModels();
@@ -49,7 +58,7 @@ function Dropdown({modelUrls,setExport,setModelPath,setModelUrls,setToCloud}) {
     <div className="model-selector" style={{float:'left',padding:'0px 10px 0px 0px'}}>
         <select id="model-select" onChange={handleModelChange}>
         <option value="">Select a model</option>
-          {modelUrls.map(model => (
+          {ModelUrls.map(model => (
           <option key={model.url} value={model.url}>
           {model.name}
         </option>

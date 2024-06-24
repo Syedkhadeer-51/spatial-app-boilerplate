@@ -1,11 +1,15 @@
 import { GizmoViewport, OrbitControls} from '@react-three/drei'
 import { GizmoHelper } from '@react-three/drei'
 import { useEffect, useState } from 'react'
-export default function CustomGizmoHelper({orbitConrols})
+import { activeCamera } from './atoms';
+import { useAtom } from 'jotai';
+export default function CustomGizmoHelper()
 {
   const [active,setActive]=useState(true);
+  const [ActiveCamera,setActiveCamera] = useAtom(activeCamera);
+
     useEffect(() => {
-      if(orbitConrols==='defaults')
+      if(ActiveCamera==='defaults')
         {
       setTimeout(() => {
         setActive(true);
@@ -13,7 +17,7 @@ export default function CustomGizmoHelper({orbitConrols})
       else{
         setActive(false);
       }
-    }, [orbitConrols]);
+    }, [ActiveCamera]);
     return(
         <>
         {active && <OrbitControls makeDefault enabled={active}/>}

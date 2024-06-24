@@ -1,6 +1,14 @@
 import React from 'react';
+import {modelPath} from './atoms';
+import { exports } from './atoms';
+import { toCloud } from './atoms';
+import { useAtom } from 'jotai';
 
-function LocalImport({setModelPath,setExport,setToCloud}) {
+function LocalImport() {
+    const [ModelPath,setModelPath]=useAtom(modelPath);
+    const [Exports,setExport]=useAtom(exports);
+    const [Tocloud,setToCloud]=useAtom(toCloud);
+
     const handleFileUpload = (event) => {
         const file = event.target.files[0];
         if (file) {
@@ -10,8 +18,6 @@ function LocalImport({setModelPath,setExport,setToCloud}) {
             console.log("Original File Size: "+file.size);
             setExport(false);
             setToCloud(false);         
-
-
         }
     };
     return (

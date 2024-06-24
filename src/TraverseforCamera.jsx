@@ -1,6 +1,9 @@
 import { useEffect } from "react";
 import { useThree } from "@react-three/fiber";
-export default function TraverseForCamera({ setCameraNames }) {
+import { cameraNames } from "./atoms";
+import { useAtom } from "jotai";
+export default function TraverseForCamera() {
+    const [CameraNames,setCameraNames] = useAtom(cameraNames);
     const { scene } = useThree();
   
     useEffect(() => {
