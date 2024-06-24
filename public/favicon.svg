@@ -1,0 +1,5 @@
+<!-- public/favicon.svg -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <rect width="100" height="100" fill="#5f9ea0"/>
+  <text x="50" y="50" font-size="50" text-anchor="middle" fill="white" dy=".3em">T</text>
+</svg>
