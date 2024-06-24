@@ -1,4 +1,10 @@
 import React, { useEffect, useRef } from 'react';
+import * as THREE from 'three';
+import { FontLoader } from 'three/examples/jsm/loaders/FontLoader';
+import { TextGeometry } from 'three/examples/jsm/geometries/TextGeometry';
+import { STLExporter } from 'three/examples/jsm/exporters/STLExporter';
+import { GLTFExporter } from 'three/examples/jsm/exporters/GLTFExporter';
+import { OBJExporter } from 'three/examples/jsm/exporters/OBJExporter';
 import SceneInit from './lib/SceneInit';
 import { GUI } from 'dat.gui';
 
@@ -6,14 +12,10 @@ function App() {
   const textMeshRef = useRef(null);
   const sceneRef = useRef(null);
   const fontRef = useRef(null);
-  const materialRef = useRef(null);
+  const materialRef = useRef(null); // To store material with transparency
 
   useEffect(() => {
-    const initThreeJs = async () => {
-      const THREE = await import('three');
-      const { FontLoader } = await import('three/examples/jsm/loaders/FontLoader');
-      const { TextGeometry } = await import('three/examples/jsm/geometries/TextGeometry');
-
+    const initThreeJs = () => {
       const test = new SceneInit('myThreeJsCanvas');
       test.initialize();
       test.animate();
@@ -29,16 +31,16 @@ function App() {
         color: '#5f9ea0',
         opacity: 1,
         scale: 1,
-        font: 'droid',
-        exportFormat: 'stl',
+        font: 'droid', // Default font
+        exportFormat: 'stl', // Default export format
       };
 
       const fonts = {
-        //droid: 'node_modules/three/examples/fonts/droid/droid_serif_regular.typeface.json',
-        helvetiker: 'fonts/helvetiker_regular.typeface.json',
-        optimer: 'fonts/optimer_bold.typeface.json',
-        gentilis: 'fonts/gentilis_regular.typeface.json',
-        gentilis_bold: 'fonts/gentilis_bold.typeface.json',
+        droid: 'node_modules/three/examples/fonts/droid/droid_serif_regular.typeface.json',
+        helvetiker: 'node_modules/three/examples/fonts/helvetiker_regular.typeface.json',
+        optimer: 'node_modules/three/examples/fonts/optimer_bold.typeface.json',
+        gentilis: 'node_modules/three/examples/fonts/gentilis_regular.typeface.json',
+        gentilis_bold: 'node_modules/three/examples/fonts/gentilis_bold.typeface.json',
       };
 
       const fontLoader = new FontLoader();
@@ -56,17 +58,17 @@ function App() {
       gui.add(textControls, 'text').onChange((value) => updateTextGeometry(value));
       gui.add(textControls, 'size', 1, 100).onChange(() => updateTextGeometry(textControls.text));
       gui.add(textControls, 'height', 1, 20).onChange(() => updateTextGeometry(textControls.text));
-      gui.add(textControls, 'positionX', -100, 100).onChange((value) => (textMeshRef.current.position.x = value));
-      gui.add(textControls, 'positionY', -100, 100).onChange((value) => (textMeshRef.current.position.y = value));
+      gui.add(textControls, 'positionX', -100, 100).onChange((value) => textMeshRef.current.position.x = value);
+      gui.add(textControls, 'positionY', -100, 100).onChange((value) => textMeshRef.current.position.y = value);
       gui.addColor(textControls, 'color').onChange((value) => {
         textControls.color = value;
         materialRef.current.color.set(value);
-        materialRef.current.needsUpdate = true;
+        materialRef.current.needsUpdate = true; // Ensure material update
       });
       gui.add(textControls, 'opacity', 0, 1).onChange((value) => {
         textControls.opacity = value;
         materialRef.current.opacity = value;
-        materialRef.current.needsUpdate = true;
+        materialRef.current.needsUpdate = true; // Ensure material update
       });
       gui.add(textControls, 'scale', 0.1, 3).onChange((value) => {
         textControls.scale = value;
@@ -112,7 +114,7 @@ function App() {
         textMeshRef.current.geometry = newGeometry;
       };
 
-      const exportModel = async (format) => {
+      const exportModel = (format) => {
         if (!textMeshRef.current) return;
 
         let exporter;
@@ -122,35 +124,31 @@ function App() {
 
         switch (format) {
           case 'stl':
-            exporter = await import('three/examples/jsm/exporters/STLExporter');
-            data = new exporter.STLExporter().parse(textMeshRef.current);
+            exporter = new STLExporter();
+            data = exporter.parse(textMeshRef.current);
             mimeType = 'application/octet-stream';
             fileName = 'text_geometry.stl';
             break;
           case 'gltf':
           case 'glb':
-            exporter = await import('three/examples/jsm/exporters/GLTFExporter');
-            new exporter.GLTFExporter().parse(
-              textMeshRef.current,
-              (result) => {
-                const isBinary = format === 'glb';
-                if (isBinary) {
-                  data = result;
-                  mimeType = 'application/octet-stream';
-                  fileName = 'text_geometry.glb';
-                } else {
-                  data = JSON.stringify(result);
-                  mimeType = 'application/json';
-                  fileName = 'text_geometry.gltf';
-                }
-                saveData(data, mimeType, fileName);
-              },
-              { binary: format === 'glb' }
-            );
-            return;
+            exporter = new GLTFExporter();
+            exporter.parse(textMeshRef.current, (result) => {
+              const isBinary = format === 'glb';
+              if (isBinary) {
+                data = result;
+                mimeType = 'application/octet-stream';
+                fileName = 'text_geometry.glb';
+              } else {
+                data = JSON.stringify(result);
+                mimeType = 'application/json';
+                fileName = 'text_geometry.gltf';
+              }
+              saveData(data, mimeType, fileName);
+            }, { binary: format === 'glb' });
+            return; // Skip saving data here, as it's done in the callback
           case 'obj':
-            exporter = await import('three/examples/jsm/exporters/OBJExporter');
-            data = new exporter.OBJExporter().parse(textMeshRef.current);
+            exporter = new OBJExporter();
+            data = exporter.parse(textMeshRef.current);
             mimeType = 'application/octet-stream';
             fileName = 'text_geometry.obj';
             break;
@@ -175,6 +173,7 @@ function App() {
     };
 
     initThreeJs();
+
   }, []);
 
   return (
