@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { getStorage, ref as storageRef, listAll, getDownloadURL } from 'firebase/storage';
 import { storage } from './Firebase';
+import { scenes } from './Experience';
 
 const CloudLoader = ({ onSelectModel }) => {
   const [files, setFiles] = useState([]);
@@ -22,13 +23,25 @@ const CloudLoader = ({ onSelectModel }) => {
     fetchFiles();
   }, []);
 
+  const ArrayAppend = (index)=> {
+    const segments = files[index].split('/');
+    const fileName = decodeURIComponent(segments.pop().split('?')[0]).replace('.glb', '');
+    const obj = {
+      path: `${files[index]}`,
+      name: `${fileName}`
+    }
+    console.log(obj);
+    scenes.push(obj);
+    console.log(scenes);
+  }
+
   return (
     <div className="dropdown-content">
       {files.map((url, index) => {
         const segments = url.split('/');
         const fileName = decodeURIComponent(segments.pop().split('?')[0]).replace('.glb', '');
         return (
-          <button key={index} onClick={() => onSelectModel(fileName)}>
+          <button key={index} onClick={() => ArrayAppend(index)}>
             {fileName}
           </button>
         );
