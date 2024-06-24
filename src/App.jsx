@@ -30,7 +30,7 @@ export default function App() {
       <Canvas camera={{ position: [0, 3, 10] }}>
       <ambientLight />
       <CustomGizmoHelper orbitConrols={activeCamera}  />
-      <Compression modelPath={modelPath} exports={exports} toCloud={toCloud} inputModelUrl={inputModelUrl}/> 
+      <Compression modelPath={modelPath} exports={exports} toCloud={toCloud} inputModelUrl={inputModelUrl} setToCloud={setToCloud}/> 
       <TraverseForCamera setCameraNames={setCameraNames} />
       <PerspectiveCameraWithHelper 
           name="PerspectiveCamera1" 

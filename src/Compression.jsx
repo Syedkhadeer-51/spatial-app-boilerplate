@@ -28,7 +28,7 @@ async function compressAndExportGLTF(gltf, fileName) {
     });
 }
 
-export default function Compression({ modelPath, exports,toCloud,inputModelUrl}) {
+export default function Compression({ modelPath, exports,toCloud,inputModelUrl,setToCloud}) {
     const [isLoadingModel, setIsLoadingModel] = useState(false);
   const [gltf, setGltf] = useState(null);
     useEffect(() => {
@@ -55,6 +55,8 @@ export default function Compression({ modelPath, exports,toCloud,inputModelUrl})
         if(toCloud)
             {
         uploadFile(gltf,inputModelUrl);
+        setToCloud(false);
+
             }
       },[toCloud])
     useEffect(()=>{
