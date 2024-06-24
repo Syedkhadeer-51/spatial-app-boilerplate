@@ -34,11 +34,11 @@ function App() {
       };
 
       const fonts = {
-        droid: 'node_modules/three/examples/fonts/droid/droid_serif_regular.typeface.json',
-        helvetiker: 'node_modules/three/examples/fonts/helvetiker_regular.typeface.json',
-        optimer: 'node_modules/three/examples/fonts/optimer_bold.typeface.json',
-        gentilis: 'node_modules/three/examples/fonts/gentilis_regular.typeface.json',
-        gentilis_bold: 'node_modules/three/examples/fonts/gentilis_bold.typeface.json',
+        //droid: 'node_modules/three/examples/fonts/droid/droid_serif_regular.typeface.json',
+        helvetiker: 'fonts/helvetiker_regular.typeface.json',
+        optimer: 'fonts/optimer_bold.typeface.json',
+        gentilis: 'fonts/gentilis_regular.typeface.json',
+        gentilis_bold: 'fonts/gentilis_bold.typeface.json',
       };
 
       const fontLoader = new FontLoader();
