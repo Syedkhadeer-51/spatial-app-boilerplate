@@ -1,10 +1,4 @@
 import React, { useEffect, useRef } from 'react';
-import * as THREE from 'three';
-import { FontLoader } from 'three/examples/jsm/loaders/FontLoader';
-import { TextGeometry } from 'three/examples/jsm/geometries/TextGeometry';
-import { STLExporter } from 'three/examples/jsm/exporters/STLExporter';
-import { GLTFExporter } from 'three/examples/jsm/exporters/GLTFExporter';
-import { OBJExporter } from 'three/examples/jsm/exporters/OBJExporter';
 import SceneInit from './lib/SceneInit';
 import { GUI } from 'dat.gui';
 
@@ -12,10 +6,14 @@ function App() {
   const textMeshRef = useRef(null);
   const sceneRef = useRef(null);
   const fontRef = useRef(null);
-  const materialRef = useRef(null); // To store material with transparency
+  const materialRef = useRef(null);
 
   useEffect(() => {
-    const initThreeJs = () => {
+    const initThreeJs = async () => {
+      const THREE = await import('three');
+      const { FontLoader } = await import('three/examples/jsm/loaders/FontLoader');
+      const { TextGeometry } = await import('three/examples/jsm/geometries/TextGeometry');
+
       const test = new SceneInit('myThreeJsCanvas');
       test.initialize();
       test.animate();
@@ -31,8 +29,8 @@ function App() {
         color: '#5f9ea0',
         opacity: 1,
         scale: 1,
-        font: 'droid', // Default font
-        exportFormat: 'stl', // Default export format
+        font: 'droid',
+        exportFormat: 'stl',
       };
 
       const fonts = {
@@ -58,17 +56,17 @@ function App() {
       gui.add(textControls, 'text').onChange((value) => updateTextGeometry(value));
       gui.add(textControls, 'size', 1, 100).onChange(() => updateTextGeometry(textControls.text));
       gui.add(textControls, 'height', 1, 20).onChange(() => updateTextGeometry(textControls.text));
-      gui.add(textControls, 'positionX', -100, 100).onChange((value) => textMeshRef.current.position.x = value);
-      gui.add(textControls, 'positionY', -100, 100).onChange((value) => textMeshRef.current.position.y = value);
+      gui.add(textControls, 'positionX', -100, 100).onChange((value) => (textMeshRef.current.position.x = value));
+      gui.add(textControls, 'positionY', -100, 100).onChange((value) => (textMeshRef.current.position.y = value));
       gui.addColor(textControls, 'color').onChange((value) => {
         textControls.color = value;
         materialRef.current.color.set(value);
-        materialRef.current.needsUpdate = true; // Ensure material update
+        materialRef.current.needsUpdate = true;
       });
       gui.add(textControls, 'opacity', 0, 1).onChange((value) => {
         textControls.opacity = value;
         materialRef.current.opacity = value;
-        materialRef.current.needsUpdate = true; // Ensure material update
+        materialRef.current.needsUpdate = true;
       });
       gui.add(textControls, 'scale', 0.1, 3).onChange((value) => {
         textControls.scale = value;
@@ -114,7 +112,7 @@ function App() {
         textMeshRef.current.geometry = newGeometry;
       };
 
-      const exportModel = (format) => {
+      const exportModel = async (format) => {
         if (!textMeshRef.current) return;
 
         let exporter;
@@ -124,31 +122,35 @@ function App() {
 
         switch (format) {
           case 'stl':
-            exporter = new STLExporter();
-            data = exporter.parse(textMeshRef.current);
+            exporter = await import('three/examples/jsm/exporters/STLExporter');
+            data = new exporter.STLExporter().parse(textMeshRef.current);
             mimeType = 'application/octet-stream';
             fileName = 'text_geometry.stl';
             break;
           case 'gltf':
           case 'glb':
-            exporter = new GLTFExporter();
-            exporter.parse(textMeshRef.current, (result) => {
-              const isBinary = format === 'glb';
-              if (isBinary) {
-                data = result;
-                mimeType = 'application/octet-stream';
-                fileName = 'text_geometry.glb';
-              } else {
-                data = JSON.stringify(result);
-                mimeType = 'application/json';
-                fileName = 'text_geometry.gltf';
-              }
-              saveData(data, mimeType, fileName);
-            }, { binary: format === 'glb' });
-            return; // Skip saving data here, as it's done in the callback
+            exporter = await import('three/examples/jsm/exporters/GLTFExporter');
+            new exporter.GLTFExporter().parse(
+              textMeshRef.current,
+              (result) => {
+                const isBinary = format === 'glb';
+                if (isBinary) {
+                  data = result;
+                  mimeType = 'application/octet-stream';
+                  fileName = 'text_geometry.glb';
+                } else {
+                  data = JSON.stringify(result);
+                  mimeType = 'application/json';
+                  fileName = 'text_geometry.gltf';
+                }
+                saveData(data, mimeType, fileName);
+              },
+              { binary: format === 'glb' }
+            );
+            return;
           case 'obj':
-            exporter = new OBJExporter();
-            data = exporter.parse(textMeshRef.current);
+            exporter = await import('three/examples/jsm/exporters/OBJExporter');
+            data = new exporter.OBJExporter().parse(textMeshRef.current);
             mimeType = 'application/octet-stream';
             fileName = 'text_geometry.obj';
             break;
@@ -173,7 +175,6 @@ function App() {
     };
 
     initThreeJs();
-
   }, []);
 
   return (
