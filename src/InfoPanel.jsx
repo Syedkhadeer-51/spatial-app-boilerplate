@@ -114,11 +114,11 @@ function InfoPanel({
       
       
       
-      <Container positionTop={40} positionRight={300} flexDirection="column" md={{ flexDirection: 'row' }} gap={32}>
+      <Container positionTop={110} positionRight={300} flexDirection="column" md={{ flexDirection: 'row' }} gap={32}>
       <Button Variant="icon" onClick={onExport} size="lg" backgroundColor={'grey'} backgroundOpacity={0.35} icon={Download}>
         <Text>Download file</Text>
       </Button>
-    </Container>
+      </Container>
 
       
     </group>  
