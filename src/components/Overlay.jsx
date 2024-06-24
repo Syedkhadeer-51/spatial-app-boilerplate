@@ -63,6 +63,7 @@ export const Overlay = () => {
           name: `${name}`
         }
         scenes.push(obj);
+        alert("Model imported to the last step");
       };
       reader.readAsArrayBuffer(file);
     }
@@ -100,10 +101,24 @@ export const Overlay = () => {
   };
 
   const handleDelete = (index) => {
-    scenes.splice(index,1);
-    setSlide((prev) => (prev < scenes.length - 1 ? prev + 1 : 0));
-    console.log(scenes);
-  }
+    if (scenes.length > 1) {
+      const confirmDeletion = window.confirm("Are you sure you want to delete this model?");
+      if (confirmDeletion) {
+        scenes.splice(index, 1);
+        setSlide((prev) => (prev < scenes.length - 1 ? prev + 1 : 0));
+      }
+    } else {
+      alert("Cannot delete the last remaining model.");
+    }
+  };
+
+  const handlePageChange = (event) => {
+    const pageNumber = parseInt(event.target.value, 10);
+    if (pageNumber > 0 && pageNumber <= scenes.length) {
+      setSlide(pageNumber - 1);
+    }
+  };
+  
 
   return (
     <div className={`overlay ${visible ? 'visible' : 'invisible'}`}>
@@ -149,6 +164,7 @@ export const Overlay = () => {
             className="nav-button"
             onClick={() => setSlide((prev) => (prev > 0 ? prev - 1 : scenes.length - 1))}
           />
+          
           <img
             src={rightArrow}
             alt="Next Slide"

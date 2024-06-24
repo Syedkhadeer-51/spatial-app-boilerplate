@@ -30,9 +30,8 @@ const CloudLoader = ({ onSelectModel }) => {
       path: `${files[index]}`,
       name: `${fileName}`
     }
-    console.log(obj);
     scenes.push(obj);
-    console.log(scenes);
+    alert("Model imported to the last step");
   }
 
   return (
