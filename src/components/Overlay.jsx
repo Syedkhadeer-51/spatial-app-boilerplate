@@ -172,7 +172,7 @@ export const Overlay = () => {
         <div className="content">
           <h1 className="title">{scenes[slide].name}</h1>
           <div className="pages">
-            {scenes.map((scene, index) => (
+            {useEffect(()=>{scenes.map((scene, index) => (
               <button
                 key={index}
                 className={`pages-button ${slide === index ? 'active' : ''}`}
@@ -180,7 +180,7 @@ export const Overlay = () => {
               >
                 {index + 1}
               </button>
-            ))} 
+            ))},[]) }
           </div>
         </div>
         
