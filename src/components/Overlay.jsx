@@ -9,6 +9,7 @@ import logo from '../assets/logo.svg';
 import trash from '../assets/trash.svg'
 import '../index.css';
 import { ref as storageRef, uploadBytes } from 'firebase/storage';
+import { SlideTracker } from './SlideTracker';
 
 export const Overlay = () => {
   const [slide, setSlide] = useAtom(slideAtom);
@@ -106,9 +107,6 @@ export const Overlay = () => {
     }
   };
 
-  const handlePageChange = (pageNumber) => {
-    setSlide(pageNumber);
-  };
   
 
   return (
@@ -172,15 +170,7 @@ export const Overlay = () => {
         <div className="content">
           <h1 className="title">{scenes[slide].name}</h1>
           <div className="pages">
-            {useEffect(()=>{scenes.map((scene, index) => (
-              <button
-                key={index}
-                className={`pages-button ${slide === index ? 'active' : ''}`}
-                onClick={() => handlePageChange(index)}
-              >
-                {index + 1}
-              </button>
-            ))},[]) }
+            <SlideTracker/>
           </div>
         </div>
         
