@@ -2,10 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { getStorage, ref as storageRef, listAll, getDownloadURL } from 'firebase/storage';
 import { storage } from './Firebase';
 import { scenes } from './Experience';
+import { useAtom } from 'jotai';
+import { slideAtom } from './Experience';
 
 const CloudLoader = ({ onSelectModel }) => {
   const [files, setFiles] = useState([]);
-
+  const [slide, setSlide] = useAtom(slideAtom);
   useEffect(() => {
     const fetchFiles = async () => {
       try {
@@ -31,6 +33,7 @@ const CloudLoader = ({ onSelectModel }) => {
       name: `${fileName}`
     }
     scenes.push(obj);
+    setSlide(scenes.length-1);
     alert("Model imported to the last step");
   }
 

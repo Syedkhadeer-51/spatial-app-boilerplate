@@ -9,7 +9,6 @@ import logo from '../assets/logo.svg';
 import trash from '../assets/trash.svg'
 import '../index.css';
 import { ref as storageRef, uploadBytes } from 'firebase/storage';
-import { SlideTracker } from './SlideTracker';
 
 export const Overlay = () => {
   const [slide, setSlide] = useAtom(slideAtom);
@@ -58,6 +57,7 @@ export const Overlay = () => {
           name: `${name}`
         }
         scenes.push(obj);
+        setSlide(scenes.length-1);
         alert("Model imported to the last step");
       };
       reader.readAsArrayBuffer(file);
@@ -107,6 +107,9 @@ export const Overlay = () => {
     }
   };
 
+  const handlePageChange = (pageNumber) => {
+    setSlide(pageNumber);
+  };
   
 
   return (
@@ -129,6 +132,7 @@ export const Overlay = () => {
             </button>
           </div>
           <h1 className='logo'>PeterCatCo</h1>
+          {/* <img src={logo} alt="Logo" className="logo" />  */}
           <div className="nav-right">
             <div className="dropdown">
               <button className="dropbtn" onClick={() => setShowDropdown(!showDropdown)}>
@@ -170,7 +174,15 @@ export const Overlay = () => {
         <div className="content">
           <h1 className="title">{scenes[slide].name}</h1>
           <div className="pages">
-            <SlideTracker/>
+            {scenes.map((scene, index) => (
+              <button
+                key={index}
+                className={`pages-button ${slide === index ? 'active' : ''}`}
+                onClick={() => handlePageChange(index)}
+              >
+                {index + 1}
+              </button>
+            ))} 
           </div>
         </div>
         
