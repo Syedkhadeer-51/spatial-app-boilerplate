@@ -70,8 +70,8 @@ export default function App() {
   }, [animationType, position]);
 
   return (
-    <div className="app-wrapper">
-      <h2>3D-Model Viewer and Compressor</h2>
+    // <div className="app-wrapper">
+    //   <h2>3D-Model Viewer and Compressor</h2>
       <div className="app-container">
         <div className="controls">
           <FileUploader onFileUploaded={handleFileUploaded} />
@@ -176,6 +176,6 @@ export default function App() {
           </Canvas>
         </div>
       </div>
-    </div>
+    // </div>
   );
 }

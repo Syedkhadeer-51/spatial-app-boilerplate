@@ -10,7 +10,6 @@ const CompressExportButton = ({ modelRef, modelLoaded, originalSize }) => {
 
             try {
                 const blob = await shrinkAndExportGLTF(modelRef.current, "compressed_model.glb");
-                // const compressedSize = blob.size;
             } catch (error) {
                 console.error("Error during compression and export:", error);
             }
@@ -20,7 +19,7 @@ const CompressExportButton = ({ modelRef, modelLoaded, originalSize }) => {
     };
 
     return (
-        <button onClick={handleExport} style={{ marginTop: '20px', border: '1px solid black' }}>
+        <button onClick={handleExport}>
             Export Model to Local
         </button>
     );

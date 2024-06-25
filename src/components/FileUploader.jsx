@@ -41,7 +41,7 @@ const FileUploader = ({ onFileUploaded }) => {
     return (
         <div>
             <input type="file" onChange={handleFileChange} />
-            <button onClick={handleUpload}>Upload</button>
+            <button onClick={handleUpload}>Upload Model</button>
             {uploadStarted && <p>Upload Progress: {Math.round(progress)}%</p>}
         </div>
     );
