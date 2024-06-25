@@ -130,7 +130,7 @@ export const Overlay = () => {
               Export To Device
             </button>
           </div>
-          <img src={logo} alt="Logo" className="logo" />
+          <h1 className='logo'>PeterCatCo</h1>
           <div className="nav-right">
             <div className="dropdown">
               <button className="dropbtn" onClick={() => setShowDropdown(!showDropdown)}>
