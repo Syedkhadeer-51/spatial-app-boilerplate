@@ -1,33 +1,175 @@
-* {
-  box-sizing: border-box;
-}
-
-html,
-body,
-#root {
+html, body, #root {
   width: 100%;
   height: 100%;
   margin: 0;
   padding: 0;
-  -webkit-touch-callout: none;
-  -webkit-user-select: none;
-  -khtml-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
   overflow: hidden;
+  font-family: 'Arial', sans-serif;
+  background: linear-gradient(135deg, #e2e2e2, #c9d6ff);
 }
+
+.canvas-container {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+}
+
+.controls-container-draggable {
+  position: absolute;
+  top: 10px;
+  left: 1100px;
+  background: rgba(3, 3, 3, 0.8);
+  backdrop-filter: blur(10px);
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.controls-container {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background: rgba(3, 3, 3, 0.8);
+  backdrop-filter: blur(10px);
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+button {
+  background-color: #007bff;
+  border: none;
+  color: rgb(8, 8, 8);
+  padding: 10px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+.slider {
+  width: 100%;
+  margin: 10px 0;
+}
+
+.input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+input[type="file"] {
+  padding: 5px;
+}
+
+
+
+
+
+
+.controls-header {
+  margin-bottom: 10px;
+  display: flex;
+  flex-direction: column;
+}
+
+.controls-header button {
+  margin-bottom: 10px;
+}
+
+.light-control {
+  margin-bottom: 20px;
+}
+
+.drag-handle {
+  cursor: move;
+  background-color: #eee5e5;
+  padding: 5px;
+  border-radius: 3px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.delete-button {
+  background-color: red;
+  color: rgb(12, 12, 12);
+  border: none;
+  border-radius: 3px;
+  padding: 3px 5px;
+  cursor: pointer;
+}
+
+.delete-button:hover {
+  background-color: darkred;
+}
+
+.controls {
+  margin-top: 10px;
+}
+
+.controls label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+/* App.css */
 
 #root {
-  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100vh;
 }
 
-body {
-  position: fixed;
-  overflow: hidden;
-  overscroll-behavior-y: none;
-  font-family: -apple-system, BlinkMacSystemFont, avenir next, avenir, helvetica neue, helvetica, ubuntu, roboto, noto, segoe ui, arial, sans-serif;
-  color: black;
-  -webkit-font-smoothing: antialiased;
-  background: #f0f0f0;
+.canvas-container {
+  width: 100%;
+  height: 80%;
+  position: relative;
+}
+
+.controls-container {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background: rgba(255, 255, 255, 0.8);
+  padding: 10px;
+  border-radius: 8px;
+  z-index: 1000;
+}
+
+.light-controls-container {
+  position: absolute;
+  top: 20px;
+  left: 10px;
+  z-index: 1000;
+  background-color: rgba(239, 233, 233, 0.8);
+  padding: 10px;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(234, 229, 229, 0.995);
+  max-height: 90vh; /* Ensure it doesn't overflow the screen */
+  overflow-y: auto; /* Scroll if content overflows */
+  display: flex;
+  flex-direction: column;
+}
+
+/* Draggable Component Styles */
+.draggable-container {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: rgba(255, 255, 255, 0.9);
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  z-index: 1000;
 }
