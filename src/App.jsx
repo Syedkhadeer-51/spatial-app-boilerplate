@@ -1,3 +1,4 @@
+//app.jsx
 import React, { useState, useEffect, useRef } from 'react';
 import { Canvas } from '@react-three/fiber';
 import { OrbitControls, Stats } from '@react-three/drei';
@@ -103,6 +104,7 @@ const App = () => {
         </Canvas>
       </div>
       <div className="controls-container">
+        <div className="controls-container-draggable">
         <LightControls 
           lights={lights} 
           updateLight={updateLight} 
@@ -115,6 +117,7 @@ const App = () => {
           globalExposure={globalExposure}
           updateGlobalExposure={updateGlobalExposure}
         />
+        </div>
         <CloudContainer onImport={handleImportFromCloud} />
         <CloudExportContainer sceneRef={sceneRef} />
         <ImportContainer onImport={handleImportFromLocal} />
