@@ -1,10 +1,9 @@
+
 * {
   box-sizing: border-box;
 }
 
-html,
-body,
-#root {
+html, body, #root {
   width: 100%;
   height: 100%;
   margin: 0;
@@ -27,7 +26,376 @@ body {
   overflow: hidden;
   overscroll-behavior-y: none;
   font-family: -apple-system, BlinkMacSystemFont, avenir next, avenir, helvetica neue, helvetica, ubuntu, roboto, noto, segoe ui, arial, sans-serif;
-  color: black;
+  color: #333;
   -webkit-font-smoothing: antialiased;
   background: #f0f0f0;
+}
+
+.app-container {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  pointer-events: auto;
+  touch-action: none;
+}
+
+.canvas-container {
+  flex: 1;
+  height: 100%;
+  width: 100%;
+  position: relative;
+}
+
+.App {
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  overflow: hidden;
+}
+
+/* Styles for info panel */
+.info-panel {
+  position: fixed;
+  top: 50%;
+  right: 20px;
+  transform: translateY(-50%);
+  width: 320px;
+  max-height: 80vh;
+  background-color: rgba(238, 233, 233, 0.1);
+  backdrop-filter: blur(20px);
+  color: #f5f1f1;
+  padding: 25px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  overflow-y: auto;
+  z-index: 10;
+  border-radius: 20px;
+  transition: all 0.3s ease-in-out;
+}
+
+.info-panel h2 {
+  color: #ffffff;
+  font-size: 1.8rem;
+  margin-bottom: 20px;
+  font-weight: 600;
+}
+
+/*.info-panel p {
+  margin: 10px 0;
+  line-height: 1.6;
+  font-size: 0.9rem;
+}*/
+
+.info-panel label {
+  display: block;
+  margin: 15px 0 8px;
+  color: #ffffff;
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+.info-panel input[type="color"],
+.info-panel input[type="range"],
+... (183 lines left)
+Collapse
+App.css
+6 KB
+import React,{useEffect, useRef, useState} from 'react';
+
+function InfoPanel2D({
+  object,
+  onColorChange,
+  onMaterialChange,
+Expand
+InfoPanel2D.jsx
+5 KB
+﻿
+Saimani
+saimani_11
+ 
+ 
+/* Existing global styles */
+* {
+  box-sizing: border-box;
+}
+
+html, body, #root {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  overflow: hidden;
+}
+
+#root {
+  overflow: hidden;
+}
+
+body {
+  position: fixed;
+  overflow: hidden;
+  overscroll-behavior-y: none;
+  font-family: -apple-system, BlinkMacSystemFont, avenir next, avenir, helvetica neue, helvetica, ubuntu, roboto, noto, segoe ui, arial, sans-serif;
+  color: #333;
+  -webkit-font-smoothing: antialiased;
+  background: #f0f0f0;
+}
+
+.app-container {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  pointer-events: auto;
+  touch-action: none;
+}
+
+.canvas-container {
+  flex: 1;
+  height: 100%;
+  width: 100%;
+  position: relative;
+}
+
+.App {
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  overflow: hidden;
+}
+
+/* Styles for info panel */
+.info-panel {
+  position: fixed;
+  top: 50%;
+  right: 20px;
+  transform: translateY(-50%);
+  width: 320px;
+  max-height: 80vh;
+  background-color: rgba(238, 233, 233, 0.1);
+  backdrop-filter: blur(20px);
+  color: #f5f1f1;
+  padding: 25px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  overflow-y: auto;
+  z-index: 10;
+  border-radius: 20px;
+  transition: all 0.3s ease-in-out;
+}
+
+.info-panel h2 {
+  color: #ffffff;
+  font-size: 1.8rem;
+  margin-bottom: 20px;
+  font-weight: 600;
+}
+
+/*.info-panel p {
+  margin: 10px 0;
+  line-height: 1.6;
+  font-size: 0.9rem;
+}*/
+
+.info-panel label {
+  display: block;
+  margin: 15px 0 8px;
+  color: #ffffff;
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+.info-panel input[type="color"],
+.info-panel input[type="range"],
+.info-panel input[type="number"],
+.info-panel input[type="text"],
+.info-panel select {
+  width: 100%;
+  padding: 12px;
+  margin: 5px 0 15px;
+  border: none;
+  border-radius: 12px;
+  background-color: rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+  outline: none;
+  transition: background-color 0.3s ease;
+  font-size: 0.9rem;
+}
+
+/*.info-panel input[type="color"]:hover,
+.info-panel input[type="range"]:hover,
+.info-panel input[type="number"]:hover,
+.info-panel select:hover {
+  background-color: #555;
+}*/
+
+.info-panel input[type="checkbox"] {
+  margin-right: 10px;
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border: 2px solid rgba(255, 255, 255, 0.5);
+  border-radius: 6px;
+  vertical-align: middle;
+  position: relative;
+  cursor: pointer;
+}
+
+.info-panel input[type="checkbox"]:checked::after {
+  content: '✓';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: #ffffff;
+  font-size: 14px;
+}
+
+.info-panel button {
+  display: block;
+  width: 100%;
+  padding: 14px;
+  margin: 20px 0;
+  border: none;
+  border-radius: 12px;
+  background-color: rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+.info-panel button:hover {
+  background-color: rgba(255, 255, 255, 0.3);
+}
+
+/* Add hover effect for highlighting text */
+
+/*.info-panel label:hover,
+.info-panel button:hover {
+  background-color: rgba(102, 178, 255, 0.2); /* Light blue background for highlighting
+  border-radius: 4px;
+} */
+
+.info-close .close-button {
+  background-color: transparent;
+  color: #fff;
+  border: none;
+  font-size: 1.5rem;
+  padding: 5px;
+  cursor: pointer;
+  position: absolute;
+  top: 15px;
+  right: 15px;
+}
+
+.info-close .close-button:hover {
+  color: #66b2ff;
+}
+
+/* Styles for containers */
+.import-container,
+.export-container,
+.cloud-container,
+.cloud-export-container {
+  background-color: rgba(255, 255, 255, 0.1);
+  position: fixed;
+  backdrop-filter: blur(20px);
+  left: 20px;
+  padding: 20px;
+  z-index: 2000;
+  border-radius: 5px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  font-family: 'Roboto', sans-serif;
+}
+
+.import-container {
+  bottom: 20px;
+}
+
+.export-container {
+  bottom: 80px;
+}
+
+.cloud-container {
+  bottom: 140px;
+}
+
+.cloud-export-container {
+  bottom: 200px;
+}
+
+.import-container input[type="file"],
+.export-container input[type="file"],
+.cloud-container input[type="file"],
+.cloud-export-container input[type="file"] {
+  color: #f0f0f0;
+}
+
+.import-container input[type="file"]::-webkit-file-upload-button,
+.export-container input[type="file"]::-webkit-file-upload-button,
+.cloud-container input[type="file"]::-webkit-file-upload-button,
+.cloud-export-container input[type="file"]::-webkit-file-upload-button {
+  padding: 8px 12px;
+  border: none;
+  border-radius: 8px;
+  background-color: #66b2ff;
+  color: #1a1a1a;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.import-container input[type="file"]::-webkit-file-upload-button:hover,
+.export-container input[type="file"]::-webkit-file-upload-button:hover,
+.cloud-container input[type="file"]::-webkit-file-upload-button:hover,
+.cloud-export-container input[type="file"]::-webkit-file-upload-button:hover {
+  background-color: #558bcc;
+}
+
+/* Additional styles for cloud and import containers */
+.cloud-container label,
+.import-container label,
+.cloud-export-container label {
+  color: #ffffff; /* Set the color to white */
+}
+
+/* Add transitions for smoother interactions */
+button,
+input[type="color"],
+input[type="range"],
+input[type="number"],
+select {
+  transition: all 0.3s ease;
+}
+
+/* Added smooth transitions for info panel */
+.info-panel {
+  transition: transform 0.3s ease-in-out;
+}
+/* Color picker styles */
+.ms-colorpicker {
+  margin-bottom: 15px;
+}
+
+#colorSwatch {
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  margin-top: 10px;
+}
+
+#values {
+  margin-top: 15px;
+  font-size: 0.8rem;
+  opacity: 0.8;
 }
