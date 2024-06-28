@@ -19,3 +19,5 @@ export const toCloud = atom(false);
 export const inputModelUrl = atom('');
 
 export const modelUrls=atom([]);
+
+export const gridHelperRefAtom = atom(null);

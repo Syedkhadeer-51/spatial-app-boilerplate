@@ -3,6 +3,7 @@ import { SketchPicker } from 'react-color';
 import { backgroundColor } from './atoms';
 import { gridColor } from './atoms';
 import { useAtom } from 'jotai';
+import { gridHelperRefAtom } from './atoms';
 
 const hexToRgb = (hex) => {
   hex = hex.replace(/^#/, '');
@@ -33,11 +34,12 @@ const getComplementaryColor = (hex) => {
   return rgbToHex(compR, compG, compB);
 };
 
-const ColorPickerGrid = ({  gridHelperRef }) => {
+const ColorPickerGrid = () => {
   const [pickerVisible, setPickerVisible] = useState(false);
   const [BackgroundColor,setBackgroundColor] = useAtom(backgroundColor);
   const [GridColor,setGridColor] = useAtom(gridColor);
-
+  const [gridHelperRef,setGridHelperRef] = useAtom(gridHelperRefAtom);
+   
   const handleColorChange = (color) => {
     setBackgroundColor(color.hex);
     const complementaryColor = getComplementaryColor(color.hex);

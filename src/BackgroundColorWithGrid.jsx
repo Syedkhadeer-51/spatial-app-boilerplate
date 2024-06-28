@@ -1,9 +1,13 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { gridColor } from './atoms';
 import { backgroundColor } from './atoms';
 import { useAtom } from 'jotai';
-function BackgroundColorWithGrid({gridHelperRef}) {
+import { gridHelperRefAtom } from './atoms';
+function BackgroundColorWithGrid() {
     // Your component logic here
+    const gridHelperRef = useRef(null);
+    const[,setGridHelperRef]  = useAtom(gridHelperRefAtom);
+    setGridHelperRef(gridHelperRef);
     const [BackgroundColor,setBackgroundColor] = useAtom(backgroundColor);
     const [GridColor,setGridColor] = useAtom(gridColor);
 

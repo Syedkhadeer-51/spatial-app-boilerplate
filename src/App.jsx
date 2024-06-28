@@ -13,13 +13,12 @@ import UiForFirebase from './uiForFirebase.jsx';
 import BackgroundColorWithGrid from './BackgroundColorWithGrid.jsx';
 
 export default function App() {
-  const gridHelperRef = useRef(null);
 
 
   return (
     <>
     <UiForFirebase/>
-      <ColorPickerGrid gridHelperRef={gridHelperRef} />
+      <ColorPickerGrid />
       <CameraNamesList position={'absolute'} />
       <Canvas camera={{ position: [0, 3, 10] }}>
       <ambientLight />
@@ -28,7 +27,7 @@ export default function App() {
       <TraverseForCamera />
       <PerspectiveCameraWithHelper name="PerspectiveCamera1" position={[0, 1.3, 0]} far={10} />
       <OrthographicCameraWithHelper name="OrthographicCamera1" position={[0, 0, 5]} far={16} left={-5} right={5} top={5} bottom={-5} />
-      <BackgroundColorWithGrid gridHelperRef={gridHelperRef} />
+      <BackgroundColorWithGrid />
       <Stats />
       </Canvas>
     </>
