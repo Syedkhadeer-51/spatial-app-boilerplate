@@ -84,7 +84,7 @@ export const Scene = ({path, ...props }) => {
                     />
                 </mesh>
                 <Effects />
-                <OrbitControls enablePan={false} enableZoom={true} minPolarAngle={Math.PI / 2.2} maxPolarAngle={Math.PI / 2.2} minDistance={5} maxDistance={10}/>
+                <OrbitControls enablePan={false} enableZoom={true} minPolarAngle={Math.PI / 2.2} maxPolarAngle={Math.PI / 2.2} minDistance={5} maxDistance={15}/>
                 
             </group>
         </>

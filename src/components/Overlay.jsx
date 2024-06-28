@@ -132,7 +132,6 @@ export const Overlay = () => {
             </button>
           </div>
           <h1 className='logo'>PeterCatCo</h1>
-          {/* <img src={logo} alt="Logo" className="logo" />  */}
           <div className="nav-right">
             <div className="dropdown">
               <button className="dropbtn" onClick={() => setShowDropdown(!showDropdown)}>
@@ -149,31 +148,19 @@ export const Overlay = () => {
             </button>
           </div>
         </div>
-        <div className="nav">
-          <div className="arrows">
-          <img
-            src={leftArrow}
-            alt="Previous Slide"
-            className="nav-button"
-            onClick={() => setSlide((prev) => (prev > 0 ? prev - 1 : scenes.length - 1))}
-          />
-          <img
-            src={rightArrow}
-            alt="Next Slide"
-            className="nav-button"
-            onClick={() => setSlide((prev) => (prev < scenes.length - 1 ? prev + 1 : 0))}
-          />
-          </div>
-          <img
-            src = {trash}
-            alt="delete"
-            className="delete"
-            onClick={()=> handleDelete(slide)}
-          />
-        </div>
+        <img
+          src = {trash}
+          alt="delete"
+          className="delete"
+          onClick={()=> handleDelete(slide)}
+        />
         <div className="content">
           <h1 className="title">{scenes[slide].name}</h1>
           <div className="pages">
+            <button className='pages-button' 
+              onClick={() => setSlide((prev) => (prev > 0 ? prev - 1 : scenes.length - 1))}>
+              &laquo;    
+            </button>
             {scenes.map((scene, index) => (
               <button
                 key={index}
@@ -183,7 +170,12 @@ export const Overlay = () => {
                 {index + 1}
               </button>
             ))} 
+            <button className='pages-button' 
+              onClick={() => setSlide((prev) => (prev < scenes.length - 1 ? prev + 1 : 0))}>
+              &raquo;    
+            </button>
           </div>
+
         </div>
         
       </>

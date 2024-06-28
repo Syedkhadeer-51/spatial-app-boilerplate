@@ -142,34 +142,6 @@ label.nav-link{
   color: #de1d1d;
 }
 
-.arrows{
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 1rem;
-}
-
-.nav {
-  display: flex;
-  flex-direction: column;
-}
-
-.nav-button {
-  width: 3rem;
-  height: 3rem;
-  pointer-events: auto;
-  cursor: pointer;
-  transition: opacity 0.3s;
-}
-
-.nav-button:hover {
-  opacity: 0.6;
-}
 
 .delete{
   top:45rem;
@@ -187,8 +159,7 @@ label.nav-link{
 }
 
 .content {
-  padding-top: 2rem;
-  padding-bottom: 2.5rem;
+  padding-top: 4rem;
   padding-left: 1rem;
   padding-right: 1rem;
   display: flex;
