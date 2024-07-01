@@ -1,20 +1,19 @@
-import { Canvas } from '@react-three/fiber'
-import './App.css'
-import { OrbitControls } from '@react-three/drei'
+import { Canvas } from "@react-three/fiber";
+import { Leva } from "leva";
+import { Experience } from "./components/Experience";
+import { Overlay } from "./components/Overlay";
 
-
-export default function App() {
+function App() {
   return (
     <>
-      <Canvas camera={{ position: [-8, 5, 8] }}>
-        <ambientLight intensity={0.1} />
-        <directionalLight color="red" position={[0, 0, 5]} />
-        <mesh scale={3}>
-          <boxGeometry />
-          <meshStandardMaterial />
-        </mesh>
-        <OrbitControls />
+      <Leva hidden/>
+      <Overlay />
+      <Canvas gl={{ logarithmicDepthBuffer: true, antialias: false }} dpr={[1, 1.5]} camera={{ position: [0, 0, 15], fov: 25 }}>
+        <color attach="background" args={["#ececec"]} />
+        <Experience />
       </Canvas>
     </>
-  )
+  );
 }
+
+export default App;

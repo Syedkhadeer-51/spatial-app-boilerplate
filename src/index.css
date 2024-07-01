@@ -1,68 +1,203 @@
-:root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
+@import url('https://fonts.googleapis.com/css2?family=Exo+2:ital,wght@0,100..900;1,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Racing+Sans+One&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Playwrite+GB+S:ital,wght@0,100..400;1,100..400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poiret+One&display=swap');
 
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
-
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+#root{
+  width:100vw;
+  height: 100vh;
 }
 
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-a:hover {
-  color: #535bf2;
-}
-
-body {
+body{
   margin: 0;
+  background-color: transparent;
+}
+
+.overlay {
+  position: fixed;
+  z-index: 10;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
   display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
+  flex-direction: column;
+  justify-content: space-between;
+  pointer-events: none;
+  color: #f5f0f0;
+  transition: opacity 1s;
+  background-color: transparent;
 }
 
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
+.visible {
+  opacity: 1;
 }
 
-button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
+.invisible {
+  opacity: 0;
+}
+
+.nav-bar {
+  position: fixed;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  top: 0;
+  color: white;
+  pointer-events: auto;
+  background-color: transparent;
+}
+
+.nav-left, .nav-right {
+  display: flex;
+  padding: 1.5rem;
+  gap: 3rem;
+}
+
+.nav-bar .nav-left .nav-link,
+.nav-bar .nav-right .nav-link {
+  font-family: "Exo 2", sans-serif;
+  background-color: transparent;
+  color: white;
+  text-decoration: none;
+  padding: 1rem;
+  transition: color 0.3s ease;
+}
+
+.nav-bar .nav-left .nav-link:hover,
+.nav-bar .nav-right .nav-link:hover {
+  color: rgb(255, 0, 0);
+}
+
+label.nav-link{
   cursor: pointer;
-  transition: border-color 0.25s;
-}
-button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
+.exportbtn{
+  font-family: "Exo 2", sans-serif;
+  font-size: 1rem;
+  background-color: transparent;
+  border: none;
+  outline: none;
+  color: white;
+  text-decoration: none;
+  padding: 1rem;
+  transition: color 0.3s ease;
+  cursor: pointer;
+}
+
+.exportbtn:hover{
+  color: rgb(255, 0, 0);
+}
+
+.dropdown .dropbtn{
+  font-family: "Exo 2", sans-serif;
+  font-size: 1rem;
+  background-color: transparent;
+  border: none;
+  outline: none;
+  color: white;
+  text-decoration: none;
+  padding: 1rem;
+  transition: color 0.3s ease;
+  cursor: pointer;
+}
+
+.dropdown .dropbtn:hover{
+  color: rgb(255, 0, 0);
+}
+
+.dropdown-content {
+  font-family: "Exo 2", sans-serif;
+  display: none;
+  position: absolute;
+  background-color: #f5f0f0;
+  min-width: 13rem;
+  z-index: 1;
+}
+
+.dropdown-content button {
+  float: none;
+  min-width: 13rem;
+  border-style: none;
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  text-align: left;
+}
+
+.dropdown-content button:hover {
+  background-color: #dba7a7;
+  cursor: pointer;  
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+.logo {
+  font-family: "Racing Sans One", sans-serif;
+  color: #de1d1d;
+}
+
+
+.delete{
+  top:45rem;
+  left: 92rem;
+  position: absolute;
+  width: 3rem;
+  height: 3rem;
+  pointer-events: auto;
+  cursor: pointer;
+  transition: opacity 0.3s;
+}
+
+.delete:hover {
+  opacity: 0.6;
+}
+
+.content {
+  padding-top: 4rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.title {
+  padding-top: 30rem;
+  font-family:"Racing Sans One", sans-serif;
+  font-size: 2.7rem;
+  font-weight: 800;
+  margin: 2rem;
+}
+
+.pages-button {
+  font-family: "Exo 2", sans-serif;
+  cursor: pointer;
+  pointer-events: auto;
+  background-color: transparent;
+  color: #f5f0f0;
+  float: left;
+  padding: 8px 16px;
+  border: none;
+  outline: none;
+  text-decoration: none;
+  transition: background-color 0.3s;
+  margin: 0 4px;
+}
+
+.pages .active {
+  background-color: #f5f0f0;
+  color: black;
+}
+
+.pages-button:hover {
+  font-weight: bold;
+  background-color: #de1d1d;
+  color: #f5f0f0;
 }
