@@ -1,0 +1,210 @@
+@import url('https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@100..900&display=swap');
+
+.light-controls-container {
+  font-family: 'Crimson Pro', sans-serif;
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 26rem; /* Increased width */
+  height: 100vh;
+  background-color: rgba(0, 255, 0, 0.08); /* Slightly stronger Neon Green base */
+  color: #7FDEFF; /* Neon Blue text */
+  padding: 3rem; /* Increased padding */
+  overflow-y: auto;
+  z-index: 10;
+  backdrop-filter: blur(12px); /* Increased blur */
+  box-shadow: 3px 0 12px rgba(0, 0, 0, 0.15); /* Slightly stronger shadow */
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 2px solid rgba(0, 255, 0, 0.15); /* Thicker Neon Green border */
+  padding-bottom: 1.5rem; /* Increased padding */
+  margin-bottom: 2rem; /* Increased margin */
+}
+
+.header h2 {
+  font-family: 'Crimson Pro', sans-serif;
+  font-size: 2rem; /* Larger font size */
+  color: #7FDEFF; /* Neon Blue text */
+}
+
+.controls-header {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem; /* Increased gap */
+  margin-bottom: 2rem; /* Increased margin */
+}
+
+.controls-header button,
+.controls-header label {
+  font-family: 'Crimson Pro', sans-serif;
+  background-color: rgba(0, 255, 0, 0.25); /* Slightly stronger Neon Green background */
+  color: #7FDEFF; /* Neon Blue text */
+  border: none;
+  border-radius: 12px; /* Increased border-radius */
+  padding: 1rem; /* Increased padding */
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+  backdrop-filter: blur(7px); /* Increased blur */
+}
+
+.controls-header button:hover,
+.controls-header label:hover {
+  background-color: rgba(0, 255, 0, 0.35); /* Slightly stronger Neon Green hover */
+  transform: translateY(-3px); /* Increased transform */
+}
+
+.controls-header label input[type="range"] {
+  width: 100%;
+  margin-top: 0.75rem; /* Increased margin */
+}
+
+.light-control {
+  margin-bottom: 2rem; /* Increased margin */
+}
+
+.drag-handle {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem; /* Increased padding */
+  border-bottom: 2px solid rgba(0, 255, 0, 0.15); /* Thicker Neon Green border */
+  cursor: pointer;
+}
+
+.drag-handle h3 {
+  font-size: 1.5rem; /* Larger font size */
+}
+
+.delete-button {
+  background-color: transparent;
+  color: #e40a0a;
+  border: none;
+  font-size: 1.25rem; /* Larger font size */
+  font-weight: 1000;
+  cursor: pointer;
+  transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.delete-button:hover {
+  color: #ff4040;
+  transform: rotate(90deg);
+}
+
+.Exposure-slider {
+  width: 100%;
+  -webkit-appearance: none;
+  appearance: none;
+  height: 10px; /* Increased height */
+  background: linear-gradient(to right, rgba(0, 255, 0, 0.1) 0%, rgba(0, 255, 0, 0.1) calc((var(--value) - var(--min)) * 100% / (var(--max) - var(--min))), rgba(0, 255, 0, 0.3) calc((var(--value) - var(--min)) * 100% / (var(--max) - var(--min))), rgba(0, 255, 0, 0.3) 100%); /* Neon Green */
+  outline: none;
+  opacity: 0.8; /* Slightly increased opacity */
+  transition: opacity .15s ease-in-out;
+  border-radius: 6px; /* Slightly increased border-radius */
+}
+
+.Exposure-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 18px; /* Larger thumb size */
+  height: 18px; /* Larger thumb size */
+  border-radius: 50%;
+  background: #7FDEFF; /* Neon Blue */
+  cursor: pointer;
+}
+
+.Exposure-slider::-moz-range-thumb {
+  width: 18px; /* Larger thumb size */
+  height: 18px; /* Larger thumb size */
+  border-radius: 50%;
+  background: #7FDEFF; /* Neon Blue */
+  cursor: pointer;
+}
+
+.controls {
+  margin-top: 1.5rem; /* Increased margin */
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem; /* Increased gap */
+}
+
+.controls label {
+  font-weight: 700; /* Increased font-weight */
+  color: #7FDEFF; /* Neon Blue */
+}
+
+.controls input[type="number"],
+.controls input[type="range"],
+.controls input[type="color"],
+.controls select {
+  width: 100%;
+  padding: 0.75rem; /* Increased padding */
+  margin-bottom: 1.5rem; /* Increased margin */
+  border: none;
+  border-radius: 12px; /* Increased border-radius */
+  background-color: rgba(0, 255, 0, 0.25); /* Slightly stronger Neon Green background */
+  color: #7FDEFF; /* Neon Blue text */
+  backdrop-filter: blur(7px); /* Increased blur */
+  border: 1px solid rgba(0, 255, 0, 0.35); /* Slightly stronger Neon Green border */
+  appearance: none;
+}
+
+.controls input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 10px; /* Increased height */
+  background: linear-gradient(to right, rgba(0, 255, 0, 0.1) 0%, rgba(0, 255, 0, 0.1) calc((var(--value) - var(--min)) * 100% / (var(--max) - var(--min))), rgba(0, 255, 0, 0.3) calc((var(--value) - var(--min)) * 100% / (var(--max) - var(--min))), rgba(0, 255, 0, 0.3) 100%); /* Neon Green */
+  border-radius: 6px; /* Slightly increased border-radius */
+}
+
+.controls input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 18px; /* Larger thumb size */
+  height: 18px; /* Larger thumb size */
+  border-radius: 50%;
+  background: #7FDEFF; /* Neon Blue */
+  cursor: pointer;
+}
+
+.controls input[type="range"]::-moz-range-thumb {
+  width: 18px; /* Larger thumb size */
+  height: 18px; /* Larger thumb size */
+  border-radius: 50%;
+  background: #7FDEFF; /* Neon Blue */
+  cursor: pointer;
+}
+
+.slider-output {
+  position: absolute;
+  top: -32px; /* Adjusted position */
+  right: 0;
+  font-size: 16px; /* Increased font size */
+  background: rgba(0, 0, 0, 0.85);
+  color: white;
+  padding: 4px 10px; /* Adjusted padding */
+  border-radius: 6px; /* Slightly increased border-radius */
+}
+
+/* Scrollbar Styling */
+.light-controls-container::-webkit-scrollbar {
+  width: 10px; /* Increased width */
+}
+
+.light-controls-container::-webkit-scrollbar-track {
+  background: rgba(0, 255, 0, 0.12); /* Slightly stronger Neon Green track */
+  backdrop-filter: blur(7px); /* Increased blur */
+  border-radius: 12px; /* Increased border-radius */
+}
+
+.light-controls-container::-webkit-scrollbar-thumb {
+  background: rgba(0, 255, 0, 0.35); /* Slightly stronger Neon Green thumb */
+  border-radius: 12px; /* Increased border-radius */
+}
+
+.light-controls-container::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 255, 0, 0.55); /* Slightly stronger Neon Green hover */
+}

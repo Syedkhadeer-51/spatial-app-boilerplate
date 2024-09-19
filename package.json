@@ -11,9 +11,22 @@
   },
   "dependencies": {
     "@react-three/drei": "^9.105.6",
-    "@react-three/fiber": "^8.16.6",
+    "@react-three/fiber": "^8.17.5",
+    "@react-three/postprocessing": "^2.16.2",
+    "@react-three/uikit": "^0.4.1",
+    "@react-three/xr": "^6.1.1",
+    "aframe": "^1.6.0",
+    "bourbon": "^7.3.0",
+    "file-saver": "^2.0.5",
+    "firebase": "^10.12.2",
+    "jotai": "^2.8.3",
+    "leva": "^0.9.35",
+    "postprocessing": "^6.35.5",
     "react": "^18.2.0",
+    "react-color": "^2.19.3",
     "react-dom": "^18.2.0",
+    "react-draggable": "^4.4.6",
+    "react-router-dom": "^6.24.1",
     "three": "^0.164.1"
   },
   "devDependencies": {
@@ -24,6 +37,8 @@
     "eslint-plugin-react": "^7.34.1",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.6",
-    "vite": "^5.2.0"
+    "sass": "^1.77.8",
+    "vite": "^5.2.0",
+    "vite-plugin-mkcert": "^1.17.5"
   }
 }

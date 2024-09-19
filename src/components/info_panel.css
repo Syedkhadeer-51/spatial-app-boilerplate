@@ -1,0 +1,229 @@
+@import url('https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@1,100..900&display=swap');
+
+.info-panel {
+  font-family: 'Crimson Pro', serif;
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 26rem; /* Increased width */
+  height: 100vh;
+  background-color: rgba(255, 255, 255, 0.08); /* Slightly stronger white base */
+  color: #f0f0f0;
+  padding: 3rem; /* Increased padding */
+  overflow-y: auto;
+  z-index: 10;
+  backdrop-filter: blur(12px); /* Increased blur */
+  box-shadow: -3px 0 12px rgba(0, 0, 0, 0.15); /* Slightly stronger shadow */
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 2px solid rgba(0, 255, 0, 0.4); /* Thicker Neon Green border */
+  padding-bottom: 1.5rem; /* Increased padding */
+  margin-bottom: 2rem; /* Increased margin */
+}
+
+.header h2 {
+  font-family: 'Crimson Pro', serif;
+  font-size: 2rem; /* Larger font size */
+  color: #00FF00; /* Neon Green */
+}
+
+.close-button {
+  background-color: transparent;
+  color: #00FF00; /* Neon Green */
+  border: none;
+  font-size: 1.5rem; /* Larger font size */
+  font-weight: 1000;
+  cursor: pointer;
+  transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.close-button:hover {
+  color: #7FFF00; /* Lighter Neon Green */
+  transform: rotate(90deg);
+}
+
+.info-panel p {
+  margin: 1.5rem 0; /* Increased margin */
+  font-size: 1.2rem; /* Larger font size */
+  color: #00BFFF; /* Deep Sky Blue */
+}
+
+.control-group {
+  margin-bottom: 1.5rem; /* Increased margin */
+}
+
+.control-group label {
+  display: block;
+  margin-bottom: 0.75rem; /* Increased margin */
+  color: #00BFFF; /* Deep Sky Blue */
+  font-weight: 700; /* Increased font-weight */
+}
+
+.control-group input[type="color"] {
+  width: 100%;
+  height: 3rem; /* Increased height */
+  padding: 0;
+  border: 1px solid rgba(0, 255, 0, 0.4); /* Thicker Neon Green border */
+  border-radius: 12px; /* Increased border-radius */
+  background-color: rgba(0, 0, 255, 0.15); /* Slightly stronger Light Blue */
+  color: #f0f0f0;
+  backdrop-filter: blur(6px); /* Increased blur */
+}
+
+.control-group input[type="color"]:hover {
+  background-color: rgba(0, 0, 255, 0.25); /* Slightly darker blue */
+}
+
+.control-group input[type="color"]:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(0, 255, 0, 0.6); /* Thicker Neon Green */
+}
+
+.control-group input,
+.control-group select {
+  font-family: 'Crimson Pro', serif;
+  width: 100%;
+  padding: 0.75rem; /* Increased padding */
+  border: none;
+  border-radius: 12px; /* Increased border-radius */
+  background-color: rgba(0, 0, 255, 0.15); /* Slightly stronger Light Blue */
+  color: #f0f0f0;
+  backdrop-filter: blur(6px); /* Increased blur */
+  border: 1px solid rgba(0, 255, 0, 0.4); /* Thicker Neon Green border */
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  position: relative;
+}
+
+.control-group select {
+  background-image: url('data:image/svg+xml;utf8,<svg fill="%2300FF00" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/></svg>'); /* Neon Green */
+  background-repeat: no-repeat;
+  background-position: right 15px center; /* Adjusted position */
+  background-size: 22px; /* Increased size */
+  padding-right: 3rem; /* Increased padding */
+}
+
+.control-group select:hover {
+  background-color: rgba(0, 0, 255, 0.25); /* Slightly darker blue */
+}
+
+.control-group select:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(0, 255, 0, 0.6); /* Thicker Neon Green */
+}
+
+.control-group option {
+  font-family: 'Crimson Pro', serif;
+  background-color: rgba(0, 0, 50, 0.9); /* Darker blue background */
+  color: #f0f0f0;
+  padding: 0.75rem; /* Increased padding */
+}
+
+.control-group option:hover {
+  background-color: rgba(0, 0, 255, 0.25); /* Light Blue */
+  color: #ffffff;
+}
+
+.control-group .toggle-button {
+  width: 100%;
+  padding: 1rem; /* Increased padding */
+  margin-top: 0.75rem; /* Increased margin */
+  border: none;
+  border-radius: 12px; /* Increased border-radius */
+  color: #f0f0f0;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+  backdrop-filter: blur(6px); /* Increased blur */
+}
+
+.control-group .toggle-button.on {
+  background-color: rgba(0, 255, 0, 0.35); /* Neon Green Tint */
+}
+
+.control-group .toggle-button.off {
+  background-color: rgba(0, 0, 255, 0.25); /* Blue Tint */
+}
+
+.control-group .toggle-button:hover {
+  transform: translateY(-3px); /* Increased transform */
+}
+
+.control-group button:hover {
+  background-color: rgba(0, 0, 255, 0.25); /* Blue Tint */
+  transform: translateY(-3px); /* Increased transform */
+}
+
+.control-group input[type="number"] {
+  margin-bottom: 1.75rem; /* Increased margin */
+}
+
+.opacity-slider {
+  width: 100%;
+  -webkit-appearance: none;
+  appearance: none;
+  height: 10px; /* Increased height */
+  background: linear-gradient(to right, rgba(0, 255, 0, 0.1) 0%, rgba(0, 255, 0, 0.1) calc((var(--value) - var(--min)) * 100% / (var(--max) - var(--min))), rgba(0, 0, 255, 0.35) calc((var(--value) - var(--min)) * 100% / (var(--max) - var(--min))), rgba(0, 0, 255, 0.35) 100%);
+  outline: none;
+  opacity: 0.8; /* Slightly increased opacity */
+  transition: opacity .15s ease-in-out;
+  border-radius: 6px; /* Increased border-radius */
+}
+
+.opacity-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 18px; /* Larger thumb size */
+  height: 18px; /* Larger thumb size */
+  border-radius: 50%;
+  background: white;
+  cursor: pointer;
+}
+
+.opacity-slider::-moz-range-thumb {
+  width: 18px; /* Larger thumb size */
+  height: 18px; /* Larger thumb size */
+  border-radius: 50%;
+  background: white;
+  cursor: pointer;
+}
+
+.slider-container {
+  position: relative;
+}
+
+.opacity-output {
+  position: absolute;
+  top: -35px; /* Adjusted position */
+  right: 0;
+  font-size: 16px; /* Increased font size */
+  background: rgba(0, 0, 0, 0.85);
+  color: white;
+  padding: 4px 10px; /* Adjusted padding */
+  border-radius: 6px; /* Increased border-radius */
+}
+
+/* Scrollbar Styling */
+.info-panel::-webkit-scrollbar {
+  width: 10px; /* Increased width */
+}
+
+.info-panel::-webkit-scrollbar-track {
+  background: rgba(0, 255, 0, 0.12); /* Slightly stronger Neon Green */
+  backdrop-filter: blur(6px); /* Increased blur */
+  border-radius: 12px; /* Increased border-radius */
+}
+
+.info-panel::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 255, 0.35); /* Blue */
+  border-radius: 12px; /* Increased border-radius */
+}
+
+.info-panel::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 255, 0, 0.55); /* Thicker Neon Green */
+}

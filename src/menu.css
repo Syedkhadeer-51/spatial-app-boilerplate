@@ -1,0 +1,95 @@
+@import url('https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@100..900&display=swap');
+
+:root {
+	--color-light: rgb(225, 203, 203);
+	--color-mid: rgb(82, 82, 221); /* Blue tone */
+	--color-dark: rgb(40, 40, 49); /* Darker blue tone */
+}
+
+#wrapper {
+	font-family: "Crimson Pro", serif; /* Updated font */
+	color: #f5f0f0;
+	position: fixed;
+	bottom: 0;
+	left: 0;
+	padding: 1rem; /* Adjust padding to your preference */
+	width: 5rem;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+header {
+	width: 30rem;
+	height: 3.5rem;
+	padding: 0.4rem;
+	display: flex;
+	border: 0.1rem solid var(--color-dark);
+	border-radius: 1rem;
+	background-color: rgba(17, 60, 124, 0.456);
+	backdrop-filter: blur(5px);
+}
+
+.iconDiv {
+	height: 2rem;
+	width: 2rem;
+	margin: 0.4rem 0.3rem;
+	padding: 0.3rem;
+	border-radius: 8px;
+	display: inline-flex;
+	align-items: center;
+	white-space: nowrap;
+	overflow: hidden;
+	cursor: pointer;
+	transition: width 300ms ease-in-out, background-color 300ms linear 200ms;
+}
+
+.iconSVG {
+	height: 36px;
+	aspect-ratio: 1 / 1;
+}
+
+.iconDiv:hover,
+.iconDiv:focus-visible {
+	width: 13rem;
+	background-color: var(--color-mid); /* Blue tone */
+	transition: width 300ms ease-in-out, background-color 100ms linear;
+}
+
+.iconDiv:focus-visible {
+	outline: 1px solid var(--color-mid); /* Blue tone */
+	outline-offset: 4px;
+}
+
+.iconDiv:active {
+	opacity: 0.9;
+}
+
+.iconDiv::after {
+	content: attr(tooltip);
+	margin-left: 12px;
+	animation: fadeIn 600ms linear forwards;
+}
+
+.spacer {
+	flex-grow: 1;
+}
+
+.divider {
+	height: 2.7rem;
+	width: 0.1rem;
+	margin: 0.4rem;
+	background-color: var(--color-dark); /* Darker blue tone */
+}
+
+@keyframes fadeIn {
+	0% {
+	  opacity: 0;
+	}
+	50% {
+	  opacity: 0;
+	}
+	100% {
+	  opacity: 1;
+	}
+}
